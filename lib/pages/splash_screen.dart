@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:helpus/pages/login_page.dart';
+
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(
+          children: [
+            SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: const Image(
+                    image: AssetImage('assets/images/bg.png'),
+                    fit: BoxFit.cover)),
+            const SizedBox(
+              height: 80,
+            ),
+            const SizedBox(
+                width: 150,
+                child: Image(
+                  image: AssetImage('assets/images/helpus.png'),
+                  fit: BoxFit.cover,
+                )),
+            const SizedBox(
+              height: 40,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              width: double.infinity,
+              height: 60,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return LoginPage();
+                  }));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffFEB61D),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  "Get Started",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              child: Text(
+                  'HelpUs: Building Homes, Restoring Hope - A Shelter App for the Homeless',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  )),
+            ),
+          ],
+        ));
+  }
+}
