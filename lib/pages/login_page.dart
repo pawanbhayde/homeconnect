@@ -21,13 +21,16 @@ class _LoginPageState extends State<LoginPage> {
   void _setupAuthListener() {
     supabase.auth.onAuthStateChange.listen((data) {
       final event = data.event;
+      print('Auth event: $event');
       if (event == AuthChangeEvent.signedIn) {
+        print('Signed in, navigating to HomePage');
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const HomePage(),
           ),
         );
       }
+      print('Auth event not fire');
     });
   }
 
@@ -62,118 +65,124 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          SizedBox(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: const Image(
+                    image: AssetImage('assets/images/bg2.png'),
+                    fit: BoxFit.cover)),
+            const SizedBox(
+              height: 80,
+            ),
+            const Center(
+              child: Text('Login with Google Or Email',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  )),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: const Image(
-                  image: AssetImage('assets/images/bg2.png'),
-                  fit: BoxFit.cover)),
-          const SizedBox(
-            height: 80,
-          ),
-          const Center(
-            child: Text('Login with Google Or Email',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                )),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-            width: double.infinity,
-            height: 60,
-            child: ElevatedButton(
-              onPressed: _googleSignIn,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xffEEF5FF),
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+              height: 60,
+              child: ElevatedButton(
+                onPressed: _googleSignIn,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffEEF5FF),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Image(
+                        image: AssetImage('assets/images/google.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      "Login with Google",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: Image(
-                      image: AssetImage('assets/images/google.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    "Login with Google",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-            width: double.infinity,
-            height: 60,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xffEEF5FF),
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+              width: double.infinity,
+              height: 60,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return HomePage();
+                  }));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffEEF5FF),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      // height: 40,
+                      width: 40,
+                      child: Image(
+                        image: AssetImage('assets/images/gmail.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      "Login with Email",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: Image(
-                      image: AssetImage('assets/images/apple.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    "Login with Apple",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-            child: Text(
-                'Helpus: Empowering Hope, Building Homes for the Homeless.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                )),
-          ),
-        ],
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              child: Text(
+                  'Helpus: Empowering Hope, Building Homes for the Homeless.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }
