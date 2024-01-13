@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       }
-      print('Auth event not fire' );
+      print('Auth event not fire');
     });
   }
 
@@ -132,7 +132,11 @@ class _LoginPageState extends State<LoginPage> {
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return HomePage();
+                  }));
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffEEF5FF),
                   elevation: 0,
@@ -144,10 +148,10 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 40,
+                      // height: 40,
                       width: 40,
                       child: Image(
-                        image: AssetImage('assets/images/apple.png'),
+                        image: AssetImage('assets/images/gmail.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -155,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: 20,
                     ),
                     Text(
-                      "Login with Apple",
+                      "Login with Email",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
