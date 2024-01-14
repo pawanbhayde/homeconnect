@@ -8,122 +8,127 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const SizedBox(
-              width: 100,
-              child: Image(
-                image: AssetImage('assets/images/helpus.png'),
-                fit: BoxFit.cover,
-              )),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.notifications),
-            )
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              CarouselWithDotsPage(imgList: const [
-                'assets/images/1.jpg',
-                'assets/images/2.jpg',
-                'assets/images/3.jpg',
-              ]),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  HomeCategory(title: 'Food', image: 'assets/images/cat-1.png'),
-                  HomeCategory(
-                      title: 'Cloths', image: 'assets/images/cat-2.png'),
-                  HomeCategory(
-                      title: 'Charity', image: 'assets/images/cat-3.png'),
-                  HomeCategory(
-                      title: 'Education', image: 'assets/images/cat-4.png'),
+      appBar: AppBar(
+        title: const SizedBox(
+            width: 100,
+            child: Image(
+              image: AssetImage('assets/images/helpus.png'),
+              fit: BoxFit.cover,
+            )),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CarouselWithDotsPage(imgList: const [
+              'assets/images/1.jpg',
+              'assets/images/2.jpg',
+              'assets/images/3.jpg',
+            ]),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                HomeCategory(title: 'Food', image: 'assets/images/cat-1.png'),
+                HomeCategory(title: 'Cloths', image: 'assets/images/cat-2.png'),
+                HomeCategory(
+                    title: 'Charity', image: 'assets/images/cat-3.png'),
+                HomeCategory(
+                    title: 'Education', image: 'assets/images/cat-4.png'),
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Nearest Shelter Homes',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 180,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: const [
+                  SizedBox(
+                    width: 20,
+                  ),
+                  NeedFirstBox(
+                    title: 'Shakti NGO Shelter Home',
+                    image: 'assets/images/ngo-banner-1.png',
+                  ),
+                  NeedFirstBox(
+                    title: 'Homies NGO Shelter Home',
+                    image: 'assets/images/ngo-banner-2.png',
+                  ),
+                  NeedFirstBox(
+                    title: 'UNEX NGO Shelter Home',
+                    image: 'assets/images/ngo-banner-3.png',
+                  ),
                 ],
               ),
-              const SizedBox(
-                height: 30,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Nearest Shelter Homes',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Latest Shelter Homes',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 180,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: const [
-                    SizedBox(
-                      width: 20,
-                    ),
-                    NeedFirstBox(
-                      title: 'Shakti NGO Shelter Home',
-                      image: 'assets/images/ngo-banner-1.png',
-                    ),
-                    NeedFirstBox(
-                      title: 'Homies NGO Shelter Home',
-                      image: 'assets/images/ngo-banner-2.png',
-                    ),
-                    NeedFirstBox(
-                      title: 'UNEX NGO Shelter Home',
-                      image: 'assets/images/ngo-banner-3.png',
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Latest Shelter Homes',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const LatestShalter(
-                title: 'Shakti NGO Shelter Home',
-                image: 'assets/images/ngo-banner-1.png',
-                distance: '2.5 km',
-              ),
-              const LatestShalter(
-                title: 'Homies NGO Shelter Home',
-                image: 'assets/images/ngo-banner-2.png',
-                distance: '3.5 km',
-              ),
-              const LatestShalter(
-                title: 'UNEX NGO Shelter Home',
-                image: 'assets/images/ngo-banner-3.png',
-                distance: '4.5 km',
-              ),
-            ],
-          ),
-        ));
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const LatestShalter(
+              title: 'Shakti NGO Shelter Home',
+              image: 'assets/images/ngo-banner-1.png',
+              distance: '2.5 km',
+            ),
+            const LatestShalter(
+              title: 'Homies NGO Shelter Home',
+              image: 'assets/images/ngo-banner-2.png',
+              distance: '3.5 km',
+            ),
+            const LatestShalter(
+              title: 'UNEX NGO Shelter Home',
+              image: 'assets/images/ngo-banner-3.png',
+              distance: '4.5 km',
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xffFEB61D),
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }
 

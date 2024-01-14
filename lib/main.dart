@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/pages/home_page.dart';
+import 'package:helpus/pages/navigator.dart';
 import 'package:helpus/pages/signin.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:helpus/pages/login_page.dart';
@@ -34,6 +35,6 @@ class _MyAppState extends State<MyApp> {
           useMaterial3: true,
           primarySwatch: Colors.blue,
         ),
-        home: HomePage());
+        home: MainNavigation());
   }
 }
