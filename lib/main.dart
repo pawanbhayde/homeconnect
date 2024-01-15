@@ -35,6 +35,6 @@ class _MyAppState extends State<MyApp> {
           useMaterial3: true,
           primarySwatch: Colors.blue,
         ),
-        home: MainNavigation());
+        home: SplashScreen());
   }
 }

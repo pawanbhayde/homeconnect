@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helpus/main.dart';
 import 'package:helpus/pages/home_page.dart';
+import 'package:helpus/pages/signin.dart';
+import 'package:helpus/pages/signup.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,54 +15,54 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
-  void initState() {
-    _setupAuthListener();
-    super.initState();
-  }
+  // void initState() {
+  //   _setupAuthListener();
+  //   super.initState();
+  // }
 
-  void _setupAuthListener() {
-    supabase.auth.onAuthStateChange.listen((data) {
-      final event = data.event;
-      print('Auth event: $event');
-      if (event == AuthChangeEvent.signedIn) {
-        print('Signed in, navigating to HomePage');
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
-      }
-      print('Auth event not fire');
-    });
-  }
+  // void _setupAuthListener() {
+  //   supabase.auth.onAuthStateChange.listen((data) {
+  //     final event = data.event;
+  //     print('Auth event: $event');
+  //     if (event == AuthChangeEvent.signedIn) {
+  //       print('Signed in, navigating to HomePage');
+  //       Navigator.of(context).pushReplacement(
+  //         MaterialPageRoute(
+  //           builder: (context) => const HomePage(),
+  //         ),
+  //       );
+  //     }
+  //     print('Auth event not fire');
+  //   });
+  // }
 
-  Future<AuthResponse> _googleSignIn() async {
-    const webClientId = 'my-web.apps.googleusercontent.com';
+  // Future<AuthResponse> _googleSignIn() async {
+  //   const webClientId = 'my-web.apps.googleusercontent.com';
 
-    const iosClientId = 'my-ios.apps.googleusercontent.com';
+  //   const iosClientId = 'my-ios.apps.googleusercontent.com';
 
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      clientId: iosClientId,
-      serverClientId: webClientId,
-    );
-    final googleUser = await googleSignIn.signIn();
-    final googleAuth = await googleUser!.authentication;
-    final accessToken = googleAuth.accessToken;
-    final idToken = googleAuth.idToken;
+  //   final GoogleSignIn googleSignIn = GoogleSignIn(
+  //     clientId: iosClientId,
+  //     serverClientId: webClientId,
+  //   );
+  //   final googleUser = await googleSignIn.signIn();
+  //   final googleAuth = await googleUser!.authentication;
+  //   final accessToken = googleAuth.accessToken;
+  //   final idToken = googleAuth.idToken;
 
-    if (accessToken == null) {
-      throw 'No Access Token found.';
-    }
-    if (idToken == null) {
-      throw 'No ID Token found.';
-    }
+  //   if (accessToken == null) {
+  //     throw 'No Access Token found.';
+  //   }
+  //   if (idToken == null) {
+  //     throw 'No ID Token found.';
+  //   }
 
-    return supabase.auth.signInWithIdToken(
-      provider: OAuthProvider.google,
-      idToken: idToken,
-      accessToken: accessToken,
-    );
-  }
+  //   return supabase.auth.signInWithIdToken(
+  //     provider: OAuthProvider.google,
+  //     idToken: idToken,
+  //     accessToken: accessToken,
+  //   );
+  // }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,37 +95,25 @@ class _LoginPageState extends State<LoginPage> {
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
-                onPressed: _googleSignIn,
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return SignInPage();
+                  }));
+                },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffEEF5FF),
+                  backgroundColor: const Color(0xffFEB61D),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: Image(
-                        image: AssetImage('assets/images/google.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      "Login with Google",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                child: const Text(
+                  "Sign In with Email",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
@@ -134,39 +124,23 @@ class _LoginPageState extends State<LoginPage> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return HomePage();
+                    return SignUp();
                   }));
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffEEF5FF),
+                  backgroundColor: const Color(0xffFEB61D),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      // height: 40,
-                      width: 40,
-                      child: Image(
-                        image: AssetImage('assets/images/gmail.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      "Login with Email",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                child: const Text(
+                  "Sign Up with Email",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),

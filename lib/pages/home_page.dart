@@ -174,6 +174,7 @@ class LatestShalter extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
+                overflow: TextOverflow.fade,
               ),
               Text(
                 distance,
