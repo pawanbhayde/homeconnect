@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:helpus/pages/home_page.dart';
 import 'package:helpus/pages/navigator.dart';
 import 'package:helpus/pages/signup.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -191,11 +190,11 @@ class _SignInPageState extends State<SignInPage> {
                   const SizedBox(height: 20),
                   Column(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 50,
                         width: double.infinity,
                         child: MaterialButton(
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: const Color.fromARGB(255, 0, 0, 0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -238,6 +237,7 @@ class _SignInPageState extends State<SignInPage> {
                               // Handle specific errors, e.g., if user is already registered
                               if (error is AuthException) {
                                 // for user friendly error message, nested "if"
+                                // ignore: unrelated_type_equality_checks
                                 if (error.statusCode == 400) {
                                   sm.showSnackBar(
                                     const SnackBar(
@@ -279,7 +279,7 @@ class _SignInPageState extends State<SignInPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Not a member?"),
+                          const Text("Not a member?"),
                           TextButton(
                             onPressed: () {
                               Navigator.push(

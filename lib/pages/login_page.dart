@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:helpus/main.dart';
-import 'package:helpus/pages/home_page.dart';
 import 'package:helpus/pages/signin.dart';
 import 'package:helpus/pages/signup.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -124,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return SignUp();
+                    return const SignUp();
                   }));
                 },
                 style: ElevatedButton.styleFrom(

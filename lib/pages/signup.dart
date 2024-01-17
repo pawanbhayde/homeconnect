@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:helpus/pages/login_page.dart';
-import 'package:helpus/pages/navigator.dart';
 import 'package:helpus/pages/signin.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -193,11 +192,11 @@ class _SignUpState extends State<SignUp> {
                   const SizedBox(height: 20),
                   Column(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 50,
                         width: double.infinity,
                         child: MaterialButton(
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: const Color.fromARGB(255, 0, 0, 0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -224,7 +223,7 @@ class _SignUpState extends State<SignUp> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LoginPage(),
+                                    builder: (context) => const LoginPage(),
                                   ),
                                 );
                               } else {
@@ -272,7 +271,7 @@ class _SignUpState extends State<SignUp> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Have an Account?"),
+                          const Text("Have an Account?"),
                           TextButton(
                             onPressed: () {
                               Navigator.push(
