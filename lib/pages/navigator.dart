@@ -21,7 +21,7 @@ class _MainNavigationState extends State<MainNavigation> {
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: selectedPage,
-          fixedColor: const Color(0xff00A45F),
+          fixedColor: const Color(0xffFEB61D),
           unselectedItemColor: const Color(0xFF757575),
           onTap: (position) {
             setState(() {

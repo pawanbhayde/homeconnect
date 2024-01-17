@@ -159,9 +159,6 @@ class _SignInPageState extends State<SignInPage> {
                     height: 50,
                     child: TextField(
                       controller: emailController,
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
                       decoration: const InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(
@@ -176,9 +173,6 @@ class _SignInPageState extends State<SignInPage> {
                     child: TextField(
                       obscureText: true,
                       controller: passwordController,
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
                       decoration: const InputDecoration(
                         labelText: 'Password',
                         border: OutlineInputBorder(
