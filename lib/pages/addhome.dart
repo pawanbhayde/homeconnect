@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:helpus/pages/home_page.dart';
+
 import 'package:helpus/pages/navigator.dart';
 
 class AddHomeShelter extends StatelessWidget {
@@ -7,6 +7,8 @@ class AddHomeShelter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
         appBar: AppBar(
           title: const SizedBox(
@@ -27,15 +29,15 @@ class AddHomeShelter extends StatelessWidget {
                   "Add Home Shelter",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: size.height * 0.02,
                 ),
                 const Text(
                   "Please fill in the form below to add a new home shelter.",
                   style: TextStyle(fontSize: 16),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: size.height * 0.02,
                 ),
                 const Text(
                   "Home Shelter Name",
@@ -55,8 +57,8 @@ class AddHomeShelter extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: size.height * 0.02,
                 ),
                 const Text(
                   "Address",
@@ -76,8 +78,8 @@ class AddHomeShelter extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: size.height * 0.02,
                 ),
                 const Text(
                   "Phone Number",
@@ -97,8 +99,8 @@ class AddHomeShelter extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: size.height * 0.02,
                 ),
                 const Text(
                   "Cover Image",
@@ -118,8 +120,8 @@ class AddHomeShelter extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: size.height * 0.02,
                 ),
                 Container(
                   width: double.infinity,
