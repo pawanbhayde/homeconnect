@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:helpus/apikey.env';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:helpus/pages/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(
-    url: 'https://lqkrraplzvnjkdxjbvbu.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxxa3JyYXBsenZuamtkeGpidmJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ5OTQwNjUsImV4cCI6MjAyMDU3MDA2NX0.yLtkxJBYPCrIERSklgFl-mfObeJGME22Haeh7fXJxo0',
-  );
+  await Supabase.initialize(url: url, anonKey: key);
   runApp(const MyApp());
 }
 
