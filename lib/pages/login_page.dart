@@ -72,8 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: const Image(
                     image: AssetImage('assets/images/bg2.png'),
                     fit: BoxFit.cover)),
-            const SizedBox(
-              height: 80,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
             ),
             const Center(
               child: Text('Login with Google Or Email',
@@ -83,8 +83,8 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.black,
                   )),
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
