@@ -11,7 +11,11 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   int selectedPage = 0;
-  final pages = [const HomePage(), const Placeholder(), const Placeholder()];
+  final pages = [
+    const HomePage(),
+    const Placeholder(),
+    const Placeholder(),
+  ];
 
   @override
   Widget build(BuildContext context) {

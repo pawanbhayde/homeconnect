@@ -92,9 +92,14 @@ class _LoginPageState extends State<LoginPage> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return SignInPage();
-                  }));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SignInPage();
+                      },
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffFEB61D),
@@ -143,13 +148,14 @@ class _LoginPageState extends State<LoginPage> {
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
               child: Text(
-                  'Helpus: Empowering Hope, Building Homes for the Homeless.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  )),
+                'Helpus: Empowering Hope, Building Homes for the Homeless.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
             ),
           ],
         ),
