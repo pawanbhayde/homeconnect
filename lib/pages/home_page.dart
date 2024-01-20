@@ -5,7 +5,7 @@ import 'package:helpus/pages/addhome.dart';
 import 'package:helpus/pages/splash_screen.dart';
 import 'package:helpus/widgets/custom_category_card.dart';
 import 'package:helpus/widgets/custom_image_carousel.dart';
-import 'package:helpus/widgets/custom_shelter_card.dart';
+import 'package:helpus/widgets/custom_near_shelter_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
