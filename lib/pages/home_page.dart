@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/Widgets/custom_shalter_card.dart';
+import 'package:helpus/main.dart';
 import 'package:helpus/pages/addhome.dart';
+import 'package:helpus/pages/splash_screen.dart';
 import 'package:helpus/widgets/custom_category_card.dart';
 import 'package:helpus/widgets/custom_image_carousel.dart';
 import 'package:helpus/widgets/custom_shelter_card.dart';
@@ -30,7 +32,16 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.only(right: 10.0),
             child: IconButton(
               iconSize: 30,
-              onPressed: () {},
+              onPressed: () async {
+                await supabase.auth.signOut();
+
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SplashScreen(),
+                    ),
+                    (route) => false);
+              },
               icon: const Icon(Icons.notifications, color: Colors.black),
             ),
           )

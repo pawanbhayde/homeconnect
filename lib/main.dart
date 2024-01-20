@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/apikey.env';
+import 'package:helpus/pages/navigator.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:helpus/pages/splash_screen.dart';
 
@@ -20,6 +21,31 @@ class MyApp extends StatefulWidget {
 }
 //  This is temp comment
 class _MyAppState extends State<MyApp> {
+  bool isLoggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthStatus();
+  }
+
+  Future<void> _checkAuthStatus() async {
+    final session = await supabase.auth.currentSession;
+    if (session != null) {
+      // User is logged in, navigate accordingly
+      setState(() {
+        // variable to check if user is logged in
+        isLoggedIn = true;
+      });
+    } else {
+      // User is not logged in, handle as needed
+      setState(() {
+        // variable to check if user is logged in
+        isLoggedIn = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,6 +54,6 @@ class _MyAppState extends State<MyApp> {
           useMaterial3: true,
           primarySwatch: Colors.blue,
         ),
-        home: const SplashScreen());
+        home: isLoggedIn ? const MainNavigation() : const SplashScreen());
   }
 }
