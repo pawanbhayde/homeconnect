@@ -7,11 +7,21 @@ import 'package:helpus/pages/splash_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(url: url, anonKey: key);
+  await Supabase.initialize(
+    url: url,
+    anonKey: key,
+    authOptions: const FlutterAuthClientOptions(
+      authFlowType: AuthFlowType.pkce,
+    ),
+    realtimeClientOptions: const RealtimeClientOptions(
+      logLevel: RealtimeLogLevel.info,
+    ),
+    storageOptions: const StorageClientOptions(
+      retryAttempts: 10,
+    ),
+  );
   runApp(const MyApp());
 }
-
-final supabase = Supabase.instance.client;
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -19,8 +29,10 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-//  This is temp comment
+
 class _MyAppState extends State<MyApp> {
+  final supabase = Supabase.instance.client;
+
   bool isLoggedIn = false;
 
   @override
@@ -49,6 +61,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Help Us',
         theme: ThemeData(
           useMaterial3: true,
