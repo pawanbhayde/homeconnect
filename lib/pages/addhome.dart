@@ -8,6 +8,10 @@ class AddHomeShelter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    TextEditingController nameController = TextEditingController();
+    TextEditingController addressController = TextEditingController();
+    TextEditingController phoneController = TextEditingController();
+    TextEditingController coverController = TextEditingController();
 
     return Scaffold(
         appBar: AppBar(
@@ -43,13 +47,15 @@ class AddHomeShelter extends StatelessWidget {
                   "Home Shelter Name",
                   style: TextStyle(fontSize: 16),
                 ),
-                const SizedBox(
+                //text field for home shelter name
+                SizedBox(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
+                    controller: nameController,
+                    style: const TextStyle(
                       fontSize: 18,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Name',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -64,13 +70,15 @@ class AddHomeShelter extends StatelessWidget {
                   "Address",
                   style: TextStyle(fontSize: 16),
                 ),
-                const SizedBox(
+                //text field for address
+                SizedBox(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
+                    controller: addressController,
+                    style: const TextStyle(
                       fontSize: 18,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Address',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -85,13 +93,15 @@ class AddHomeShelter extends StatelessWidget {
                   "Phone Number",
                   style: TextStyle(fontSize: 16),
                 ),
-                const SizedBox(
+                //text field for phone number
+                SizedBox(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
+                    controller: phoneController,
+                    style: const TextStyle(
                       fontSize: 18,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Phone Number',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -106,13 +116,15 @@ class AddHomeShelter extends StatelessWidget {
                   "Cover Image",
                   style: TextStyle(fontSize: 16),
                 ),
-                const SizedBox(
+                //text field for cover image
+                SizedBox(
                   height: 50,
                   child: TextField(
-                    style: TextStyle(
+                    controller: coverController,
+                    style: const TextStyle(
                       fontSize: 18,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Cover Image URL',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
