@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/Widgets/custom_shalter_card.dart';
-import 'package:helpus/main.dart';
+import 'package:helpus/auth/authentication.dart';
+import 'package:helpus/auth/database.dart';
 import 'package:helpus/pages/addhome.dart';
 import 'package:helpus/pages/splash_screen.dart';
 import 'package:helpus/widgets/custom_category_card.dart';
@@ -15,6 +16,7 @@ class HomePage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      //appbar
       appBar: AppBar(
         forceMaterialTransparency: true,
         automaticallyImplyLeading: false,
@@ -33,8 +35,7 @@ class HomePage extends StatelessWidget {
             child: IconButton(
               iconSize: 30,
               onPressed: () async {
-                await supabase.auth.signOut();
-
+                await Authentication.signOut(context);
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
@@ -42,24 +43,47 @@ class HomePage extends StatelessWidget {
                     ),
                     (route) => false);
               },
-              icon: const Icon(Icons.notifications, color: Colors.black),
+              icon: const Icon(Icons.logout_rounded, color: Colors.black),
             ),
           )
         ],
       ),
+
+      //body
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: size.height * 0.01,
+              height: size.height * 0.03,
             ),
+
+            //image carousel
             CarouselWithDotsPage(imgList: const [
               'assets/images/1.jpg',
               'assets/images/2.jpg',
               'assets/images/3.jpg',
             ]),
+            SizedBox(
+              height: size.height * 0.03,
+            ),
+
+            //Donation Categories
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Donation Categories',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -74,6 +98,8 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: size.height * 0.03,
             ),
+
+            //Nearest Shelter Homes
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Align(
@@ -89,29 +115,34 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: size.height * 0.02),
-            SizedBox(
-              height: 180,
-              child: ListView(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                children: [
-                  SizedBox(
-                    width: size.width * 0.05,
-                  ),
-                  const NeedFirstBox(
-                    title: 'Shakti NGO Shelter Home',
-                    image: 'assets/images/ngo-banner-1.png',
-                  ),
-                  const NeedFirstBox(
-                    title: 'Homies NGO Shelter Home',
-                    image: 'assets/images/ngo-banner-2.png',
-                  ),
-                  const NeedFirstBox(
-                    title: 'UNEX NGO Shelter Home',
-                    image: 'assets/images/ngo-banner-3.png',
-                  ),
-                ],
-              ),
+            //nearest shelter homes cards
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: SizedBox(
+                  height: 180,
+                  child: StreamBuilder(
+                    stream: DatabaseService.getShelter(),
+                    builder: (context, snapshot) {
+                      print(snapshot.data);
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (context, index) {
+                            return NeedFirstBox(
+                              title: snapshot.data?[index]['name'],
+                              image: snapshot.data?[index]['image'],
+                            );
+                          },
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  )),
             ),
             SizedBox(
               height: size.height * 0.03,

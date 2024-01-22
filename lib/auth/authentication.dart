@@ -72,5 +72,29 @@ class Authentication {
     }
   }
 
-  // get current user
+  // Sign Out
+  static Future<void> signOut(BuildContext context) async {
+    final sm = ScaffoldMessenger.of(context);
+
+    try {
+      // Attempt to sign out the user
+      await supabase.auth.signOut();
+      // Navigate to the home page
+      sm.showSnackBar(
+        const SnackBar(
+          content: Text("Signed Out Successfully"),
+        ),
+      );
+    } catch (error) {
+      // Handle sign out errors
+      sm.showSnackBar(
+        SnackBar(
+          padding: EdgeInsets.only(bottom: 10),
+          content: Text(
+            "Error signing out: ${error.toString()}",
+          ),
+        ),
+      );
+    }
+  }
 }

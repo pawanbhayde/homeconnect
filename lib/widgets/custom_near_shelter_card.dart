@@ -17,7 +17,7 @@ class NeedFirstBox extends StatelessWidget {
       width: 300,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(image),
+          image: AssetImage('assets/images/ngo-banner-1.png'),
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(10),
