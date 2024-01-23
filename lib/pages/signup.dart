@@ -1,7 +1,9 @@
 // ignore_for_file: use_build_context_synchronously, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
+import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/pages/login_page.dart';
+import 'package:helpus/pages/navigator.dart';
 import 'package:helpus/pages/signin.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -29,7 +31,7 @@ class _SignUpState extends State<SignUp> {
         child: Center(
           child: Container(
             padding: const EdgeInsets.all(20.0),
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: MediaQuery.of(context).size.height * 0.7,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               boxShadow: const [
@@ -191,105 +193,82 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
 
+                const SizedBox(height: 10),
+
                 //sign Up with google and apple
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: Container(
-                //         margin: const EdgeInsets.symmetric(horizontal: 10),
-                //         height: 1,
-                //         color: Colors.grey,
-                //       ),
-                //     ),
-                //     const Text(
-                //       "Or Continue with",
-                //       style: TextStyle(
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w500,
-                //         color: Color.fromARGB(255, 135, 135, 135),
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Container(
-                //         margin: const EdgeInsets.symmetric(horizontal: 10),
-                //         height: 1,
-                //         color: Colors.grey,
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                // SizedBox(
-                //   width: double.infinity,
-                //   height: 50,
-                //   child: ElevatedButton(
-                //     onPressed: () {},
-                //     style: ElevatedButton.styleFrom(
-                //       backgroundColor: const Color(0xffEEF5FF),
-                //       elevation: 0,
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(8),
-                //       ),
-                //     ),
-                //     child: const Row(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Image(
-                //           image: AssetImage('assets/images/google.png'),
-                //           width: 30,
-                //         ),
-                //         SizedBox(
-                //           width: 10,
-                //         ),
-                //         Text(
-                //           "Sign Up with Google",
-                //           style: TextStyle(
-                //             fontSize: 16,
-                //             fontWeight: FontWeight.w500,
-                //             color: Colors.black,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                // const SizedBox(height: 10),
-                // SizedBox(
-                //   width: double.infinity,
-                //   height: 50,
-                //   child: ElevatedButton(
-                //     onPressed: () {},
-                //     style: ElevatedButton.styleFrom(
-                //       backgroundColor: const Color(0xffEEF5FF),
-                //       elevation: 0,
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(8),
-                //       ),
-                //     ),
-                //     child: const Row(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Image(
-                //           image: AssetImage('assets/images/apple.png'),
-                //           width: 30,
-                //         ),
-                //         SizedBox(
-                //           width: 10,
-                //         ),
-                //         Text(
-                //           "Sign Up with Apple",
-                //           style: TextStyle(
-                //             fontSize: 16,
-                //             fontWeight: FontWeight.w500,
-                //             color: Colors.black,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        height: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const Text(
+                      "Or Continue with",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromARGB(255, 135, 135, 135),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        height: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      //sign in with google
+                      await Authentication.googleSignIn();
+                      //navigate to main navigation
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainNavigation(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xffEEF5FF),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image(
+                          image: AssetImage('assets/images/google.png'),
+                          width: 30,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Sign Up with Google",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
