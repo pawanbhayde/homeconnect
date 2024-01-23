@@ -39,6 +39,8 @@ dependencies:
   carousel_slider: ^4.2.1
   glass: ^1.0.2+1
   iconsax: ^0.0.8
+  line_awesome_flutter: ^2.0.0
+  animated_theme_switcher: ^2.0.10
 
 dev_dependencies:
   flutter_test:
