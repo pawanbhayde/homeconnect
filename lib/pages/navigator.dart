@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/pages/home_page.dart';
-import 'package:helpus/pages/profile_page.dart';
 import 'package:iconsax/iconsax.dart';
 
 class MainNavigation extends StatefulWidget {
@@ -15,7 +14,7 @@ class _MainNavigationState extends State<MainNavigation> {
   final pages = [
     const HomePage(),
     const Placeholder(),
-    ProfilePage(),
+    const Placeholder(),
   ];
 
   @override
