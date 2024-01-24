@@ -4,13 +4,14 @@ class UserProfile {
   final String email;
   final String location;
   final String profilePicture;
-
+  final String userid;
   UserProfile({
     required this.id,
     required this.name,
     required this.email,
     required this.location,
     required this.profilePicture,
+    required this.userid,
   });
 
   // Factory method to create a User instance from a Map returned by Supabase
@@ -21,6 +22,7 @@ class UserProfile {
       email: data['email'],
       location: data['location'],
       profilePicture: data['profile_picture'],
+      userid: data['userid'],
     );
   }
 
@@ -32,6 +34,7 @@ class UserProfile {
       'email': email,
       'location': location,
       'profile_picture': profilePicture,
+      'userid': userid,
     };
   }
 }

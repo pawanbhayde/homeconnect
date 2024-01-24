@@ -136,7 +136,8 @@ class Authentication {
   }
 
   // store users google sign in details into user table
-  static Future<void> storeUserDetails(BuildContext context) async {
+  static Future<void> storeUserDetails(
+      BuildContext context, String name, String email) async {
     final sm = ScaffoldMessenger.of(context);
 
     try {
@@ -145,8 +146,8 @@ class Authentication {
       final response = await supabase.from('user').insert([
         {
           'userid': user?.id,
-          'name': user?.userMetadata?['name'],
-          'email': user?.userMetadata?['email'],
+          'name': user?.userMetadata?['name'] ?? name,
+          'email': user?.userMetadata?['email'] ?? email,
           'profile_picture': user?.userMetadata?['avatar_url'],
         }
       ]);

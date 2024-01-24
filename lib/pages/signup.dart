@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
-import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/login_page.dart';
 import 'package:helpus/pages/navigator.dart';
 import 'package:helpus/pages/signin.dart';
@@ -20,6 +19,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _SignUpState extends State<SignUp> {
         child: Center(
           child: Container(
             padding: const EdgeInsets.all(20.0),
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: MediaQuery.of(context).size.height * 0.7,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               boxShadow: const [
@@ -94,6 +94,22 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 50,
+                    child: TextField(
+                      controller: nameController,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 20),
                   Column(
                     children: [
@@ -114,6 +130,8 @@ class _SignUpState extends State<SignUp> {
                                 password: passwordController.text,
                                 email: emailController.text,
                               );
+                              await Authentication.storeUserDetails(context,
+                                  nameController.text, emailController.text);
 
                               // Check if the sign-up was successful
                               if (authResponse.user != null) {
@@ -235,7 +253,8 @@ class _SignUpState extends State<SignUp> {
                       onPressed: () async {
                         //sign in with google
                         await Authentication.googleSignIn();
-                        await Authentication.storeUserDetails(context);
+                        await Authentication.storeUserDetails(
+                            context, nameController.text, emailController.text);
 
                         //navigate to main navigation
                         Navigator.pushReplacement(

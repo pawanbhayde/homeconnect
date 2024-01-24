@@ -1,15 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
+import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/edit_profile.dart';
 import 'package:helpus/pages/splash_screen.dart';
 import 'package:iconsax/iconsax.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  UserProfile? profile;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Authentication.getCurrentUser().then((fetchedProfile) {
+      setState(() {
+        profile = fetchedProfile;
+        print(profile);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final user = supabase.auth.currentUser;
+    //
+    //get current user
+    final userProfile = Authentication.getCurrentUser();
+
+    print(userProfile);
 
     Future<void> _showMyDialog() async {
       return showDialog<void>(
@@ -92,16 +117,21 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          user!.userMetadata?['avatar_url'],
-                          fit: BoxFit.cover,
-                        ),
+                        child: user!.userMetadata?['avatar_url'] == null
+                            ? const Icon(
+                                Iconsax.user,
+                                size: 50,
+                              )
+                            : Image.network(
+                                user.userMetadata?['avatar_url'],
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                     const SizedBox(height: 15),
                     Text(
-                      user.userMetadata?['name'],
-                      style: TextStyle(
+                      user.userMetadata?['name'] ?? profile?.name,
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -109,8 +139,8 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      user.userMetadata?['email'],
-                      style: TextStyle(
+                      user.userMetadata?['email'] ?? profile?.email,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
@@ -123,14 +153,14 @@ class ProfileScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return EditProfileScreen();
+                              return const EditProfileScreen();
                             },
                           ),
                         );
                       },
                       style: ElevatedButton.styleFrom(
                         side: const BorderSide(width: 1.0, color: Colors.black),
-                        primary: const Color(0xffF3F2F5),
+                        backgroundColor: const Color(0xffF3F2F5),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),

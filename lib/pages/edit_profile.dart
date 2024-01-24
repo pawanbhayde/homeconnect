@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:helpus/pages/navigator.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
+
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
 }
@@ -17,22 +18,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   String? _image;
 
-  // final ImagePicker _imagePicker = ImagePicker();
-  // PickedFile? _pickedImage;
+  final ImagePicker _imagePicker = ImagePicker();
+  PickedFile? _pickedImage;
 
-  // void _pickImage() async {
-  //   final File pickedImage =
-  //       (await _imagePicker.pickImage(source: ImageSource.gallery)) as File;
-  //   setState(() {
-  //     _pickedImage = pickedImage as PickedFile?;
-  //   });
-  // }
+  void _pickImage() async {
+    final XFile pickedImage =
+        (await _imagePicker.pickImage(source: ImageSource.gallery)) as XFile;
+    setState(() {
+      _pickedImage = pickedImage as PickedFile?;
+    });
+    print(_pickedImage!.path);
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(Iconsax.arrow_left),
+          ),
+          centerTitle: true,
           title: const Text('Edit Profile'),
         ),
         body: Padding(
@@ -44,6 +53,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               GestureDetector(
                 onTap: () async {
                   // Now you can use imagePath as needed.
+                  _pickImage();
+                  print(_pickedImage!);
                 },
                 child: Container(
                   width: 100,
@@ -97,8 +108,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.black,
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.black,
                   ),
                   onPressed: () {
                     Navigator.push(
