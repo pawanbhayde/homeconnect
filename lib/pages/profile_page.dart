@@ -9,6 +9,46 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _showMyDialog() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Sign Out'),
+            content: const SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('This will sign you out of the app'),
+                  Text('Are you sure?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Logout'),
+                onPressed: () async {
+                  await Authentication.signOut(context);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SplashScreen(),
+                      ),
+                      (route) => false);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffF3F2F5),
@@ -22,15 +62,8 @@ class ProfileScreen extends StatelessWidget {
             padding: const EdgeInsets.only(right: 10.0),
             child: IconButton(
               iconSize: 25,
-              onPressed: () async {
-                await Authentication.signOut(context);
-                // ignore: use_build_context_synchronously
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SplashScreen(),
-                    ),
-                    (route) => false);
+              onPressed: () {
+                _showMyDialog();
               },
               icon: const Icon(Icons.logout_rounded, color: Colors.black),
             ),
