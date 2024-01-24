@@ -9,6 +9,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = supabase.auth.currentUser;
+
     Future<void> _showMyDialog() async {
       return showDialog<void>(
         context: context,
@@ -90,15 +92,15 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Image.asset(
-                          'assets/images/pofile.jpeg',
+                        child: Image.network(
+                          user!.userMetadata?['avatar_url'],
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
                     const SizedBox(height: 15),
-                    const Text(
-                      'John Doe',
+                    Text(
+                      user.userMetadata?['name'],
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -106,8 +108,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      'johndoe@gmail.com',
+                    Text(
+                      user.userMetadata?['email'],
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -116,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.push(
                           context,
                           MaterialPageRoute(

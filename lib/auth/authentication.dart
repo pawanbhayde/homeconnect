@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/navigator.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -132,5 +133,58 @@ class Authentication {
       idToken: idToken,
       accessToken: accessToken,
     );
+  }
+
+  // store users google sign in details into user table
+  static Future<void> storeUserDetails(BuildContext context) async {
+    final sm = ScaffoldMessenger.of(context);
+
+    try {
+      final user = supabase.auth.currentUser;
+
+      final response = await supabase.from('user').insert([
+        {
+          'userid': user?.id,
+          'name': user?.userMetadata?['name'],
+          'email': user?.userMetadata?['email'],
+          'profile_picture': user?.userMetadata?['avatar_url'],
+        }
+      ]);
+
+      if (response.error == null) {
+        sm.showSnackBar(
+          const SnackBar(
+            content: Text("User Details Stored Successfully"),
+          ),
+        );
+      } else {
+        sm.showSnackBar(
+          SnackBar(
+            content: Text(
+              "Error storing user details: ${response.error!.message}",
+            ),
+          ),
+        );
+      }
+    } catch (error) {
+      sm.showSnackBar(
+        SnackBar(
+          content: Text(
+            "Error storing user details: ${error.toString()}",
+          ),
+        ),
+      );
+    }
+  }
+
+  // get current  user details
+  static Future<UserProfile> getCurrentUser() async {
+    final String userId = supabase.auth.currentUser!.id;
+
+    final data = await supabase.from('user').select().eq('id', userId).single();
+
+    final UserProfile profile = UserProfile.fromMap(data);
+
+    return profile;
   }
 }
