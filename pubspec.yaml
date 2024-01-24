@@ -41,6 +41,8 @@ dependencies:
   iconsax: ^0.0.8
   line_awesome_flutter: ^2.0.0
   animated_theme_switcher: ^2.0.10
+  image_picker: ^0.8.4+4
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:

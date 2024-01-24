@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/pages/home_page.dart';
+import 'package:helpus/pages/profile_page.dart';
+import 'package:helpus/pages/searchshelter.dart';
 import 'package:iconsax/iconsax.dart';
 
 class MainNavigation extends StatefulWidget {
@@ -13,8 +15,8 @@ class _MainNavigationState extends State<MainNavigation> {
   int selectedPage = 0;
   final pages = [
     const HomePage(),
-    const Placeholder(),
-    const Placeholder(),
+    SearchHomeShelter(),
+    ProfileScreen(),
   ];
 
   @override
@@ -35,7 +37,7 @@ class _MainNavigationState extends State<MainNavigation> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Iconsax.home), label: "Home"),
             BottomNavigationBarItem(
-                icon: Icon(Iconsax.health), label: "Predict"),
+                icon: Icon(Iconsax.search_normal), label: "Search"),
             BottomNavigationBarItem(icon: Icon(Iconsax.user), label: "Account")
           ]),
     );
