@@ -52,6 +52,7 @@ class _SignUpState extends State<SignUp> {
                   padding: EdgeInsets.all(20.0),
                   child: Text(
                     'Sign up with Email & Password',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
