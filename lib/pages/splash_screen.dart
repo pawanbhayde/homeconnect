@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/pages/login_page.dart';
+import 'package:helpus/utilities/colors.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -20,7 +21,7 @@ class SplashScreen extends StatelessWidget {
               height: 80,
             ),
             const SizedBox(
-                width: 150,
+                width: 200,
                 child: Image(
                   image: AssetImage('assets/images/helpus.png'),
                   fit: BoxFit.cover,
@@ -44,7 +45,7 @@ class SplashScreen extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffFEB61D),
+                  backgroundColor: primaryColor,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -54,8 +55,8 @@ class SplashScreen extends StatelessWidget {
                   "Get Started",
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
               ),

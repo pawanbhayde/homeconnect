@@ -40,10 +40,11 @@ dependencies:
   glass: ^1.0.2+1
   iconsax: ^0.0.8
   line_awesome_flutter: ^2.0.0
-  animated_theme_switcher: ^2.0.10
   image_picker: ^0.8.4+4
   image_cropper: ^5.0.0
   path_provider: ^2.1.2
+  floating_snackbar: ^1.0.3+1
+  url_launcher: ^6.2.4
 
 dev_dependencies:
   flutter_test:

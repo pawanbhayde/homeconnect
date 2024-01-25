@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/pages/signin.dart';
 import 'package:helpus/pages/signup.dart';
+import 'package:helpus/utilities/colors.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,55 +12,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
-  // void initState() {
-  //   _setupAuthListener();
-  //   super.initState();
-  // }
-
-  // void _setupAuthListener() {
-  //   supabase.auth.onAuthStateChange.listen((data) {
-  //     final event = data.event;
-  //     print('Auth event: $event');
-  //     if (event == AuthChangeEvent.signedIn) {
-  //       print('Signed in, navigating to HomePage');
-  //       Navigator.of(context).pushReplacement(
-  //         MaterialPageRoute(
-  //           builder: (context) => const HomePage(),
-  //         ),
-  //       );
-  //     }
-  //     print('Auth event not fire');
-  //   });
-  // }
-
-  // Future<AuthResponse> _googleSignIn() async {
-  //   const webClientId = 'my-web.apps.googleusercontent.com';
-
-  //   const iosClientId = 'my-ios.apps.googleusercontent.com';
-
-  //   final GoogleSignIn googleSignIn = GoogleSignIn(
-  //     clientId: iosClientId,
-  //     serverClientId: webClientId,
-  //   );
-  //   final googleUser = await googleSignIn.signIn();
-  //   final googleAuth = await googleUser!.authentication;
-  //   final accessToken = googleAuth.accessToken;
-  //   final idToken = googleAuth.idToken;
-
-  //   if (accessToken == null) {
-  //     throw 'No Access Token found.';
-  //   }
-  //   if (idToken == null) {
-  //     throw 'No ID Token found.';
-  //   }
-
-  //   return supabase.auth.signInWithIdToken(
-  //     provider: OAuthProvider.google,
-  //     idToken: idToken,
-  //     accessToken: accessToken,
-  //   );
-  // }
-
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -91,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffFEB61D),
+                  backgroundColor: primaryColor,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -101,8 +53,8 @@ class _LoginPageState extends State<LoginPage> {
                   "Sign In with Email",
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
               ),
@@ -123,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffFEB61D),
+                  backgroundColor: primaryColor,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -133,8 +85,8 @@ class _LoginPageState extends State<LoginPage> {
                   "Sign Up with Email",
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
               ),
