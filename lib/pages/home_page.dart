@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/Widgets/custom_shalter_card.dart';
-import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/pages/addhome.dart';
-import 'package:helpus/pages/splash_screen.dart';
+import 'package:helpus/pages/home_shelter_detail.dart';
 import 'package:helpus/widgets/custom_category_card.dart';
 import 'package:helpus/widgets/custom_image_carousel.dart';
 import 'package:helpus/widgets/custom_near_shelter_card.dart';
@@ -14,48 +13,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    // ignore: no_leading_underscores_for_local_identifiers
-    Future<void> _showMyDialog() async {
-      return showDialog<void>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Sign Out'),
-            content: const SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('This will sign you out of the app'),
-                  Text('Are you sure?'),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: const Text('Logout'),
-                onPressed: () async {
-                  await Authentication.signOut(context);
-                  // ignore: use_build_context_synchronously
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SplashScreen(),
-                      ),
-                      (route) => false);
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
 
     return Scaffold(
       //appbar
@@ -68,18 +25,6 @@ class HomePage extends StatelessWidget {
               image: AssetImage('assets/images/helpus.png'),
               fit: BoxFit.cover,
             )),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: IconButton(
-              iconSize: 25,
-              onPressed: () {
-                _showMyDialog();
-              },
-              icon: const Icon(Icons.logout, color: Colors.black),
-            ),
-          )
-        ],
       ),
 
       //body
@@ -202,7 +147,11 @@ class HomePage extends StatelessWidget {
               title: 'Shakti NGO Shelter Home',
               image: 'assets/images/ngo-banner-1.png',
               distance: '2.5 km',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return  HomeShelterDetails();
+                }));
+              },
             ),
             LatestShalter(
               title: 'Homies NGO Shelter Home',

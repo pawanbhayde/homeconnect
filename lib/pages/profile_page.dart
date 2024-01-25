@@ -89,18 +89,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               fit: BoxFit.cover,
             )),
         centerTitle: true,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: IconButton(
-              iconSize: 25,
-              onPressed: () {
-                _showMyDialog();
-              },
-              icon: const Icon(Icons.logout_rounded, color: Colors.black),
-            ),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: SizedBox(
@@ -164,6 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
                         side: const BorderSide(width: 1.0, color: Colors.black),
                         backgroundColor: const Color(0xffF3F2F5),
                         shape: RoundedRectangleBorder(
@@ -181,11 +170,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 ),
-              ),
-              Custom_Profile_Item(
-                title: 'Setting',
-                icon: Iconsax.setting,
-                onPressed: () {},
               ),
               Custom_Profile_Item(
                 title: 'Change Password',
@@ -213,6 +197,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
                   );
+                },
+              ),
+              Custom_Profile_Item(
+                title: 'Logut',
+                icon: Iconsax.logout,
+                onPressed: () {
+                  _showMyDialog();
                 },
               ),
             ],

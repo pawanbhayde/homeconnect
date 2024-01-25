@@ -16,7 +16,7 @@ Future<void> main() async {
     realtimeClientOptions: const RealtimeClientOptions(
       logLevel: RealtimeLogLevel.info,
     ),
-    storageOptions: const StorageClientOptions( 
+    storageOptions: const StorageClientOptions(
       retryAttempts: 10,
     ),
   );
