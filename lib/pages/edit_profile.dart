@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:helpus/pages/navigator.dart';
-import 'package:helpus/pages/profile_page.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
+
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
 }
@@ -13,15 +15,19 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+
+  String? _image;
+
   final ImagePicker _imagePicker = ImagePicker();
   PickedFile? _pickedImage;
 
   void _pickImage() async {
-    final pickedImage =
-        await _imagePicker.getImage(source: ImageSource.gallery);
+    final XFile pickedImage =
+        (await _imagePicker.pickImage(source: ImageSource.gallery)) as XFile;
     setState(() {
-      _pickedImage = pickedImage;
+      _pickedImage = pickedImage as PickedFile?;
     });
+    print(_pickedImage!.path);
   }
 
   @override
@@ -29,16 +35,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Edit Profile'),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(Iconsax.arrow_left),
+          ),
+          centerTitle: true,
+          title: const Text('Edit Profile'),
         ),
         body: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Profile Picture
               GestureDetector(
-                onTap: _pickImage,
+                onTap: () async {
+                  // Now you can use imagePath as needed.
+                  _pickImage();
+                  print(_pickedImage!);
+                },
                 child: Container(
                   width: 100,
                   height: 100,
@@ -49,41 +66,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       width: 2.0,
                     ),
                   ),
-                  child: _pickedImage == null
-                      ? Center(
+                  child: _image == null
+                      ? const Center(
                           child: Icon(
-                            Icons.camera_alt,
+                            Iconsax.gallery_add,
                             size: 40.0,
                           ),
                         )
                       : ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.file(
-                            _pickedImage!.path as File,
+                            _image as File,
                             fit: BoxFit.cover,
                           ),
                         ),
                 ),
               ),
-              SizedBox(height: 50.0),
+              const SizedBox(height: 50.0),
 
               // Name TextField
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Name',
                 ),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
 
               // Email TextField
               TextField(
                 controller: emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                 ),
               ),
-              SizedBox(height: 50.0),
+              const SizedBox(height: 50.0),
 
               // Update Profile Button
               SizedBox(
@@ -91,20 +108,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.black,
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.black,
                   ),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return MainNavigation();
+                          return const MainNavigation();
                         },
                       ),
                     );
                   },
-                  child: Text('Update Profile'),
+                  child: const Text('Update Profile'),
                 ),
               ),
             ],
@@ -113,4 +130,93 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
     );
   }
+
+  // Bottom sheet To Pick Profile picture for users
+  // void _showBottomSheet() {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       shape: const RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.only(
+  //               topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+  //       builder: (_) {
+  //         return ListView(
+  //           shrinkWrap: true,
+  //           // padding: EdgeInsets.only(
+  //           //     top: size.height * .02, bottom: size.height * .05),
+  //           children: [
+  //             //Drawer Title
+  //             const Text(
+  //               "Pick Profile picture",
+  //               textAlign: TextAlign.center,
+  //               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+  //             ),
+  //
+  //             //For adding Some Space
+  //             // SizedBox(
+  //             //   height: size.height * .02,
+  //             // ),
+  //
+  //             //Drawer Button
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //               children: [
+  //                 //Gallery Button
+  //
+  //                 ElevatedButton.icon(
+  //                     style:
+  //                         ButtonStyle(iconSize: MaterialStateProperty.all(30)),
+  //                     onPressed: () async {
+  //                       final ImagePicker picker = ImagePicker();
+  //                       final ImageCropper cropper = ImageCropper();
+  //
+  //                       // Pick an image .
+  //                       final XFile? image =
+  //                           await picker.pickImage(source: ImageSource.gallery);
+  //
+  //                       if (image != null) {
+  //                         final CroppedFile? crop = await cropper.cropImage(
+  //                             sourcePath: image.path,
+  //                             aspectRatio:
+  //                                 const CropAspectRatio(ratioX: 1, ratioY: 1),
+  //                             compressQuality: 100,
+  //                             compressFormat: ImageCompressFormat.jpg);
+  //                         if (crop != null) {
+  //                           setState(() {
+  //                             _image = crop.path;
+  //                           });
+  //                         }
+  //
+  //                         //for hiding bottom sheet
+  //                         Navigator.pop(context);
+  //                       }
+  //                     },
+  //                     icon: const Icon(Icons.photo),
+  //                     label: const Text('Gallery')),
+  //
+  //                 //Camera Button
+  //                 ElevatedButton.icon(
+  //                     style:
+  //                         ButtonStyle(iconSize: MaterialStateProperty.all(30)),
+  //                     onPressed: () async {
+  //                       final ImagePicker picker = ImagePicker();
+  //                       // Pick an image .
+  //                       final XFile? image =
+  //                           await picker.pickImage(source: ImageSource.camera);
+  //                       if (image != null) {
+  //                         setState(() {
+  //                           _image = image.path;
+  //                         });
+  //
+  //                         //for hiding bottom sheet
+  //                         Navigator.pop(context);
+  //                       }
+  //                     },
+  //                     icon: const Icon(Icons.photo_camera),
+  //                     label: const Text('Camera'))
+  //               ],
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 }
