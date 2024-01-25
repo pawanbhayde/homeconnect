@@ -5,6 +5,7 @@ import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/pages/login_page.dart';
 import 'package:helpus/pages/navigator.dart';
 import 'package:helpus/pages/signin.dart';
+import 'package:helpus/utilities/colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;
@@ -19,37 +20,36 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(20.0),
-        decoration: const BoxDecoration(
-          color: Color(0xffFEB61D),
+        decoration: BoxDecoration(
+          color: primaryColor,
         ),
         child: Center(
-          child: Container(
-            padding: const EdgeInsets.all(20.0),
-            height: MediaQuery.of(context).size.height * 0.7,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 5.0,
-                  offset: Offset(0, 5),
-                ),
-              ],
-              color: Colors.white,
-            ),
-            child: SingleChildScrollView(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(20.0),
+              // height: MediaQuery.of(context).size.height * 0.7,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 5.0,
+                    offset: Offset(0, 5),
+                  ),
+                ],
+                color: Colors.white,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 20),
-                  Image.asset('assets/images/helpus.png', width: 100),
+                  Image.asset('assets/images/helpus.png', width: 200),
                   const Padding(
                     padding: EdgeInsets.all(20.0),
                     child: Text(
@@ -94,22 +94,6 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 50,
-                    child: TextField(
-                      controller: nameController,
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
-                      decoration: const InputDecoration(
-                        labelText: 'Name',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 20),
                   Column(
                     children: [
@@ -130,8 +114,6 @@ class _SignUpState extends State<SignUp> {
                                 password: passwordController.text,
                                 email: emailController.text,
                               );
-                              await Authentication.storeUserDetails(context,
-                                  nameController.text, emailController.text);
 
                               // Check if the sign-up was successful
                               if (authResponse.user != null) {
@@ -253,9 +235,6 @@ class _SignUpState extends State<SignUp> {
                       onPressed: () async {
                         //sign in with google
                         await Authentication.googleSignIn();
-                        await Authentication.storeUserDetails(
-                            context, nameController.text, emailController.text);
-
                         //navigate to main navigation
                         Navigator.pushReplacement(
                           context,

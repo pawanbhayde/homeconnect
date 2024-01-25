@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/model/user.dart';
+import 'package:helpus/pages/change_password.dart';
 import 'package:helpus/pages/edit_profile.dart';
 import 'package:helpus/pages/splash_screen.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -79,10 +81,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffF3F2F5),
-        title: Image.asset(
-          'assets/images/helpus.png',
-          width: 80,
-        ),
+        title: const SizedBox(
+            width: 150,
+            child: Image(
+              image: AssetImage('assets/images/helpus.png'),
+              fit: BoxFit.cover,
+            )),
         centerTitle: true,
         actions: [
           Padding(
@@ -153,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return const EditProfileScreen();
+                              return EditProfileScreen();
                             },
                           ),
                         );
@@ -177,17 +181,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-              const Custom_Profile_Item(
-                title: 'Verification',
-                icon: Iconsax.verify,
-              ),
-              const Custom_Profile_Item(
+              Custom_Profile_Item(
                 title: 'Setting',
                 icon: Iconsax.setting,
+                onPressed: () {},
               ),
-              const Custom_Profile_Item(
+              Custom_Profile_Item(
                 title: 'Change Password',
                 icon: Iconsax.lock,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ChangePasswod();
+                      },
+                    ),
+                  );
+                },
+              ),
+              Custom_Profile_Item(
+                title: 'Help & Support',
+                icon: Iconsax.support,
+                onPressed: () {},
               ),
             ],
           ),
@@ -202,46 +218,51 @@ class Custom_Profile_Item extends StatelessWidget {
     super.key,
     required this.title,
     required this.icon,
+    required this.onPressed,
   });
   final String title;
   final IconData icon;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Row(
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: const Color(0xffF3F2F5),
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Row(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: const Color(0xffF3F2F5),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 20,
+                  ),
                 ),
-                child: Icon(
-                  icon,
-                  size: 20,
+                const SizedBox(width: 20),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 20),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-          const Spacer(),
-          const Icon(
-            Iconsax.arrow_right_3,
-            size: 20,
-          ),
-        ],
+              ],
+            ),
+            const Spacer(),
+            const Icon(
+              Iconsax.arrow_right_3,
+              size: 20,
+            ),
+          ],
+        ),
       ),
     );
   }
