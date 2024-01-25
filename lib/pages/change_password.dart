@@ -77,7 +77,7 @@ class ChangePasswod extends StatelessWidget {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: const Text(
+                      child: Text(
                         'Change Password',
                         style: TextStyle(color: Colors.white),
                       ),

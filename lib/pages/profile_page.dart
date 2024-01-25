@@ -226,11 +226,12 @@ class Custom_Profile_Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: GestureDetector(
-        onTap: onPressed,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
@@ -256,7 +257,6 @@ class Custom_Profile_Item extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
             const Icon(
               Iconsax.arrow_right_3,
               size: 20,
