@@ -283,6 +283,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
 
+
     return StreamBuilder<Object>(
       stream: supabase.auth.onAuthStateChange,
       builder: (context, snapshot) {
@@ -339,6 +340,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               height: 150,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
+
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -385,6 +387,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
+
+
                         ),
                         const SizedBox(height: 5),
                         Text(
@@ -393,6 +397,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
+
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -425,6 +430,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 20,
                         ),
                       ],
+
                     ),
                   ),
                   Custom_Profile_Item(
@@ -462,6 +468,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
+
             ),
           ),
         );
