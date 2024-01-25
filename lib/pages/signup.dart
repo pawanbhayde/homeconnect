@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
-import 'package:helpus/pages/login_page.dart';
-import 'package:helpus/pages/navigator.dart';
 import 'package:helpus/pages/signin.dart';
 import 'package:helpus/utilities/colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -20,6 +18,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +93,23 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 50,
+                    child: TextField(
+                      controller: nameController,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+                    ),
+                  ),
+
                   const SizedBox(height: 20),
                   Column(
                     children: [
@@ -106,63 +122,14 @@ class _SignUpState extends State<SignUp> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () async {
-                            final sm = ScaffoldMessenger.of(context);
-
-                            try {
-                              // Attempt to sign up the user
-                              final authResponse = await supabase.auth.signUp(
-                                password: passwordController.text,
-                                email: emailController.text,
-                              );
-
-                              // Check if the sign-up was successful
-                              if (authResponse.user != null) {
-                                sm.showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                        "Registered Successful, Please Sign In Here"),
-                                  ),
-                                );
-
-                                // Navigate to sign-in page
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginPage(),
-                                  ),
-                                );
-                              } else {
-                                // Handle other scenarios where user is not registered but sign-up failed
-                                sm.showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          "Sign-up failed. Please try again.")),
-                                );
-                              }
-                            } catch (error) {
-                              // Handle specific errors, e.g., if user is already registered
-                              if (error is AuthException) {
-                                // for user friendly error message, nested "if"
-                                if (error.statusCode == 400) {
-                                  sm.showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                          "User already registered, Sign In"),
-                                    ),
-                                  );
-                                } else {
-                                  // Handle other AuthException errors
-                                  sm.showSnackBar(SnackBar(
-                                    content: Text(
-                                        "Authentication error: ${error.message}"),
-                                  ));
-                                }
-                              } else {
-                                // Handle other errors
-                                sm.showSnackBar(
-                                    SnackBar(content: Text("Error:$error")));
-                              }
-                            }
+                            //sign up with email and password
+                            await Authentication.signUpWithEmail(
+                              context: context,
+                              email: emailController.text,
+                              password: passwordController.text,
+                              name: nameController.text,
+                            );
+                            //navigate to main navigation
                           },
                           child: const Text('Sign Up',
                               style: TextStyle(
@@ -233,15 +200,8 @@ class _SignUpState extends State<SignUp> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () async {
-                        //sign in with google
-                        await Authentication.googleSignIn();
-                        //navigate to main navigation
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MainNavigation(),
-                          ),
-                        );
+                        //sign up with google
+                        await Authentication.signUpWithGoogle(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xffEEF5FF),
