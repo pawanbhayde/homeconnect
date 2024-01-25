@@ -2,26 +2,132 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:helpus/pages/navigator.dart';
-import 'package:helpus/pages/profile_page.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
+
   @override
-  _EditProfileScreenState createState() => _EditProfileScreenState();
+  EditProfileScreenState createState() {
+    return EditProfileScreenState();
+  }
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  final ImagePicker _imagePicker = ImagePicker();
-  PickedFile? _pickedImage;
+  PickedFile? pickedImage;
 
-  void _pickImage() async {
-    final pickedImage =
-        await _imagePicker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _pickedImage = pickedImage;
-    });
+  pickImage(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    final ImageCropper cropper = ImageCropper();
+
+    showBottomSheet(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        context: context,
+        builder: (_) {
+          return ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * .02,
+                bottom: MediaQuery.of(context).size.height * .05),
+            children: [
+              const Text(
+                'Pick Profile picture',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  //pick image from gallery
+                  ElevatedButton.icon(
+                      style:
+                          ButtonStyle(iconSize: MaterialStateProperty.all(30)),
+                      onPressed: () async {
+                        final ImageCropper cropper = ImageCropper();
+
+                        // Pick an image .
+                        final XFile? image =
+                            await picker.pickImage(source: ImageSource.gallery);
+
+                        if (image != null) {
+                          final CroppedFile? crop = await cropper.cropImage(
+                              sourcePath: image.path,
+                              aspectRatio:
+                                  const CropAspectRatio(ratioX: 1, ratioY: 1),
+                              compressQuality: 100,
+                              compressFormat: ImageCompressFormat.jpg);
+
+                          try {
+                            if (crop != null) {
+                              photo = crop.path;
+
+                              //update the profile picture
+
+                              //for hiding bottom sheet
+                              Navigator.pop(context);
+
+                              //Show AlertDialog after successful update
+                            }
+                          } catch (e) {
+                            //show snakbar
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text('Failed to update profile picture'),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      icon: const Icon(Icons.photo),
+                      label: const Text('Gallery')),
+                  //pick image from camera
+                  ElevatedButton.icon(
+                    style: ButtonStyle(iconSize: MaterialStateProperty.all(30)),
+                    onPressed: () async {
+                      final ImagePicker picker = ImagePicker();
+                      // Pick an image .
+                      final XFile? image =
+                          await picker.pickImage(source: ImageSource.camera);
+                      if (image != null) {
+                        final CroppedFile? crop = await cropper.cropImage(
+                            sourcePath: image.path,
+                            aspectRatio:
+                                const CropAspectRatio(ratioX: 1, ratioY: 1),
+                            compressQuality: 100,
+                            compressFormat: ImageCompressFormat.jpg);
+                        if (crop != null) {
+                          photo = crop.path;
+
+                          //update the profile picture
+
+                          //for hiding bottom sheet
+                          Navigator.pop(context);
+
+                          //Show AlertDialog after successful update
+                        }
+                      }
+                    },
+                    icon: const Icon(Icons.photo_camera),
+                    label: const Text('Camera'),
+                  )
+                ],
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -29,16 +135,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Edit Profile'),
+          title: const Text('Edit Profile'),
         ),
         body: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Profile Picture
               GestureDetector(
-                onTap: _pickImage,
+                onTap: () {
+                  pickImage(context);
+                },
                 child: Container(
                   width: 100,
                   height: 100,
@@ -49,41 +157,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       width: 2.0,
                     ),
                   ),
-                  child: _pickedImage == null
-                      ? Center(
+                  child: pickedImage == null
+                      ? const Center(
                           child: Icon(
-                            Icons.camera_alt,
+                            Iconsax.profile_add,
                             size: 40.0,
                           ),
                         )
                       : ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.file(
-                            _pickedImage!.path as File,
+                            pickedImage!.path as File,
                             fit: BoxFit.cover,
                           ),
                         ),
                 ),
               ),
-              SizedBox(height: 50.0),
+              const SizedBox(height: 50.0),
 
               // Name TextField
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Name',
                 ),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
 
               // Email TextField
               TextField(
                 controller: emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                 ),
               ),
-              SizedBox(height: 50.0),
+              const SizedBox(height: 50.0),
 
               // Update Profile Button
               SizedBox(
@@ -91,20 +199,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.black,
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.black,
                   ),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return MainNavigation();
+                          return const MainNavigation();
                         },
                       ),
                     );
                   },
-                  child: Text('Update Profile'),
+                  child: const Text('Update Profile'),
                 ),
               ),
             ],
