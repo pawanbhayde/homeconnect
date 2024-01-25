@@ -9,6 +9,8 @@ class SearchHomeShelter extends StatelessWidget {
     return Scaffold(
       //appbar
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        forceMaterialTransparency: true,
         backgroundColor: Colors.white,
         title: const SizedBox(
             width: 150,

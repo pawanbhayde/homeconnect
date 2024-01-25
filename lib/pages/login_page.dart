@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
               child: Text(
-                'Helpus: Empowering Hope, Building Homes for the Homeless.',
+                'HomeConnect: Empowering Hope, Building Homes for the Homeless.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,

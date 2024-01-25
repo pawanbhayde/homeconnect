@@ -18,7 +18,7 @@ class UserProfile {
       name: data['name'],
       email: data['email'],
       location: data['location'] ?? '',
-      profilePicture: data['profile_picture'],
+      profilePicture: data['profile_picture'] ?? '',
       userid: data['userid'],
     );
   }
