@@ -3,6 +3,7 @@ import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/change_password.dart';
 import 'package:helpus/pages/edit_profile.dart';
+import 'package:helpus/pages/help&support.dart';
 import 'package:helpus/pages/splash_screen.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -203,7 +204,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Custom_Profile_Item(
                 title: 'Help & Support',
                 icon: Iconsax.support,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return HelpAndSupport();
+                      },
+                    ),
+                  );
+                },
               ),
             ],
           ),
