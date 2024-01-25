@@ -5,7 +5,6 @@ import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/change_password.dart';
-import 'package:helpus/pages/edit_profile.dart';
 import 'package:helpus/pages/help&support.dart';
 import 'package:helpus/pages/splash_screen.dart';
 import 'package:iconsax/iconsax.dart';
@@ -283,7 +282,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
 
-
     return StreamBuilder<Object>(
       stream: supabase.auth.onAuthStateChange,
       builder: (context, snapshot) {
@@ -340,7 +338,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               height: 150,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
-
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -387,8 +384,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
-
-
                         ),
                         const SizedBox(height: 5),
                         Text(
@@ -397,21 +392,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
-
                           ),
                         ),
                         const SizedBox(height: 10),
                         ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return const EditProfileScreen();
-                                },
-                              ),
-                            );
-                          },
+                          onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             side: const BorderSide(
                                 width: 1.0, color: Colors.black),
@@ -430,7 +415,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 20,
                         ),
                       ],
-
                     ),
                   ),
                   Custom_Profile_Item(
@@ -468,7 +452,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-
             ),
           ),
         );
