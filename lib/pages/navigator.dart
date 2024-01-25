@@ -15,8 +15,8 @@ class _MainNavigationState extends State<MainNavigation> {
   int selectedPage = 0;
   final pages = [
     const HomePage(),
-    SearchHomeShelter(),
-    ProfileScreen(),
+    const SearchHomeShelter(),
+    const ProfileScreen(),
   ];
 
   @override

@@ -9,9 +9,148 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final supabase = Supabase.instance.client;
 
 class Authentication {
-  // Sign in with email and password
+  //---------------------- Sign Up with email and password
+  static Future<void> signUpWithEmail(
+      {required BuildContext context,
+      required String email,
+      required String password,
+      required String name}) async {
+    final sm = ScaffoldMessenger.of(context);
+
+    try {
+      // Attempt to sign up the user
+      final authResponse =
+          await supabase.auth.signUp(email: email, password: password);
+      // Check if the sign-up was successful
+      if (authResponse.user != null) {
+        sm.showSnackBar(
+          const SnackBar(
+            content: Text(
+              "Sign Up Successful. Please Sign In.",
+            ),
+          ),
+        );
+
+        // store user details in user table
+        await storeUserDetails(context, name, email, authResponse.user!.id, '');
+
+        // Navigate to the home page
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const MainNavigation()));
+      } else {
+        // Display an appropriate error message
+        sm.showSnackBar(
+          const SnackBar(content: Text("Sign-Up failed. Please try again.")),
+        );
+      }
+    } catch (error) {
+      // Handle specific errors, e.g., if user is already registered
+      if (error is AuthException) {
+        // for user friendly error message, nested "if"
+        // ignore: unrelated_type_equality_checks
+        if (error.statusCode == 400) {
+          sm.showSnackBar(
+            const SnackBar(
+              content: Text(" User already exists. Please Sign In "),
+            ),
+          );
+        } else {
+          // Handle other AuthException errors
+          sm.showSnackBar(
+            SnackBar(
+              content: Text(
+                " Authentication error: ${error.message}",
+              ),
+            ),
+          );
+        }
+      } else {
+        // Handle other errors
+        sm.showSnackBar(
+          SnackBar(
+            content: Text(
+              "Error:${error.toString()}",
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  //----------- sign up with google
+  static Future<void> signUpWithGoogle(BuildContext context) async {
+    final sm = ScaffoldMessenger.of(context);
+
+    try {
+      final authResponse = await googleSignIn();
+
+      if (authResponse.user != null) {
+        sm.showSnackBar(
+          const SnackBar(
+            content: Text(
+              "Sign Up Successful. Please Sign In.",
+            ),
+          ),
+        );
+
+        // store user details in user table
+        await storeUserDetails(
+          context,
+          authResponse.user!.userMetadata?['name'] ?? authResponse.user!.email!,
+          authResponse.user!.userMetadata?['email'] ??
+              authResponse.user!.email!,
+          authResponse.user!.userMetadata?['userid'] ?? authResponse.user!.id,
+          authResponse.user!.userMetadata?['avatar_url'] ?? '',
+        );
+
+        // Navigate to the home page
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const MainNavigation()));
+      } else {
+        // Display an appropriate error message
+        sm.showSnackBar(
+          const SnackBar(content: Text("Sign-Up failed. Please try again.")),
+        );
+      }
+    } catch (error) {
+      // Handle specific errors, e.g., if user is already registered
+      if (error is AuthException) {
+        // for user friendly error message, nested "if"
+        // ignore: unrelated_type_equality_checks
+        if (error.statusCode == 400) {
+          sm.showSnackBar(
+            const SnackBar(
+              content: Text(" User already exists. Please Sign In "),
+            ),
+          );
+        } else {
+          // Handle other AuthException errors
+          sm.showSnackBar(
+            SnackBar(
+              content: Text(
+                " Authentication error: ${error.message}",
+              ),
+            ),
+          );
+        }
+      } else {
+        // Handle other errors
+        sm.showSnackBar(
+          SnackBar(
+            content: Text(
+              "Error:${error.toString()}",
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  //----------- Sign in with email and password
   static Future<void> signInWithEmail(
-      BuildContext context, String email, String password) async {
+      {required BuildContext context,
+      required String email,
+      required String password}) async {
     final sm = ScaffoldMessenger.of(context);
 
     try {
@@ -29,6 +168,7 @@ class Authentication {
             ),
           ),
         );
+
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const MainNavigation()));
@@ -74,38 +214,12 @@ class Authentication {
     }
   }
 
-  // Sign Out
-  static Future<void> signOut(BuildContext context) async {
-    final sm = ScaffoldMessenger.of(context);
-
-    try {
-      // Attempt to sign out the user
-      await supabase.auth.signOut();
-      // Navigate to the home page
-      sm.showSnackBar(
-        const SnackBar(
-          content: Text("Signed Out Successfully"),
-        ),
-      );
-    } catch (error) {
-      // Handle sign out errors
-      sm.showSnackBar(
-        SnackBar(
-          padding: EdgeInsets.only(bottom: 10),
-          content: Text(
-            "Error signing out: ${error.toString()}",
-          ),
-        ),
-      );
-    }
-  }
-
-  // Sign in with Google
+  //------------ Sign In with Google
   static Future<AuthResponse> googleSignIn() async {
     const webClientId =
         '232200069198-pl2uco2rt6q356dbnphrbl3pnv3mmu7g.apps.googleusercontent.com';
 
-    /// TODO: update the iOS client ID with your own.
+    ///
     ///
     /// iOS Client ID that you registered with Google Cloud.
     //const iosClientId = 'my-ios.apps.googleusercontent.com';
@@ -135,20 +249,44 @@ class Authentication {
     );
   }
 
-  // store users google sign in details into user table
-  static Future<void> storeUserDetails(
-      BuildContext context, String name, String email) async {
+  //---------- Sign Out
+  static Future<void> signOut(BuildContext context) async {
     final sm = ScaffoldMessenger.of(context);
 
     try {
-      final user = supabase.auth.currentUser;
+      // Attempt to sign out the user
+      await supabase.auth.signOut();
+      // Navigate to the home page
+      sm.showSnackBar(
+        const SnackBar(
+          content: Text("Signed Out Successfully"),
+        ),
+      );
+    } catch (error) {
+      // Handle sign out errors
+      sm.showSnackBar(
+        SnackBar(
+          padding: EdgeInsets.only(bottom: 10),
+          content: Text(
+            "Error signing out: ${error.toString()}",
+          ),
+        ),
+      );
+    }
+  }
 
+  //--------- store users google sign in details into user table
+  static Future<void> storeUserDetails(BuildContext context, String name,
+      String email, String id, String profileurl) async {
+    final sm = ScaffoldMessenger.of(context);
+
+    try {
       final response = await supabase.from('user').insert([
         {
-          'userid': user?.id,
-          'name': user?.userMetadata?['name'] ?? name,
-          'email': user?.userMetadata?['email'] ?? email,
-          'profile_picture': user?.userMetadata?['avatar_url'],
+          'userid': id,
+          'name': name,
+          'email': email,
+          'profile_picture': profileurl,
         }
       ]);
 
@@ -168,24 +306,43 @@ class Authentication {
         );
       }
     } catch (error) {
-      sm.showSnackBar(
-        SnackBar(
-          content: Text(
-            "Error storing user details: ${error.toString()}",
-          ),
-        ),
-      );
+      print(error);
     }
   }
 
-  // get current  user details
-  static Future<UserProfile> getCurrentUser() async {
+  //------ get current  user details
+  static Future<UserProfile?> getCurrentUser() async {
+    // Get the current user ID
     final String userId = supabase.auth.currentUser!.id;
 
-    final data = await supabase.from('user').select().eq('id', userId).single();
+    // Check if user data exists based on Supabase ID
+    final supabaseUserData =
+        await supabase.from('user').select().eq('userid', userId).single();
 
-    final UserProfile profile = UserProfile.fromMap(data);
+    print(" This is Get all user Response:  $supabaseUserData");
 
-    return profile;
+    // If user data is found, return directly
+    if (supabaseUserData != null) {
+      return UserProfile.fromMap(supabaseUserData);
+    }
+
+    // If no user data found with Supabase ID, check for Google user
+    final String googleUserId =
+        supabase.auth.currentUser!.userMetadata?['userid'];
+    if (googleUserId != null) {
+      final googleUserData = await supabase
+          .from('user')
+          .select()
+          .eq('userid', googleUserId)
+          .single();
+
+      // If user data found with Google ID, return it
+      if (googleUserData != null) {
+        return UserProfile.fromMap(googleUserData);
+      }
+    }
+
+    // If no user found with both IDs, return null
+    return null;
   }
 }

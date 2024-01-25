@@ -101,8 +101,10 @@ class _SignInPageState extends State<SignInPage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           onPressed: () async {
-                            await Authentication.signInWithEmail(context,
-                                emailController.text, passwordController.text);
+                            await Authentication.signInWithEmail(
+                                context: context,
+                                email: emailController.text,
+                                password: passwordController.text);
                           },
                           child: const Text('Sign In',
                               style: TextStyle(
