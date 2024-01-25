@@ -7,7 +7,6 @@ import 'package:helpus/pages/splash_screen.dart';
 import 'package:helpus/widgets/custom_category_card.dart';
 import 'package:helpus/widgets/custom_image_carousel.dart';
 import 'package:helpus/widgets/custom_near_shelter_card.dart';
-import 'package:iconsax/iconsax.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,6 +15,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+    // ignore: no_leading_underscores_for_local_identifiers
     Future<void> _showMyDialog() async {
       return showDialog<void>(
         context: context,
@@ -42,6 +42,7 @@ class HomePage extends StatelessWidget {
                 child: const Text('Logout'),
                 onPressed: () async {
                   await Authentication.signOut(context);
+                  // ignore: use_build_context_synchronously
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
@@ -61,15 +62,12 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         forceMaterialTransparency: true,
         automaticallyImplyLeading: false,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 10.0),
-          child: SizedBox(
-              width: 100,
-              child: Image(
-                image: AssetImage('assets/images/helpus.png'),
-                fit: BoxFit.cover,
-              )),
-        ),
+        title: const SizedBox(
+            width: 150,
+            child: Image(
+              image: AssetImage('assets/images/helpus.png'),
+              fit: BoxFit.cover,
+            )),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10.0),
@@ -78,7 +76,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 _showMyDialog();
               },
-              icon: Icon(Icons.logout, color: Colors.black),
+              icon: const Icon(Icons.logout, color: Colors.black),
             ),
           )
         ],
@@ -158,6 +156,7 @@ class HomePage extends StatelessWidget {
                   child: StreamBuilder(
                     stream: DatabaseService.getShelter(),
                     builder: (context, snapshot) {
+                      // ignore: avoid_print
                       print(snapshot.data);
                       if (snapshot.hasData) {
                         return ListView.builder(
@@ -199,32 +198,38 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            const LatestShalter(
+            LatestShalter(
               title: 'Shakti NGO Shelter Home',
               image: 'assets/images/ngo-banner-1.png',
               distance: '2.5 km',
+              onPressed: () {},
             ),
-            const LatestShalter(
+            LatestShalter(
               title: 'Homies NGO Shelter Home',
               image: 'assets/images/ngo-banner-2.png',
               distance: '3.5 km',
+              onPressed: () {},
             ),
-            const LatestShalter(
+            LatestShalter(
               title: 'UNEX NGO Shelter Home',
               image: 'assets/images/ngo-banner-3.png',
               distance: '4.5 km',
+              onPressed: () {},
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xffFEB61D),
+        backgroundColor: const Color(0xff395EE7),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return const AddHomeShelter();
           }));
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Color.fromARGB(255, 255, 255, 255),
+        ),
       ),
     );
   }

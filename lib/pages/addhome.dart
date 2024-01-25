@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/pages/navigator.dart';
+import 'package:helpus/utilities/colors.dart';
 
 class AddHomeShelter extends StatefulWidget {
   const AddHomeShelter({super.key});
@@ -21,7 +22,7 @@ class _AddHomeShelterState extends State<AddHomeShelter> {
     return Scaffold(
       appBar: AppBar(
         title: const SizedBox(
-            width: 100,
+            width: 150,
             child: Image(
               image: AssetImage('assets/images/helpus.png'),
               fit: BoxFit.cover,
@@ -157,7 +158,7 @@ class _AddHomeShelterState extends State<AddHomeShelter> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xffFEB61D),
+                    backgroundColor: primaryColor,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -167,8 +168,8 @@ class _AddHomeShelterState extends State<AddHomeShelter> {
                     "Submit",
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
                   ),
                 ),
