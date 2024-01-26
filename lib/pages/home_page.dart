@@ -7,6 +7,8 @@ import 'package:helpus/widgets/custom_category_card.dart';
 import 'package:helpus/widgets/custom_image_carousel.dart';
 import 'package:helpus/widgets/custom_near_shelter_card.dart';
 
+import 'donation_category.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -62,15 +64,19 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            const Row(
+             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                HomeCategory(title: 'Food', image: 'assets/images/cat-1.png'),
-                HomeCategory(title: 'Cloths', image: 'assets/images/cat-2.png'),
+                HomeCategory(title: 'Food', image: 'assets/images/cat-1.png', press: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const DonationCategoryPage();
+                  }));
+                },),
+                HomeCategory(title: 'Cloths', image: 'assets/images/cat-2.png', press: () {  },),
                 HomeCategory(
-                    title: 'Charity', image: 'assets/images/cat-3.png'),
+                    title: 'Charity', image: 'assets/images/cat-3.png', press: () {  },),
                 HomeCategory(
-                    title: 'Education', image: 'assets/images/cat-4.png'),
+                    title: 'Education', image: 'assets/images/cat-4.png', press: () {  },),
               ],
             ),
             SizedBox(
