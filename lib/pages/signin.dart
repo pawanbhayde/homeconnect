@@ -63,6 +63,9 @@ class _SignInPageState extends State<SignInPage> {
                     height: 50,
                     child: TextField(
                       controller: emailController,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
                       decoration: const InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(
