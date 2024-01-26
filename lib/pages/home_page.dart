@@ -22,11 +22,12 @@ class HomePage extends StatelessWidget {
         forceMaterialTransparency: true,
         automaticallyImplyLeading: false,
         title: const SizedBox(
-            width: 150,
-            child: Image(
-              image: AssetImage('assets/images/helpus.png'),
-              fit: BoxFit.cover,
-            )),
+          width: 150,
+          child: Image(
+            image: AssetImage('assets/images/helpus.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
 
       //body
@@ -64,19 +65,73 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                HomeCategory(title: 'Food', image: 'assets/images/cat-1.png', press: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const DonationCategoryPage();
-                  }));
-                },),
-                HomeCategory(title: 'Cloths', image: 'assets/images/cat-2.png', press: () {  },),
                 HomeCategory(
-                    title: 'Charity', image: 'assets/images/cat-3.png', press: () {  },),
+                  title: 'Food',
+                  image: 'assets/images/cat-1.png',
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const DonationCategoryPage(
+                            category: 'food',
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
                 HomeCategory(
-                    title: 'Education', image: 'assets/images/cat-4.png', press: () {  },),
+                  title: 'Cloths',
+                  image: 'assets/images/cat-2.png',
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const DonationCategoryPage(
+                            category: 'clothes',
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+                HomeCategory(
+                  title: 'Charity',
+                  image: 'assets/images/cat-3.png',
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const DonationCategoryPage(
+                            category: 'charity',
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+                HomeCategory(
+                  title: 'Education',
+                  image: 'assets/images/cat-4.png',
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const DonationCategoryPage(
+                            category: 'education',
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
             SizedBox(
@@ -155,7 +210,7 @@ class HomePage extends StatelessWidget {
               distance: '2.5 km',
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return  HomeShelterDetails();
+                  return HomeShelterDetails();
                 }));
               },
             ),
