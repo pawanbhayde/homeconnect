@@ -291,8 +291,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         }
         if (!snapshot.hasData || snapshot.data == null) {
-          return const Center(
-            child: Text('You are not logged in'),
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'You are not logged in',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .02,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SplashScreen(),
+                        ),
+                        (route) => false);
+                  },
+                  child: const Text('Login'),
+                ),
+              ],
+            ),
           );
         }
         return Scaffold(
