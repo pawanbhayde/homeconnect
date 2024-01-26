@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/navigator.dart';
+import 'package:helpus/pages/signin.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;
@@ -21,12 +22,13 @@ class Authentication {
       // Attempt to sign up the user
       final authResponse =
           await supabase.auth.signUp(email: email, password: password);
+
       // Check if the sign-up was successful
       if (authResponse.user != null) {
         sm.showSnackBar(
           const SnackBar(
             content: Text(
-              "Sign Up Successful. Please Sign In.",
+              "Sign Up Successful.",
             ),
           ),
         );
@@ -35,8 +37,8 @@ class Authentication {
         await storeUserDetails(context, name, email, authResponse.user!.id, '');
 
         // Navigate to the home page
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const MainNavigation()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => SignInPage()));
       } else {
         // Display an appropriate error message
         sm.showSnackBar(
@@ -82,13 +84,14 @@ class Authentication {
     final sm = ScaffoldMessenger.of(context);
 
     try {
+      // Attempt to sign up the user
       final authResponse = await googleSignIn();
 
       if (authResponse.user != null) {
         sm.showSnackBar(
           const SnackBar(
             content: Text(
-              "Sign Up Successful. Please Sign In.",
+              "Sign Up Successful.",
             ),
           ),
         );
@@ -311,6 +314,7 @@ class Authentication {
   }
 
   //------ get current  user details
+
   static Future<UserProfile?> getCurrentUser() async {
     // Get the current user ID
     final String userId = supabase.auth.currentUser!.id;
@@ -322,14 +326,14 @@ class Authentication {
     print(" This is Get all user Response:  $supabaseUserData");
 
     // If user data is found, return directly
-    if (supabaseUserData != null) {
+    if (supabaseUserData.isNotEmpty) {
       return UserProfile.fromMap(supabaseUserData);
     }
 
     // If no user data found with Supabase ID, check for Google user
     final String googleUserId =
         supabase.auth.currentUser!.userMetadata?['userid'];
-    if (googleUserId != null) {
+    if (googleUserId.isNotEmpty) {
       final googleUserData = await supabase
           .from('user')
           .select()
@@ -337,7 +341,7 @@ class Authentication {
           .single();
 
       // If user data found with Google ID, return it
-      if (googleUserData != null) {
+      if (googleUserData.isNotEmpty) {
         return UserProfile.fromMap(googleUserData);
       }
     }

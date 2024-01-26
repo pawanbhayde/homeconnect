@@ -64,7 +64,7 @@ class SplashScreen extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
               child: Text(
-                  'HelpUs: Building Homes, Restoring Hope - A Shelter App for the Homeless',
+                  'HomeConnect: Building Homes, Restoring Hope - A Shelter App for the Homeless',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,

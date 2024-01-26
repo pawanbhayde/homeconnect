@@ -291,13 +291,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         }
         if (!snapshot.hasData || snapshot.data == null) {
-          return const Center(
-            child: Text('You are not logged in'),
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'You are not logged in',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .02,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SplashScreen(),
+                        ),
+                        (route) => false);
+                  },
+                  child: const Text('Login'),
+                ),
+              ],
+            ),
           );
         }
-
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: const Color(0xffF3F2F5),
             title: const SizedBox(
                 width: 150,
@@ -341,7 +366,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: profile?.profilePicture == ''
+                                child: profile?.profilePicture == null
                                     ? const Icon(
                                         Iconsax.user,
                                         size: 50,
@@ -387,7 +412,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          profile?.email ?? ' user email ',
+                          profile?.email ?? 'user email',
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -396,7 +421,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         const SizedBox(height: 10),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showMyDialog();
+                          },
                           style: ElevatedButton.styleFrom(
                             side: const BorderSide(
                                 width: 1.0, color: Colors.black),
@@ -406,7 +433,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             minimumSize: const Size(100, 40),
                           ),
-                          child: const Text('Edit Profile',
+                          child: const Text('Logout',
                               style: TextStyle(
                                 color: Colors.black,
                               )),
