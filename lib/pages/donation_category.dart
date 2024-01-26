@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:helpus/utilities/colors.dart';
-
 import '../Widgets/custom_shalter_card.dart';
 
 class DonationCategoryPage extends StatelessWidget {
-  const DonationCategoryPage({super.key});
+  const DonationCategoryPage({
+    super.key,
+    required this.category,
+  });
+
+  final String category;
 
   @override
   Widget build(BuildContext context) {
+    // select chip of received category
+
+    bool food = false;
+    bool clothes = false;
+    bool charity = false;
+    bool education = false;
+
+    if (category == 'food') {
+      food = true;
+    } else if (category == 'clothes') {
+      clothes = true;
+    } else if (category == 'charity') {
+      charity = true;
+    } else if (category == 'education') {
+      education = true;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Donation Category'),
@@ -24,46 +44,46 @@ class DonationCategoryPage extends StatelessWidget {
               child: ListView(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                children:  [
-                  SizedBox(width: 10),
-
+                children: [
+                  const SizedBox(width: 10),
                   ChoiceChip(
-                    label: Text('Food'),
-                    selected: true,
-
+                    label: const Text('Food'),
+                    selected: food,
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   ChoiceChip(
-                    label: Text('Cloths'),
-                    selected: false,
+                    label: const Text('Cloths'),
+                    selected: clothes,
                   ),
-                  SizedBox(width: 10),
-
+                  const SizedBox(width: 10),
                   ChoiceChip(
-                    label: Text('Charity'),
-                    selected: false,
+                    label: const Text('Charity'),
+                    selected: charity,
                   ),
-                  SizedBox(width: 10),
-
+                  const SizedBox(width: 10),
                   ChoiceChip(
-                    label: Text('Education'),
-                    selected: false,
+                    label: const Text('Education'),
+                    selected: education,
                   ),
-                  SizedBox(width: 10),
-
+                  const SizedBox(width: 10),
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Home Shelters That Need Food', style: TextStyle(fontSize: 18, ),),
+              child: Text(
+                'Home Shelters That Need $category',
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
+              ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             // list of shelters that need food
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: 5,
               itemBuilder: (context, index) {
                 return LatestShalter(
@@ -74,9 +94,9 @@ class DonationCategoryPage extends StatelessWidget {
                 );
               },
             ),
-            ],
+          ],
         ),
-                  ),
+      ),
     );
   }
 }
