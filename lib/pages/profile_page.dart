@@ -321,6 +321,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         }
         return Scaffold(
+          // AppBar
           appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: const Color(0xffF3F2F5),
@@ -344,6 +345,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               )
             ],
           ),
+
+          // Body
           body: SingleChildScrollView(
             child: SizedBox(
               width: double.infinity,

@@ -65,6 +65,10 @@ class _ChangePasswodState extends State<ChangePasswod> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        backgroundColor: const Color(0xffF3F2F5),
+      ),
       body: _buildPasswordFields(),
     );
   }
@@ -77,7 +81,7 @@ class _ChangePasswodState extends State<ChangePasswod> {
           children: [
             Container(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.35,
+              height: MediaQuery.of(context).size.height * 0.3,
               color: const Color(0xffF3F2F5),
               child: Center(
                 child: Container(
@@ -161,7 +165,7 @@ class _ChangePasswodState extends State<ChangePasswod> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child:  const Text('Change Password',
+                      child: const Text('Change Password',
                           style: TextStyle(color: Colors.white)),
                     ),
                   ),
