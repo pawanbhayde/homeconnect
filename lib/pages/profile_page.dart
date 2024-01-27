@@ -89,7 +89,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             final imageExtension =
                                 crop.path.split('.').last.toLowerCase();
 
-                            final data = await DatabaseService.uploadImage(
+                            final data =
+                                await DatabaseService.uploadUserProfile(
                               filePath: crop.path,
                               storagePath: '/${profile!.userid}/profile',
                               imageExtension: imageExtension,
@@ -166,7 +167,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             final imageExtension =
                                 crop.path.split('.').last.toLowerCase();
 
-                            final data = await DatabaseService.uploadImage(
+                            final data =
+                                await DatabaseService.uploadUserProfile(
                               filePath: crop.path,
                               storagePath: '/${profile!.userid}/profile',
                               imageExtension: imageExtension,

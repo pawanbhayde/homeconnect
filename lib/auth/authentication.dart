@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/navigator.dart';
 import 'package:helpus/pages/signin.dart';
@@ -34,7 +35,8 @@ class Authentication {
         );
 
         // store user details in user table
-        await storeUserDetails(context, name, email, authResponse.user!.id, '');
+        await DatabaseService.storeUserDetails(
+            context, name, email, authResponse.user!.id, '');
 
         // Navigate to the home page
         Navigator.pushReplacement(
@@ -97,7 +99,7 @@ class Authentication {
         );
 
         // store user details in user table
-        await storeUserDetails(
+        await DatabaseService.storeUserDetails(
           context,
           authResponse.user!.userMetadata?['name'] ?? authResponse.user!.email!,
           authResponse.user!.userMetadata?['email'] ??
@@ -275,41 +277,6 @@ class Authentication {
           ),
         ),
       );
-    }
-  }
-
-  //--------- store users google sign in details into user table
-  static Future<void> storeUserDetails(BuildContext context, String name,
-      String email, String id, String profileurl) async {
-    final sm = ScaffoldMessenger.of(context);
-
-    try {
-      final response = await supabase.from('user').insert([
-        {
-          'userid': id,
-          'name': name,
-          'email': email,
-          'profile_picture': profileurl,
-        }
-      ]);
-
-      if (response.error == null) {
-        sm.showSnackBar(
-          const SnackBar(
-            content: Text("User Details Stored Successfully"),
-          ),
-        );
-      } else {
-        sm.showSnackBar(
-          SnackBar(
-            content: Text(
-              "Error storing user details: ${response.error!.message}",
-            ),
-          ),
-        );
-      }
-    } catch (error) {
-      print(error);
     }
   }
 
