@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/utilities/colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -49,6 +50,7 @@ class _ChangePasswodState extends State<ChangePasswod> {
           Navigator.pop(context);
 
           // Consider signing out or prompting for re-authentication
+          Authentication.signOut(context);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Error changing password: $response')),
