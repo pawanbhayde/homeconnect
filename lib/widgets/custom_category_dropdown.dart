@@ -22,8 +22,9 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[200],
+          border: Border.all(color: Color.fromARGB(255, 140, 140, 140))),
       child: DropdownButton<String>(
         underline: const SizedBox(),
         style: const TextStyle(

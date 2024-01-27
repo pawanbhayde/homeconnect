@@ -42,9 +42,10 @@ class HomePage extends StatelessWidget {
 
             //image carousel
             CarouselWithDotsPage(imgList: const [
-              'assets/images/1.jpg',
-              'assets/images/2.jpg',
-              'assets/images/3.jpg',
+              'assets/images/food.png',
+              'assets/images/cloths.png',
+              'assets/images/education.png',
+              'assets/images/charity.png',
             ]),
             SizedBox(
               height: size.height * 0.03,
