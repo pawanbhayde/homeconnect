@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/pages/navigator.dart';
 import 'package:helpus/utilities/colors.dart';
+import 'package:helpus/widgets/custom_category_dropdown.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class AddHomeShelter extends StatefulWidget {
   const AddHomeShelter({super.key});
@@ -12,15 +14,20 @@ class AddHomeShelter extends StatefulWidget {
 
 class _AddHomeShelterState extends State<AddHomeShelter> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController streetController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
+  final TextEditingController stateController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController coverController = TextEditingController();
+  final TextEditingController categoryController = TextEditingController();
+  late final CroppedFile image;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         title: const SizedBox(
             width: 150,
             child: Image(
@@ -46,6 +53,7 @@ class _AddHomeShelterState extends State<AddHomeShelter> {
                 "Please fill in the form below to add a new home shelter.",
                 style: TextStyle(fontSize: 16),
               ),
+
               SizedBox(
                 height: size.height * 0.02,
               ),
@@ -66,22 +74,23 @@ class _AddHomeShelterState extends State<AddHomeShelter> {
                   ),
                 ),
               ),
+
               SizedBox(
                 height: size.height * 0.02,
               ),
               const Text(
-                "Address",
+                "Home Shelter Description",
                 style: TextStyle(fontSize: 16),
               ),
-              //text field for address
+              //text field for home shelter name
               SizedBox(
                 height: 50,
                 child: TextField(
-                  controller: addressController,
+                  controller: descriptionController,
                   decoration: const InputDecoration(
-                    labelText: 'Address',
+                    labelText: 'Description',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                   ),
                 ),
@@ -106,28 +115,89 @@ class _AddHomeShelterState extends State<AddHomeShelter> {
                   ),
                 ),
               ),
+
               SizedBox(
                 height: size.height * 0.02,
               ),
               const Text(
-                "Cover Image",
+                "Home Shelter Category",
                 style: TextStyle(fontSize: 16),
               ),
 
-              //text field for cover image
+              // Add the category dropdown
+              CategoryDropdown(
+                categories: const ['Food', 'Clothes', 'Charity', 'Education'],
+                onCategorySelected: (selectedCategory) {
+                  setState(() {
+                    categoryController.text = selectedCategory!;
+                  });
+                },
+              ),
+
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              const Text(
+                "Street/Area",
+                style: TextStyle(fontSize: 16),
+              ),
+              //text field for address
               SizedBox(
                 height: 50,
                 child: TextField(
-                  controller: coverController,
+                  controller: streetController,
                   decoration: const InputDecoration(
-                    enabled: true,
-                    labelText: 'Cover Image URL',
+                    labelText: 'Street/Area',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
                   ),
                 ),
               ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              const Text(
+                "City",
+                style: TextStyle(fontSize: 16),
+              ),
+              //text field for address
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  controller: cityController,
+                  decoration: const InputDecoration(
+                    labelText: 'City',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              const Text(
+                "State",
+                style: TextStyle(fontSize: 16),
+              ),
+              //text field for address
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  controller: stateController,
+                  decoration: const InputDecoration(
+                    labelText: 'State',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+
               SizedBox(
                 height: size.height * 0.02,
               ),
@@ -140,9 +210,13 @@ class _AddHomeShelterState extends State<AddHomeShelter> {
                     try {
                       await DatabaseService.addShelter(
                         name: nameController.text,
-                        address: addressController.text,
+                        description: descriptionController.text,
+                        category: categoryController.text,
+                        street: streetController.text,
+                        city: cityController.text,
+                        state: stateController.text,
                         phone: int.parse(phoneController.text),
-                        image: coverController.text,
+                        //  crop: await pickImage(context),
                       );
 
                       Navigator.push(

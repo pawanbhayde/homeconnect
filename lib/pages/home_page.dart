@@ -172,7 +172,7 @@ class HomePage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return NeedFirstBox(
                               title: snapshot.data?[index]['name'],
-                              image: snapshot.data?[index]['image'],
+                              image: snapshot.data?[index]['name'],
                             );
                           },
                         );
