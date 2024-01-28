@@ -123,6 +123,9 @@ class _AddHomeShelterState extends State<AddHomeShelter> {
                 "Home Shelter Category",
                 style: TextStyle(fontSize: 16),
               ),
+              SizedBox(
+                height: size.height * 0.01,
+              ),
 
               // Add the category dropdown
               CategoryDropdown(
