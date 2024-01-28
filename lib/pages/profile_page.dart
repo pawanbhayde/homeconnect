@@ -21,8 +21,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   UserProfile? profile;
-  late final supabase = Supabase.instance.client;
-  StreamSubscription? subscription;
 
   pickImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
@@ -235,13 +233,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    // Unsubscribe from realtime updates
-    subscription?.cancel();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final supabase = Supabase.instance.client;
     Future<void> showMyDialog() async {
@@ -371,7 +362,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: profile?.profilePicture == null
+                                child: profile?.profilePicture == null ||
+                                        profile?.profilePicture == ''
                                     ? const Icon(
                                         Iconsax.user,
                                         size: 50,
@@ -425,36 +417,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            showMyDialog();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            side: const BorderSide(
-                                width: 1.0, color: Colors.black),
-                            backgroundColor: const Color(0xffF3F2F5),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            minimumSize: const Size(100, 40),
+                        //city
+                        Text(
+                          profile?.city ?? 'user city',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
                           ),
-                          child: const Text('Logout',
-                              style: TextStyle(
-                                color: Colors.black,
-                              )),
                         ),
+
                         const SizedBox(
                           height: 20,
                         ),
                       ],
                     ),
                   ),
-                  Custom_Profile_Item(
+                  CustomProfileItem(
                     title: 'Setting',
                     icon: Iconsax.setting,
                     onPressed: () {},
                   ),
-                  Custom_Profile_Item(
+                  CustomProfileItem(
                     title: 'Change Password',
                     icon: Iconsax.lock,
                     onPressed: () {
@@ -468,7 +452,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     },
                   ),
-                  Custom_Profile_Item(
+                  CustomProfileItem(
                     title: 'Help & Support',
                     icon: Iconsax.support,
                     onPressed: () {
@@ -492,8 +476,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-class Custom_Profile_Item extends StatelessWidget {
-  const Custom_Profile_Item({
+class CustomProfileItem extends StatelessWidget {
+  const CustomProfileItem({
     super.key,
     required this.title,
     required this.icon,

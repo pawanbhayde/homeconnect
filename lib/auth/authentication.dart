@@ -16,7 +16,8 @@ class Authentication {
       {required BuildContext context,
       required String email,
       required String password,
-      required String name}) async {
+      required String name,
+      required String city}) async {
     final sm = ScaffoldMessenger.of(context);
 
     try {
@@ -36,7 +37,7 @@ class Authentication {
 
         // store user details in user table
         await DatabaseService.storeUserDetails(
-            context, name, email, authResponse.user!.id, '');
+            context, name, email, authResponse.user!.id, '', city);
 
         // Navigate to the home page
         Navigator.pushReplacement(
@@ -106,6 +107,7 @@ class Authentication {
               authResponse.user!.email!,
           authResponse.user!.userMetadata?['userid'] ?? authResponse.user!.id,
           authResponse.user!.userMetadata?['avatar_url'] ?? '',
+          '',
         );
 
         // Navigate to the home page

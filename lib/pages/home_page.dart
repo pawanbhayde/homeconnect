@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:helpus/Widgets/custom_shalter_card.dart';
+import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/auth/database.dart';
+import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/addhome.dart';
 import 'package:helpus/pages/home_shelter_detail.dart';
 import 'package:helpus/widgets/custom_category_card.dart';
 import 'package:helpus/widgets/custom_image_carousel.dart';
 import 'package:helpus/widgets/custom_near_shelter_card.dart';
+import 'package:helpus/widgets/custom_shalter_card.dart';
 
 import 'donation_category.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  //get current user
+  UserProfile? user;
+  @override
+  void initState() {
+    super.initState();
+
+    // Get user profile
+    Authentication.getCurrentUser().then((value) => setState(() {
+          user = value;
+        }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +51,7 @@ class HomePage extends StatelessWidget {
 
       //body
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -159,13 +178,24 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: SizedBox(
-                  height: 180,
-                  child: StreamBuilder(
-                    stream: DatabaseService.getShelter(),
-                    builder: (context, snapshot) {
-                      // ignore: avoid_print
-                      print(snapshot.data);
-                      if (snapshot.hasData) {
+                height: 180,
+                child: StreamBuilder(
+                  stream: DatabaseService.getNearShelterStream(user!.city),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('An error occurred: ${snapshot.error}'),
+                      );
+                    } else if (snapshot.hasData) {
+                      if (snapshot.data?.length == 0) {
+                        return Center(
+                          child: Text('No data available'),
+                        );
+                      } else {
                         return ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
@@ -173,21 +203,36 @@ class HomePage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return NeedFirstBox(
                               title: snapshot.data?[index]['name'],
-                              image: snapshot.data?[index]['name'],
+                              category: snapshot.data?[index]['category'],
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return HomeShelterDetails(
+                                    id: snapshot.data?[index]['id'],
+                                    title: snapshot.data?[index]['name'],
+                                    category: snapshot.data?[index]['category'],
+                                    phone: snapshot.data?[index]['phone'],
+                                  );
+                                }));
+                              },
                             );
                           },
                         );
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
                       }
-                    },
-                  )),
+                    } else {
+                      return Center(
+                        child: Text('Unknown state'),
+                      );
+                    }
+                  },
+                ),
+              ),
             ),
             SizedBox(
               height: size.height * 0.03,
             ),
+
+            //Latest Shelter Homes
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Align(
@@ -205,28 +250,49 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            LatestShalter(
-              title: 'Shakti NGO Shelter Home',
-              image: 'assets/images/ngo-banner-1.png',
-              distance: '2.5 km',
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return HomeShelterDetails();
-                }));
-              },
-            ),
-            LatestShalter(
-              title: 'Homies NGO Shelter Home',
-              image: 'assets/images/ngo-banner-2.png',
-              distance: '3.5 km',
-              onPressed: () {},
-            ),
-            LatestShalter(
-              title: 'UNEX NGO Shelter Home',
-              image: 'assets/images/ngo-banner-3.png',
-              distance: '4.5 km',
-              onPressed: () {},
-            ),
+            //latest shelter homes cards
+            SizedBox(
+              height: 400,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: StreamBuilder(
+                  stream: DatabaseService.getShelterStream(),
+                  builder: (context, snapshot) {
+                    // ignore: avoid_print
+                    print(snapshot.data);
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: snapshot.data?.length,
+                        itemBuilder: (context, index) {
+                          return LatestShelter(
+                            title: snapshot.data?[index]['name'],
+                            category: snapshot.data?[index]['category'],
+                            //navigate to shelter details page with data when pressed
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return HomeShelterDetails(
+                                  id: snapshot.data?[index]['id'],
+                                  title: snapshot.data?[index]['name'],
+                                  category: snapshot.data?[index]['category'],
+                                  phone: snapshot.data?[index]['phone'],
+                                );
+                              }));
+                            },
+                          );
+                        },
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
+            )
           ],
         ),
       ),

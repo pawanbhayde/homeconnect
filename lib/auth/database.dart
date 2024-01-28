@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:helpus/model/home_shelter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;
@@ -44,13 +45,38 @@ class DatabaseService {
   }
 
   //get stream of data from supabase table
-  static SupabaseStreamFilterBuilder getShelter() {
+  static SupabaseStreamFilterBuilder getShelterStream() {
     return supabase.from('HomeShelter').stream(primaryKey: ['id']);
+  }
+
+  static SupabaseStreamBuilder getNearShelterStream(String city) {
+    print(city);
+    final res = supabase
+        .from('HomeShelter')
+        .stream(primaryKey: ['id'])
+        .order('id')
+        .limit(10);
+    print(res);
+    return res;
+  }
+
+  //get shelter details from supabase table
+  static Future<HomeShelter> getShelterDetails(int id) async {
+    final response =
+        await supabase.from('HomeShelter').select().eq('id', id).single();
+    print(response);
+
+    if (response.isNotEmpty) {
+      final shelter = HomeShelter.fromMap(response);
+      return shelter;
+    } else {
+      throw Exception('Shelter not found');
+    }
   }
 
   //--------- store users google sign in details into user table
   static Future<void> storeUserDetails(BuildContext context, String name,
-      String email, String id, String profileurl) async {
+      String email, String id, String profileurl, String city) async {
     final sm = ScaffoldMessenger.of(context);
 
     try {
@@ -60,6 +86,7 @@ class DatabaseService {
           'name': name,
           'email': email,
           'profile_picture': profileurl,
+          'city': city,
         }
       ]);
 

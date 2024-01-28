@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
+import 'package:helpus/pages/city_input_screen.dart';
 import 'package:helpus/pages/signin.dart';
 import 'package:helpus/utilities/colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,6 +20,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +111,22 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 50,
+                    child: TextField(
+                      controller: cityController,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      decoration: const InputDecoration(
+                        labelText: 'City',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+                    ),
+                  ),
 
                   const SizedBox(height: 20),
                   Column(
@@ -128,6 +146,7 @@ class _SignUpState extends State<SignUp> {
                               email: emailController.text,
                               password: passwordController.text,
                               name: nameController.text,
+                              city: cityController.text,
                             );
                             //navigate to main navigation
                           },
@@ -202,6 +221,12 @@ class _SignUpState extends State<SignUp> {
                       onPressed: () async {
                         //sign up with google
                         await Authentication.signUpWithGoogle(context);
+
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CityInputScreen()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xffEEF5FF),
