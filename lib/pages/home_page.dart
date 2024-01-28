@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/auth/database.dart';
+import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/addhome.dart';
 import 'package:helpus/pages/home_shelter_detail.dart';
 import 'package:helpus/widgets/custom_category_card.dart';
@@ -9,8 +11,25 @@ import 'package:helpus/widgets/custom_shalter_card.dart';
 
 import 'donation_category.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  //get current user
+  UserProfile? user;
+  @override
+  void initState() {
+    super.initState();
+
+    // Get user profile
+    Authentication.getCurrentUser().then((value) => setState(() {
+          user = value;
+        }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,13 +178,24 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: SizedBox(
-                  height: 180,
-                  child: StreamBuilder(
-                    stream: DatabaseService.getShelterStream(),
-                    builder: (context, snapshot) {
-                      // ignore: avoid_print
-                      print(snapshot.data);
-                      if (snapshot.hasData) {
+                height: 180,
+                child: StreamBuilder(
+                  stream: DatabaseService.getNearShelterStream(user!.city),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('An error occurred: ${snapshot.error}'),
+                      );
+                    } else if (snapshot.hasData) {
+                      if (snapshot.data?.length == 0) {
+                        return Center(
+                          child: Text('No data available'),
+                        );
+                      } else {
                         return ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
@@ -174,16 +204,29 @@ class HomePage extends StatelessWidget {
                             return NeedFirstBox(
                               title: snapshot.data?[index]['name'],
                               category: snapshot.data?[index]['category'],
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return HomeShelterDetails(
+                                    id: snapshot.data?[index]['id'],
+                                    title: snapshot.data?[index]['name'],
+                                    category: snapshot.data?[index]['category'],
+                                    phone: snapshot.data?[index]['phone'],
+                                  );
+                                }));
+                              },
                             );
                           },
                         );
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
                       }
-                    },
-                  )),
+                    } else {
+                      return Center(
+                        child: Text('Unknown state'),
+                      );
+                    }
+                  },
+                ),
+              ),
             ),
             SizedBox(
               height: size.height * 0.03,

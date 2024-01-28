@@ -362,7 +362,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: profile?.profilePicture == null
+                                child: profile?.profilePicture == null ||
+                                        profile?.profilePicture == ''
                                     ? const Icon(
                                         Iconsax.user,
                                         size: 50,
@@ -416,24 +417,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            showMyDialog();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            side: const BorderSide(
-                                width: 1.0, color: Colors.black),
-                            backgroundColor: const Color(0xffF3F2F5),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            minimumSize: const Size(100, 40),
+                        //city
+                        Text(
+                          profile?.city ?? 'user city',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
                           ),
-                          child: const Text('Logout',
-                              style: TextStyle(
-                                color: Colors.black,
-                              )),
                         ),
+
                         const SizedBox(
                           height: 20,
                         ),

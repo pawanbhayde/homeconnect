@@ -1,13 +1,13 @@
 class UserProfile {
   final String name;
   final String email;
-  final String location;
+  final String city;
   final String profilePicture;
   final String userid;
   UserProfile({
     required this.name,
     required this.email,
-    required this.location,
+    required this.city,
     required this.profilePicture,
     required this.userid,
   });
@@ -17,7 +17,7 @@ class UserProfile {
     return UserProfile(
       name: data['name'],
       email: data['email'],
-      location: data['location'] ?? '',
+      city: data['city'] ?? '',
       profilePicture: data['profile_picture'] ?? '',
       userid: data['userid'],
     );
@@ -28,7 +28,7 @@ class UserProfile {
     return {
       'name': name,
       'email': email,
-      'location': location,
+      'city': city,
       'profile_picture': profilePicture,
       'userid': userid,
     };

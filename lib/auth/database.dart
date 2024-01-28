@@ -49,6 +49,17 @@ class DatabaseService {
     return supabase.from('HomeShelter').stream(primaryKey: ['id']);
   }
 
+  static SupabaseStreamBuilder getNearShelterStream(String city) {
+    print(city);
+    final res = supabase
+        .from('HomeShelter')
+        .stream(primaryKey: ['id'])
+        .order('id')
+        .limit(10);
+    print(res);
+    return res;
+  }
+
   //get shelter details from supabase table
   static Future<HomeShelter> getShelterDetails(int id) async {
     final response =
@@ -65,7 +76,7 @@ class DatabaseService {
 
   //--------- store users google sign in details into user table
   static Future<void> storeUserDetails(BuildContext context, String name,
-      String email, String id, String profileurl) async {
+      String email, String id, String profileurl, String city) async {
     final sm = ScaffoldMessenger.of(context);
 
     try {
@@ -75,6 +86,7 @@ class DatabaseService {
           'name': name,
           'email': email,
           'profile_picture': profileurl,
+          'city': city,
         }
       ]);
 

@@ -3,7 +3,7 @@ import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/home_shelter.dart';
 
 class HomeShelterDetails extends StatefulWidget {
-  HomeShelterDetails({
+  const HomeShelterDetails({
     super.key,
     required this.title,
     required this.id,
