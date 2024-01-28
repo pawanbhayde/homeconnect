@@ -13,7 +13,7 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   int selectedPage = 0;
-  final pages = [
+  final List<Widget> pages = [
     const HomePage(),
     const SearchHomeShelter(),
     const ProfileScreen(),

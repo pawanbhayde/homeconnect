@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
 
       //body
       body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return const DonationCategoryPage(
+                          return DonationCategoryPage(
                             category: 'food',
                           );
                         },
@@ -112,8 +112,8 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return const DonationCategoryPage(
-                            category: 'clothes',
+                          return DonationCategoryPage(
+                            category: 'cloths',
                           );
                         },
                       ),
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return const DonationCategoryPage(
+                          return DonationCategoryPage(
                             category: 'charity',
                           );
                         },
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return const DonationCategoryPage(
+                          return DonationCategoryPage(
                             category: 'education',
                           );
                         },
@@ -180,10 +180,10 @@ class _HomePageState extends State<HomePage> {
               child: SizedBox(
                 height: 180,
                 child: StreamBuilder(
-                  stream: DatabaseService.getNearShelterStream(user!.city),
+                  stream: DatabaseService.getShelterStream(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     } else if (snapshot.hasError) {
@@ -191,27 +191,33 @@ class _HomePageState extends State<HomePage> {
                         child: Text('An error occurred: ${snapshot.error}'),
                       );
                     } else if (snapshot.hasData) {
-                      if (snapshot.data?.length == 0) {
-                        return Center(
+                      print(snapshot.data as List);
+                      //filter data based on city
+                      final filteredData = snapshot.data as List;
+
+                      print(filteredData);
+
+                      if (filteredData.isEmpty) {
+                        return const Center(
                           child: Text('No data available'),
                         );
                       } else {
                         return ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data?.length,
+                          itemCount: filteredData.length,
                           itemBuilder: (context, index) {
                             return NeedFirstBox(
-                              title: snapshot.data?[index]['name'],
-                              category: snapshot.data?[index]['category'],
+                              title: filteredData[index]['name'],
+                              category: filteredData[index]['category'],
                               onPressed: () {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
                                   return HomeShelterDetails(
-                                    id: snapshot.data?[index]['id'],
-                                    title: snapshot.data?[index]['name'],
-                                    category: snapshot.data?[index]['category'],
-                                    phone: snapshot.data?[index]['phone'],
+                                    id: filteredData[index]['id'],
+                                    title: filteredData[index]['name'],
+                                    category: filteredData[index]['category'],
+                                    phone: filteredData[index]['phone'],
                                   );
                                 }));
                               },
@@ -220,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                         );
                       }
                     } else {
-                      return Center(
+                      return const Center(
                         child: Text('Unknown state'),
                       );
                     }

@@ -3,6 +3,7 @@ import 'package:helpus/apikey.env';
 import 'package:helpus/pages/navigator.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:helpus/pages/splash_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,6 +65,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Help Us',
         theme: ThemeData(
+          fontFamily: GoogleFonts.poppins().fontFamily,
           useMaterial3: true,
           primarySwatch: Colors.blue,
         ),
