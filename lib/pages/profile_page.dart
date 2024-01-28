@@ -21,8 +21,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   UserProfile? profile;
-  late final supabase = Supabase.instance.client;
-  StreamSubscription? subscription;
 
   pickImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
@@ -235,13 +233,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    // Unsubscribe from realtime updates
-    subscription?.cancel();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final supabase = Supabase.instance.client;
     Future<void> showMyDialog() async {
@@ -449,12 +440,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
-                  Custom_Profile_Item(
+                  CustomProfileItem(
                     title: 'Setting',
                     icon: Iconsax.setting,
                     onPressed: () {},
                   ),
-                  Custom_Profile_Item(
+                  CustomProfileItem(
                     title: 'Change Password',
                     icon: Iconsax.lock,
                     onPressed: () {
@@ -468,7 +459,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     },
                   ),
-                  Custom_Profile_Item(
+                  CustomProfileItem(
                     title: 'Help & Support',
                     icon: Iconsax.support,
                     onPressed: () {
@@ -492,8 +483,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-class Custom_Profile_Item extends StatelessWidget {
-  const Custom_Profile_Item({
+class CustomProfileItem extends StatelessWidget {
+  const CustomProfileItem({
     super.key,
     required this.title,
     required this.icon,

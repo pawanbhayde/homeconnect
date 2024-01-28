@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:helpus/model/home_shelter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;
@@ -44,8 +45,22 @@ class DatabaseService {
   }
 
   //get stream of data from supabase table
-  static SupabaseStreamFilterBuilder getShelter() {
+  static SupabaseStreamFilterBuilder getShelterStream() {
     return supabase.from('HomeShelter').stream(primaryKey: ['id']);
+  }
+
+  //get shelter details from supabase table
+  static Future<HomeShelter> getShelterDetails(int id) async {
+    final response =
+        await supabase.from('HomeShelter').select().eq('id', id).single();
+    print(response);
+
+    if (response.isNotEmpty) {
+      final shelter = HomeShelter.fromMap(response);
+      return shelter;
+    } else {
+      throw Exception('Shelter not found');
+    }
   }
 
   //--------- store users google sign in details into user table

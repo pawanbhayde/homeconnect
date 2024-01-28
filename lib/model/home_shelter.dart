@@ -6,7 +6,7 @@ class HomeShelter {
   final String street;
   final String city;
   final String state;
-  final String phone;
+  final int phone;
 
   const HomeShelter({
     required this.id,

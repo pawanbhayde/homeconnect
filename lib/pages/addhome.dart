@@ -219,7 +219,6 @@ class _AddHomeShelterState extends State<AddHomeShelter> {
                         city: cityController.text,
                         state: stateController.text,
                         phone: int.parse(phoneController.text),
-                        //  crop: await pickImage(context),
                       );
 
                       Navigator.push(

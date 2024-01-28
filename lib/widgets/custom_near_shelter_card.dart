@@ -5,10 +5,10 @@ class NeedFirstBox extends StatelessWidget {
   const NeedFirstBox({
     super.key,
     required this.title,
-    required this.image,
+    required this.category,
   });
   final String title;
-  final String image;
+  final String category;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,18 @@ class NeedFirstBox extends StatelessWidget {
       margin: const EdgeInsets.only(right: 20),
       width: 300,
       decoration: BoxDecoration(
+        // show image based on the category of the shelter
+
         image: DecorationImage(
-          image: AssetImage('assets/images/ngo-banner-1.png'),
+          image: category == 'Food'
+              ? const AssetImage('assets/images/food.png')
+              : category == 'Clothes'
+                  ? const AssetImage('assets/images/cloths.png')
+                  : category == 'Education'
+                      ? const AssetImage('assets/images/education.png')
+                      : category == 'Charity'
+                          ? const AssetImage('assets/images/charity.png')
+                          : const AssetImage('assets/images/ngo-banner-1.png'),
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(10),
