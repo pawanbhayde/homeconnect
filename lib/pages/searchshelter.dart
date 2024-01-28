@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:helpus/widgets/custom_shalter_card.dart';
 
 class SearchHomeShelter extends StatelessWidget {
   const SearchHomeShelter({super.key});
@@ -53,42 +52,6 @@ class SearchHomeShelter extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            LatestShalter(
-              title: 'Shakti NGO Shelter Home',
-              image: 'assets/images/ngo-banner-1.png',
-              distance: '2.5 km',
-              onPressed: () {},
-            ),
-            LatestShalter(
-              title: 'Homies NGO Shelter Home',
-              image: 'assets/images/ngo-banner-2.png',
-              distance: '3.5 km',
-              onPressed: () {},
-            ),
-            LatestShalter(
-              title: 'UNEX NGO Shelter Home',
-              image: 'assets/images/ngo-banner-3.png',
-              distance: '4.5 km',
-              onPressed: () {},
-            ),
-            LatestShalter(
-              title: 'Shakti NGO Shelter Home',
-              image: 'assets/images/ngo-banner-1.png',
-              distance: '2.5 km',
-              onPressed: () {},
-            ),
-            LatestShalter(
-              title: 'Homies NGO Shelter Home',
-              image: 'assets/images/ngo-banner-2.png',
-              distance: '3.5 km',
-              onPressed: () {},
-            ),
-            LatestShalter(
-              title: 'UNEX NGO Shelter Home',
-              image: 'assets/images/ngo-banner-3.png',
-              distance: '4.5 km',
-              onPressed: () {},
             ),
           ],
         ),

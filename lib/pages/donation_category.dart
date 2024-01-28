@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Widgets/custom_shalter_card.dart';
+import 'package:helpus/widgets/custom_shalter_card.dart';
 
 class DonationCategoryPage extends StatelessWidget {
   const DonationCategoryPage({
@@ -86,10 +86,9 @@ class DonationCategoryPage extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 5,
               itemBuilder: (context, index) {
-                return LatestShalter(
+                return LatestShelter(
                   title: 'Homies NGO Shelter Home',
-                  image: 'assets/images/ngo-banner-2.png',
-                  distance: '3.5 km',
+                  category: 'Food',
                   onPressed: () {},
                 );
               },
