@@ -1,4 +1,4 @@
-// supabase sign in with email and password
+// ignore_for_file: use_build_context_synchronously, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -28,9 +28,16 @@ class Authentication {
       // Check if the sign-up was successful
       if (authResponse.user != null) {
         sm.showSnackBar(
-          const SnackBar(
-            content: Text(
+          SnackBar(
+            content: const Text(
               "Sign Up Successful.",
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
           ),
         );
@@ -45,18 +52,33 @@ class Authentication {
       } else {
         // Display an appropriate error message
         sm.showSnackBar(
-          const SnackBar(content: Text("Sign-Up failed. Please try again.")),
+          SnackBar(
+            content: const Text("Sign-Up failed. Please try again."),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
         );
       }
     } catch (error) {
       // Handle specific errors, e.g., if user is already registered
       if (error is AuthException) {
         // for user friendly error message, nested "if"
-        // ignore: unrelated_type_equality_checks
         if (error.statusCode == 400) {
           sm.showSnackBar(
-            const SnackBar(
-              content: Text(" User already exists. Please Sign In "),
+            SnackBar(
+              content: const Text(" User already exists. Please Sign In "),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.startToEnd,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
           );
         } else {
@@ -66,6 +88,13 @@ class Authentication {
               content: Text(
                 " Authentication error: ${error.message}",
               ),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.startToEnd,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
           );
         }
@@ -73,8 +102,15 @@ class Authentication {
         // Handle other errors
         sm.showSnackBar(
           SnackBar(
-            content: Text(
-              "Error:${error.toString()}",
+            content: const Text(
+              "An Error Occured",
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
           ),
         );
@@ -92,9 +128,16 @@ class Authentication {
 
       if (authResponse.user != null) {
         sm.showSnackBar(
-          const SnackBar(
-            content: Text(
+          SnackBar(
+            content: const Text(
               "Sign Up Successful.",
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
           ),
         );
@@ -116,18 +159,33 @@ class Authentication {
       } else {
         // Display an appropriate error message
         sm.showSnackBar(
-          const SnackBar(content: Text("Sign-Up failed. Please try again.")),
+          SnackBar(
+            content: const Text("Sign-Up failed. Please try again."),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
         );
       }
     } catch (error) {
       // Handle specific errors, e.g., if user is already registered
       if (error is AuthException) {
         // for user friendly error message, nested "if"
-        // ignore: unrelated_type_equality_checks
         if (error.statusCode == 400) {
           sm.showSnackBar(
-            const SnackBar(
-              content: Text(" User already exists. Please Sign In "),
+            SnackBar(
+              content: const Text(" User already exists. Please Sign In "),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.startToEnd,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
           );
         } else {
@@ -137,6 +195,13 @@ class Authentication {
               content: Text(
                 " Authentication error: ${error.message}",
               ),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.startToEnd,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
           );
         }
@@ -144,8 +209,15 @@ class Authentication {
         // Handle other errors
         sm.showSnackBar(
           SnackBar(
-            content: Text(
-              "Error:${error.toString()}",
+            content: const Text(
+              "An Error Occurred",
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
           ),
         );
@@ -169,14 +241,20 @@ class Authentication {
       // Check if the sign-up was successful
       if (authResponse.user != null) {
         sm.showSnackBar(
-          const SnackBar(
-            content: Text(
+          SnackBar(
+            content: const Text(
               "Signed In Successful." /*${authResponse.user!.email!}*/,
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
           ),
         );
 
-        // ignore: use_build_context_synchronously
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const MainNavigation()));
 
@@ -184,18 +262,33 @@ class Authentication {
       } else {
         // Display an appropriate error message
         sm.showSnackBar(
-          const SnackBar(content: Text("Sign-In failed. Please try again.")),
+          SnackBar(
+            content: const Text("Sign-In failed. Please try again."),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
         );
       }
     } catch (error) {
       // Handle specific errors, e.g., if user is already registered
       if (error is AuthException) {
         // for user friendly error message, nested "if"
-        // ignore: unrelated_type_equality_checks
         if (error.statusCode == 400) {
           sm.showSnackBar(
-            const SnackBar(
-              content: Text(" User not found. Please Sign Up "),
+            SnackBar(
+              content: const Text(" User not found. Please Sign Up "),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.startToEnd,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
           );
         } else {
@@ -205,6 +298,13 @@ class Authentication {
               content: Text(
                 " Authentication error: ${error.message}",
               ),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.startToEnd,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
           );
         }
@@ -212,8 +312,15 @@ class Authentication {
         // Handle other errors
         sm.showSnackBar(
           SnackBar(
-            content: Text(
-              "Error:${error.toString()}",
+            content: const Text(
+              "An Error Occured",
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
           ),
         );
@@ -234,26 +341,31 @@ class Authentication {
     // Google sign in on Android will work without providing the Android
     // Client ID registered on Google Cloud.
 
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      serverClientId: webClientId,
-    );
-    final googleUser = await googleSignIn.signIn();
-    final googleAuth = await googleUser!.authentication;
-    final accessToken = googleAuth.accessToken;
-    final idToken = googleAuth.idToken;
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        serverClientId: webClientId,
+      );
+      final googleUser = await googleSignIn.signIn();
+      final googleAuth = await googleUser!.authentication;
+      final accessToken = googleAuth.accessToken;
+      final idToken = googleAuth.idToken;
 
-    if (accessToken == null) {
-      throw 'No Access Token found.';
-    }
-    if (idToken == null) {
-      throw 'No ID Token found.';
-    }
+      if (accessToken == null) {
+        throw 'No Access Token found.';
+      }
+      if (idToken == null) {
+        throw 'No ID Token found.';
+      }
 
-    return supabase.auth.signInWithIdToken(
-      provider: OAuthProvider.google,
-      idToken: idToken,
-      accessToken: accessToken,
-    );
+      return supabase.auth.signInWithIdToken(
+        provider: OAuthProvider.google,
+        idToken: idToken,
+        accessToken: accessToken,
+      );
+    } catch (e) {
+      print("Error in google sign in: $e");
+      throw e;
+    }
   }
 
   //---------- Sign Out
@@ -265,17 +377,30 @@ class Authentication {
       await supabase.auth.signOut();
       // Navigate to the home page
       sm.showSnackBar(
-        const SnackBar(
-          content: Text("Signed Out Successfully"),
+        SnackBar(
+          content: const Text("Signed Out Successfully"),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          showCloseIcon: true,
+          behavior: SnackBarBehavior.floating,
+          dismissDirection: DismissDirection.startToEnd,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
       );
     } catch (error) {
       // Handle sign out errors
       sm.showSnackBar(
         SnackBar(
-          padding: EdgeInsets.only(bottom: 10),
-          content: Text(
-            "Error signing out: ${error.toString()}",
+          content: const Text(
+            "An Error Occured",
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          showCloseIcon: true,
+          behavior: SnackBarBehavior.floating,
+          dismissDirection: DismissDirection.startToEnd,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
           ),
         ),
       );

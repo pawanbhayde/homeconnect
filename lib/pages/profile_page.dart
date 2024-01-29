@@ -97,9 +97,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             print('Print on Profile Screen : $data');
 
                             // Close bottom sheet
+                            // ignore: use_build_context_synchronously
                             Navigator.pop(context);
 
                             // Show AlertDialog after successful update
+                            // ignore: use_build_context_synchronously
                             showDialog(
                               context: context,
                               builder: (context) {
@@ -121,9 +123,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           }
                         } catch (e) {
                           //show snakbar
+                          // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Failed to update profile picture'),
+                            SnackBar(
+                              content: const Text(
+                                  'Failed to update profile picture'),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              showCloseIcon: true,
+                              behavior: SnackBarBehavior.floating,
+                              dismissDirection: DismissDirection.startToEnd,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
                             ),
                           );
                         }
@@ -175,9 +187,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             print('Print on Profile Screen : $data');
 
                             // Close bottom sheet
+                            // ignore: use_build_context_synchronously
                             Navigator.pop(context);
 
                             // Show AlertDialog after successful update
+                            // ignore: use_build_context_synchronously
                             showDialog(
                               context: context,
                               builder: (context) {
@@ -199,9 +213,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           }
                         } catch (e) {
                           //show snakbar
+                          // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Failed to update profile picture'),
+                            SnackBar(
+                              content: const Text(
+                                  'Failed to update profile picture'),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              showCloseIcon: true,
+                              behavior: SnackBarBehavior.floating,
+                              dismissDirection: DismissDirection.startToEnd,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
                             ),
                           );
                         }
@@ -235,13 +259,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final supabase = Supabase.instance.client;
+
     Future<void> showMyDialog() async {
       return showDialog<void>(
         context: context,
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Sign Out'),
+            title: const Text('Logout ?'),
             content: const SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -261,6 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: const Text('Logout'),
                 onPressed: () async {
                   await Authentication.signOut(context);
+                  // ignore: use_build_context_synchronously
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
@@ -288,7 +314,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'You are not logged in',
                   style: TextStyle(
                     fontSize: 20,
@@ -325,18 +351,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fit: BoxFit.cover,
                 )),
             centerTitle: true,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                  iconSize: 25,
-                  onPressed: () {
-                    showMyDialog();
-                  },
-                  icon: const Icon(Icons.logout_rounded, color: Colors.black),
-                ),
-              )
-            ],
           ),
 
           // Body
@@ -433,11 +447,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
-                  CustomProfileItem(
-                    title: 'Setting',
-                    icon: Iconsax.setting,
-                    onPressed: () {},
-                  ),
+                  // CustomProfileItem(
+                  //   title: 'Logout',
+                  //   icon: Iconsax.logout,
+                  //   onPressed: () {
+                  //     showMyDialog();
+                  //   },
+                  // ),
                   CustomProfileItem(
                     title: 'Change Password',
                     icon: Iconsax.lock,
@@ -465,6 +481,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       );
                     },
+                  ),
+
+                  //logout button
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(const Color(0xff395EE7)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        showMyDialog();
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 15.0),
+                        child: Text(
+                          'Logout',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),

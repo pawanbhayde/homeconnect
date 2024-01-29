@@ -44,7 +44,16 @@ class _ChangePasswodState extends State<ChangePasswod> {
 
         if (response.user != null) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Password changed successfully')),
+            SnackBar(
+              content: const Text('Password changed successfully'),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.startToEnd,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
           );
 
           Navigator.pop(context);
@@ -53,12 +62,30 @@ class _ChangePasswodState extends State<ChangePasswod> {
           Authentication.signOut(context);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error changing password: $response')),
+            SnackBar(
+              content: Text('Error changing password: $response'),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.startToEnd,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
           );
         }
       } catch (error) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid current password')),
+          SnackBar(
+            content: const Text('Invalid current password'),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
         );
       }
     }
@@ -70,6 +97,21 @@ class _ChangePasswodState extends State<ChangePasswod> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: const Color(0xffF3F2F5),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ElevatedButton(
+          onPressed: _changePassword,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          child: const Text('Change Password',
+              style: TextStyle(color: Colors.white)),
+        ),
       ),
       body: _buildPasswordFields(),
     );
@@ -155,22 +197,6 @@ class _ChangePasswodState extends State<ChangePasswod> {
                     // Add validation for confirm password
                   ),
                   const SizedBox(height: 20),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: _changePassword,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text('Change Password',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                  ),
                 ],
               ),
             )
