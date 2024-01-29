@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return DonationCategoryPage(
+                          return const DonationCategoryPage(
                             category: 'food',
                           );
                         },
@@ -112,8 +112,8 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return DonationCategoryPage(
-                            category: 'cloths',
+                          return const DonationCategoryPage(
+                            category: 'clothes',
                           );
                         },
                       ),
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return DonationCategoryPage(
+                          return const DonationCategoryPage(
                             category: 'charity',
                           );
                         },
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return DonationCategoryPage(
+                          return const DonationCategoryPage(
                             category: 'education',
                           );
                         },

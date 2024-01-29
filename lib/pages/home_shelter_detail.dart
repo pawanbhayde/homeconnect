@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/home_shelter.dart';
+import 'package:helpus/utilities/colors.dart';
 
 class HomeShelterDetails extends StatefulWidget {
   const HomeShelterDetails({
@@ -48,19 +49,19 @@ class _HomeShelterDetailsState extends State<HomeShelterDetails> {
         padding: const EdgeInsets.all(10.0),
         child: ElevatedButton(
           onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
           child: const Text(
             'Call Us',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Colors.white,
-            ),
-          ),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black,
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),
@@ -117,11 +118,7 @@ class _HomeShelterDetailsState extends State<HomeShelterDetails> {
                       ),
                     ),
                     Text(
-                      shelterDetails!.street +
-                          ',' +
-                          shelterDetails!.city +
-                          ',' +
-                          shelterDetails!.state,
+                      '${shelterDetails!.street},${shelterDetails!.city},${shelterDetails!.state}',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
