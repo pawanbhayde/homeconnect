@@ -57,7 +57,7 @@ class _SearchHomeShelterState extends State<SearchHomeShelter> {
                 });
               },
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 hintText: 'Search Shelter',
                 suffixIcon: IconButton(
                   onPressed: () {},
@@ -69,12 +69,12 @@ class _SearchHomeShelterState extends State<SearchHomeShelter> {
           const SizedBox(height: 10),
           // text
           Padding(
-            padding: EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.only(left: 20.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Shelter Homes in ${user!.city}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -86,11 +86,11 @@ class _SearchHomeShelterState extends State<SearchHomeShelter> {
               stream: DatabaseService.getShelterStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (snapshot.hasError) {
-                  return Center(
+                  return const Center(
                     child: Text('An error occurred'),
                   );
                 } else if (snapshot.hasData) {
@@ -101,8 +101,8 @@ class _SearchHomeShelterState extends State<SearchHomeShelter> {
                         .contains(searchTerm.toLowerCase());
                   }).toList();
 
-                  if (filteredData.length == 0) {
-                    return Center(
+                  if (filteredData.isEmpty) {
+                    return const Center(
                       child: Text('No data available'),
                     );
                   } else {
@@ -131,7 +131,7 @@ class _SearchHomeShelterState extends State<SearchHomeShelter> {
                     );
                   }
                 } else {
-                  return Center(
+                  return const Center(
                     child: Text('Unknown state'),
                   );
                 }

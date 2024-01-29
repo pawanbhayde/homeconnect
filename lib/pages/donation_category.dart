@@ -55,7 +55,7 @@ class DonationCategoryPage extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   ChoiceChip(
-                    label: const Text('Cloths'),
+                    label: const Text('Clothes'),
                     selected: clothes,
                   ),
                   const SizedBox(width: 10),
@@ -76,7 +76,7 @@ class DonationCategoryPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Home Shelters That Need ${category}',
+                'Home Shelters That Need $category',
                 style: const TextStyle(
                   fontSize: 18,
                 ),
@@ -88,11 +88,11 @@ class DonationCategoryPage extends StatelessWidget {
               stream: DatabaseService.getShelterStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (snapshot.hasError) {
-                  return Center(
+                  return const Center(
                     child: Text('An error occurred'),
                   );
                 } else if (snapshot.hasData) {
@@ -126,7 +126,7 @@ class DonationCategoryPage extends StatelessWidget {
                     },
                   );
                 } else {
-                  return Center(
+                  return const Center(
                     child: Text('Unknown state'),
                   );
                 }

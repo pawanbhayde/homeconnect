@@ -34,13 +34,13 @@ class HelpAndSupport extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 20),
-              HelpAndSupport_Custom_Card(
+              HelpAndSupportCustomCard(
                 title: "02227610846",
                 subtitle: "Our 24x7 Customer Support",
                 icon: Iconsax.call,
               ),
               SizedBox(height: 20),
-              HelpAndSupport_Custom_Card(
+              HelpAndSupportCustomCard(
                 title: "homeconnet@support.com",
                 subtitle: "Write us at",
                 icon: Iconsax.message,
@@ -87,8 +87,8 @@ class HelpAndSupport extends StatelessWidget {
   }
 }
 
-class HelpAndSupport_Custom_Card extends StatelessWidget {
-  const HelpAndSupport_Custom_Card({
+class HelpAndSupportCustomCard extends StatelessWidget {
+  const HelpAndSupportCustomCard({
     super.key,
     required this.title,
     required this.subtitle,
@@ -132,13 +132,13 @@ class HelpAndSupport_Custom_Card extends StatelessWidget {
                 children: [
                   Text(
                     subtitle,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                     ),
                   ),
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Color(0xff185ADB),

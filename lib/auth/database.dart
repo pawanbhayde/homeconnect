@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, unrelated_type_equality_checks
+
 import 'dart:async';
 import 'dart:io';
 
@@ -49,32 +51,6 @@ class DatabaseService {
     return supabase.from('HomeShelter').stream(primaryKey: ['id']);
   }
 
-  // //get stream of shelter data based on city from supabase table
-  // static Stream<SupabaseStreamEvent> getNearShelterStream(String city) {
-  //   print(city);
-  //
-  //   final res = supabase.from('HomeShelter').stream(primaryKey: ['id']);
-  //
-  //   print(res);
-  //   return res;
-  // }
-  //
-  // //get stream of shelter data based on category from supabase table
-  // static SupabaseStreamBuilder getSheltersByCategory(String category) {
-  //   final res = supabase.from('HomeShelter').stream(primaryKey: ['id']);
-  //
-  //   return res;
-  // }
-
-  // //get stream of shelter data based on category from supabase table
-  // static Stream<SupabaseStreamEvent> getSheltersByCategory(String category) {
-  //   // Replace this with your actual database query
-  //   // This is just a placeholder
-  //   return supabase
-  //       .from('HomeShelter')
-  //       .stream(primaryKey: ['id']).eq('category', category);
-  // }
-
   //get shelter details from supabase table
   static Future<HomeShelter> getShelterDetails(int id) async {
     final response =
@@ -107,15 +83,29 @@ class DatabaseService {
 
       if (response.error == null) {
         sm.showSnackBar(
-          const SnackBar(
-            content: Text("User Details Stored Successfully"),
+          SnackBar(
+            content: const Text("User Details Stored Successfully"),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
           ),
         );
       } else {
         sm.showSnackBar(
           SnackBar(
-            content: Text(
-              "Error storing user details: ${response.error!.message}",
+            content: const Text(
+              "Error storing user details",
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
           ),
         );
