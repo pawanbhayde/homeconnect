@@ -49,16 +49,31 @@ class DatabaseService {
     return supabase.from('HomeShelter').stream(primaryKey: ['id']);
   }
 
-  static SupabaseStreamBuilder getNearShelterStream(String city) {
-    print(city);
-    final res = supabase
-        .from('HomeShelter')
-        .stream(primaryKey: ['id'])
-        .order('id')
-        .limit(10);
-    print(res);
-    return res;
-  }
+  // //get stream of shelter data based on city from supabase table
+  // static Stream<SupabaseStreamEvent> getNearShelterStream(String city) {
+  //   print(city);
+  //
+  //   final res = supabase.from('HomeShelter').stream(primaryKey: ['id']);
+  //
+  //   print(res);
+  //   return res;
+  // }
+  //
+  // //get stream of shelter data based on category from supabase table
+  // static SupabaseStreamBuilder getSheltersByCategory(String category) {
+  //   final res = supabase.from('HomeShelter').stream(primaryKey: ['id']);
+  //
+  //   return res;
+  // }
+
+  // //get stream of shelter data based on category from supabase table
+  // static Stream<SupabaseStreamEvent> getSheltersByCategory(String category) {
+  //   // Replace this with your actual database query
+  //   // This is just a placeholder
+  //   return supabase
+  //       .from('HomeShelter')
+  //       .stream(primaryKey: ['id']).eq('category', category);
+  // }
 
   //get shelter details from supabase table
   static Future<HomeShelter> getShelterDetails(int id) async {
