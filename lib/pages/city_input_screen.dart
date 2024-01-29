@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/pages/navigator.dart';
+import 'package:helpus/utilities/colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CityInputScreen extends StatefulWidget {
@@ -23,14 +24,34 @@ class _CityInputScreenState extends State<CityInputScreen> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: const Text('Enter your city'),
+        backgroundColor: const Color(0xffF3F2F5),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              TextFormField(
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.3,
+              color: const Color(0xffF3F2F5),
+              child: Center(
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/logo.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: cityController,
                 validator: (value) {
@@ -39,11 +60,19 @@ class _CityInputScreenState extends State<CityInputScreen> {
                   }
                   return null;
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'City',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
                 ),
               ),
-              ElevatedButton(
+            ),
+            Container(
+              width: double.infinity,
+              height: 50,
+              margin: EdgeInsets.all(20),
+              child: ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     // Store the city in your database
@@ -102,10 +131,23 @@ class _CityInputScreenState extends State<CityInputScreen> {
                     );
                   }
                 },
-                child: const Text('Submit'),
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
