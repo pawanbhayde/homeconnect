@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/pages/navigator.dart';
+import 'package:helpus/pages/shelter_navigation.dart';
 import 'package:helpus/utilities/colors.dart';
 import 'package:helpus/widgets/custom_category_dropdown.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -58,7 +59,7 @@ class _AddHomeShelterState extends State<AddHomeShelter> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return const MainNavigation();
+                      return const ShelterNavigation();
                     },
                   ),
                 );
