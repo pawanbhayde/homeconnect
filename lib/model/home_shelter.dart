@@ -1,5 +1,7 @@
 class HomeShelter {
   final int id;
+  final String email;
+
   final String name;
   final String description;
   final String category;
@@ -11,6 +13,7 @@ class HomeShelter {
   const HomeShelter({
     required this.id,
     required this.name,
+    required this.email,
     required this.description,
     required this.category,
     required this.street,
@@ -23,6 +26,7 @@ class HomeShelter {
   factory HomeShelter.fromMap(Map<String, dynamic> json) {
     return HomeShelter(
       id: json['id'],
+      email: json['email'],
       name: json['name'],
       phone: json['phone'],
       description: json['description'],
@@ -37,6 +41,7 @@ class HomeShelter {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      'email': email,
       'description': description,
       'category': category,
       'street': street,
@@ -48,7 +53,7 @@ class HomeShelter {
 
   @override
   String toString() =>
-      'HomeShelter{id:$id, name: $name, description: $description, '
+      'HomeShelter{id:$id, email:$email , name: $name, description: $description, '
       'category: $category, street: $street, city: $city, '
       'state: $state, phone: $phone}';
 }

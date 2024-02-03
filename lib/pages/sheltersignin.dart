@@ -2,9 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
-import 'package:helpus/pages/navigator.dart';
+import 'package:helpus/pages/shelter_navigation.dart';
 import 'package:helpus/pages/sheltersignup.dart';
-import 'package:helpus/pages/signup.dart';
 import 'package:helpus/utilities/colors.dart';
 
 class ShelterSignInPage extends StatefulWidget {
@@ -143,6 +142,14 @@ class _ShelterSignInPageState extends State<ShelterSignInPage> {
                                     context: context,
                                     email: emailController.text,
                                     password: passwordController.text);
+
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ShelterNavigation(),
+                                  ),
+                                );
                               }
                             },
                             child: const Text('Sign In',
@@ -172,82 +179,82 @@ class _ShelterSignInPageState extends State<ShelterSignInPage> {
                         ),
                       ],
                     ),
-
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            height: 1,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const Text(
-                          "Or Continue with",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromARGB(255, 135, 135, 135),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            height: 1,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    //google sign-in button
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          //sign in with google
-                          await Authentication.googleSignIn();
-                          //navigate to main navigation
-
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MainNavigation(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xffEEF5FF),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image(
-                              image: AssetImage('assets/images/google.png'),
-                              width: 30,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Sign In with Google",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    //
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: Container(
+                    //         margin: const EdgeInsets.symmetric(horizontal: 10),
+                    //         height: 1,
+                    //         color: Colors.grey,
+                    //       ),
+                    //     ),
+                    //     const Text(
+                    //       "Or Continue with",
+                    //       style: TextStyle(
+                    //         fontSize: 16,
+                    //         fontWeight: FontWeight.w500,
+                    //         color: Color.fromARGB(255, 135, 135, 135),
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       child: Container(
+                    //         margin: const EdgeInsets.symmetric(horizontal: 10),
+                    //         height: 1,
+                    //         color: Colors.grey,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // //google sign-in button
+                    // SizedBox(
+                    //   width: double.infinity,
+                    //   height: 50,
+                    //   child: ElevatedButton(
+                    //     onPressed: () async {
+                    //       //sign in with google
+                    //       await Authentication.googleSignIn();
+                    //       //navigate to main navigation
+                    //
+                    //       Navigator.pushReplacement(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //           builder: (context) => const MainNavigation(),
+                    //         ),
+                    //       );
+                    //     },
+                    //     style: ElevatedButton.styleFrom(
+                    //       backgroundColor: const Color(0xffEEF5FF),
+                    //       elevation: 0,
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(8),
+                    //       ),
+                    //     ),
+                    //     child: const Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Image(
+                    //           image: AssetImage('assets/images/google.png'),
+                    //           width: 30,
+                    //         ),
+                    //         SizedBox(
+                    //           width: 10,
+                    //         ),
+                    //         Text(
+                    //           "Sign In with Google",
+                    //           style: TextStyle(
+                    //             fontSize: 16,
+                    //             fontWeight: FontWeight.w500,
+                    //             color: Colors.black,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
