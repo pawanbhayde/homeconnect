@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpus/pages/sheltersignin.dart';
 import 'package:helpus/pages/signin.dart';
 import 'package:helpus/pages/signup.dart';
 import 'package:helpus/utilities/colors.dart';
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 child: const Text(
-                  "Sign In with Email",
+                  "Login as a User",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return const SignUp();
+                        return ShelterSignInPage();
                       },
                     ),
                   );
@@ -82,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 child: const Text(
-                  "Sign Up with Email",
+                  "Login as a Shelter",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
