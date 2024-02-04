@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/model/home_shelter.dart';
+import 'package:helpus/pages/historypage.dart';
 import 'package:helpus/pages/home_shelter_detail.dart';
 import 'package:helpus/pages/profile_page.dart';
+import 'package:helpus/pages/shelter_homepage.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ShelterNavigation extends StatefulWidget {
@@ -35,14 +37,15 @@ class _ShelterNavigationState extends State<ShelterNavigation> {
 
     final List<Widget> pages = [
       // Shelter Detail Page
-      HomeShelterDetails(
-        title: homeShelter!.name,
-        phone: homeShelter!.phone,
-        category: homeShelter!.category,
-        id: homeShelter!.id,
-      ),
+      // HomeShelterDetails(
+      //   title: homeShelter!.name,
+      //   phone: homeShelter!.phone,
+      //   category: homeShelter!.category,
+      //   id: homeShelter!.id,
+      // ),
+      ShelterHomePage(),
       // History Page
-      const Placeholder(),
+      const HistoryPage(),
       const ProfileScreen(),
     ];
 
