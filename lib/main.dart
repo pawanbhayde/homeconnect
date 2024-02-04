@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/apikey.env';
-import 'package:helpus/pages/city_input_screen.dart';
 import 'package:helpus/pages/navigator.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:helpus/pages/splash_screen.dart';

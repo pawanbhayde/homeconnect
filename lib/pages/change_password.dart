@@ -34,36 +34,125 @@ class _ChangePasswodState extends State<ChangePasswod> {
     });
   }
 
+  // void _changePassword() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     try {
+  //       // Current password verified, proceed with update
+  //       final userAttributes =
+  //           UserAttributes(password: _newPasswordController.text);
+  //       final response = await supabase.auth.updateUser(userAttributes);
+  //
+  //       if (response.user != null) {
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(
+  //             content: const Text('Password changed successfully'),
+  //             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+  //             showCloseIcon: true,
+  //             behavior: SnackBarBehavior.floating,
+  //             dismissDirection: DismissDirection.startToEnd,
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(10.0),
+  //             ),
+  //           ),
+  //         );
+  //
+  //         Navigator.pop(context);
+  //
+  //         // Consider signing out or prompting for re-authentication
+  //         Authentication.signOut(context);
+  //       } else {
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(
+  //             content: Text('Error changing password: $response'),
+  //             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+  //             showCloseIcon: true,
+  //             behavior: SnackBarBehavior.floating,
+  //             dismissDirection: DismissDirection.startToEnd,
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(10.0),
+  //             ),
+  //           ),
+  //         );
+  //       }
+  //     } catch (error) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: const Text('Invalid current password'),
+  //           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+  //           showCloseIcon: true,
+  //           behavior: SnackBarBehavior.floating,
+  //           dismissDirection: DismissDirection.startToEnd,
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(10.0),
+  //           ),
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
+
   void _changePassword() async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        // Current password verified, proceed with update
-        final userAttributes =
-            UserAttributes(password: _newPasswordController.text);
-        final response = await supabase.auth.updateUser(userAttributes);
+    final user = supabase.auth.currentSession?.providerToken;
+    if (user == 'google') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+              'You are logged in with Google. Please change your password through Google\'s account management page.'),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          showCloseIcon: true,
+          behavior: SnackBarBehavior.floating,
+          dismissDirection: DismissDirection.startToEnd,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      );
+    } else {
+      if (_formKey.currentState!.validate()) {
+        try {
+          // Current password verified, proceed with update
+          final userAttributes =
+              UserAttributes(password: _newPasswordController.text);
+          final response = await supabase.auth.updateUser(userAttributes);
 
-        if (response.user != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Password changed successfully'),
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              showCloseIcon: true,
-              behavior: SnackBarBehavior.floating,
-              dismissDirection: DismissDirection.startToEnd,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
+          if (response.user != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Password changed successfully'),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                showCloseIcon: true,
+                behavior: SnackBarBehavior.floating,
+                dismissDirection: DismissDirection.startToEnd,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
               ),
-            ),
-          );
+            );
 
-          Navigator.pop(context);
+            Navigator.pop(context);
 
-          // Consider signing out or prompting for re-authentication
-          Authentication.signOut(context);
-        } else {
+            // Consider signing out or prompting for re-authentication
+            Authentication.signOut(context);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Error changing password: $response'),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                showCloseIcon: true,
+                behavior: SnackBarBehavior.floating,
+                dismissDirection: DismissDirection.startToEnd,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            );
+          }
+        } catch (error) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Error changing password: $response'),
+              content: const Text('Invalid current password'),
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               showCloseIcon: true,
               behavior: SnackBarBehavior.floating,
@@ -74,19 +163,6 @@ class _ChangePasswodState extends State<ChangePasswod> {
             ),
           );
         }
-      } catch (error) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Invalid current password'),
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            showCloseIcon: true,
-            behavior: SnackBarBehavior.floating,
-            dismissDirection: DismissDirection.startToEnd,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-        );
       }
     }
   }

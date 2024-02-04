@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/user.dart';
-import 'package:helpus/pages/addhome.dart';
 import 'package:helpus/pages/home_shelter_detail.dart';
 import 'package:helpus/widgets/custom_category_card.dart';
 import 'package:helpus/widgets/custom_image_carousel.dart';
@@ -302,18 +301,18 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xff395EE7),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const AddHomeShelter();
-          }));
-        },
-        child: const Icon(
-          Icons.add,
-          color: Color.fromARGB(255, 255, 255, 255),
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: const Color(0xff395EE7),
+      //   onPressed: () {
+      //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //       return const AddHomeShelter();
+      //     }));
+      //   },
+      //   child: const Icon(
+      //     Icons.add,
+      //     color: Color.fromARGB(255, 255, 255, 255),
+      //   ),
+      // ),
     );
   }
 }

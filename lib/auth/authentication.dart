@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helpus/auth/database.dart';
+import 'package:helpus/model/home_shelter.dart';
 import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/navigator.dart';
 import 'package:helpus/pages/signin.dart';
@@ -11,7 +12,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final supabase = Supabase.instance.client;
 
 class Authentication {
-  //---------------------- Sign Up with email and password
+  //========= User Authentication =========
+
+  //------- Sign Up User with email and password
   static Future<void> signUpWithEmail(
       {required BuildContext context,
       required String email,
@@ -118,7 +121,7 @@ class Authentication {
     }
   }
 
-  //----------- sign up with google
+  //----------- sign up User with google
   static Future<void> signUpWithGoogle(BuildContext context) async {
     final sm = ScaffoldMessenger.of(context);
 
@@ -225,7 +228,7 @@ class Authentication {
     }
   }
 
-  //----------- Sign in with email and password
+  //----------- Sign in User with email and password
   static Future<void> signInWithEmail(
       {required BuildContext context,
       required String email,
@@ -328,7 +331,7 @@ class Authentication {
     }
   }
 
-  //------------ Sign In with Google
+  //------------ Sign In User with Google
   static Future<AuthResponse> googleSignIn() async {
     const webClientId =
         '232200069198-pl2uco2rt6q356dbnphrbl3pnv3mmu7g.apps.googleusercontent.com';
@@ -407,7 +410,7 @@ class Authentication {
     }
   }
 
-  //------ get current  user details
+  //------ get current user details
 
   static Future<UserProfile?> getCurrentUser() async {
     // Get the current user ID
@@ -442,5 +445,105 @@ class Authentication {
 
     // If no user found with both IDs, return null
     return null;
+  }
+
+  //========= HomeShelter Authentication =========
+
+  //----------- Sign Up Shelter with email and password
+  static Future<void> signUpShelterWithEmail({
+    required BuildContext context,
+    required String email,
+    required String password,
+  }) async {
+    final sm = ScaffoldMessenger.of(context);
+
+    try {
+      // Attempt to sign up the user
+      final authResponse =
+          await supabase.auth.signUp(email: email, password: password);
+
+      // Check if the sign-up was successful
+      if (authResponse.user != null) {
+        sm.showSnackBar(
+          SnackBar(
+            content: const Text(
+              "Sign Up Successful.",
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+        );
+      } else {
+        // Display an appropriate error message
+        sm.showSnackBar(
+          SnackBar(
+            content: const Text("Sign-Up failed. Please try again."),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+        );
+      }
+    } catch (error) {
+      // Handle specific errors, e.g., if user is already registered
+      if (error is AuthException) {
+        // for user friendly error message, nested "if"
+        if (error.statusCode == 400) {
+          sm.showSnackBar(
+            SnackBar(
+              content: const Text(" User already exists. Please Sign In "),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.startToEnd,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          );
+        } else {
+          // Handle other AuthException errors
+          sm.showSnackBar(
+            SnackBar(
+              content: const Text(
+                "An Error Occured",
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              dismissDirection: DismissDirection.startToEnd,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          );
+        }
+      }
+    }
+  }
+
+  //get current shelter details from supabase table
+  static Future<HomeShelter?> getCurrentShelterDetails(String? email) async {
+    final response = await supabase
+        .from('HomeShelter')
+        .select()
+        .eq('email', email!)
+        .single();
+
+    if (response.isNotEmpty) {
+      final shelter = HomeShelter.fromMap(response);
+      return shelter;
+    } else {
+      throw Exception('Shelter not found');
+    }
   }
 }
