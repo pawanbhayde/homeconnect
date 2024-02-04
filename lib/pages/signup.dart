@@ -186,14 +186,35 @@ class _SignUpState extends State<SignUp> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             onPressed: () async {
-                              //sign up with email and password
-                              await Authentication.signUpWithEmail(
-                                context: context,
-                                email: emailController.text,
-                                password: passwordController.text,
-                                name: nameController.text,
-                                city: cityController.text,
-                              );
+                              if (_formKey.currentState!.validate()) {
+                                //sign up with email and password
+                                await Authentication.signUpWithEmail(
+                                  context: context,
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  name: nameController.text,
+                                  city: cityController.text,
+                                );
+                                //navigate to main navigation
+                              } else {
+                                //all fields are not filled
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: const Text(
+                                        'Please fill in all the fields'),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                    showCloseIcon: true,
+                                    behavior: SnackBarBehavior.floating,
+                                    dismissDirection:
+                                        DismissDirection.startToEnd,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                );
+                              }
+
                               //navigate to main navigation
                             },
                             child: const Text('Sign Up',
@@ -265,33 +286,14 @@ class _SignUpState extends State<SignUp> {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            //sign up with google
-                            await Authentication.signUpWithGoogle(context);
+                          //sign up with google
+                          await Authentication.signUpWithGoogle(context);
 
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CityInputScreen()),
-                            );
-                          } else {
-                            //all fields are not filled
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content:
-                                    const Text('Please fill in all the fields'),
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                showCloseIcon: true,
-                                behavior: SnackBarBehavior.floating,
-                                dismissDirection: DismissDirection.startToEnd,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                            );
-                          }
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CityInputScreen()),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xffEEF5FF),

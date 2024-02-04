@@ -11,40 +11,6 @@ final supabase = Supabase.instance.client;
 
 class DatabaseService {
   //insert data into supabase table
-  static Future<PostgrestResponse?> addShelter({
-    required String name,
-    required String description,
-    required int phone,
-    required String category,
-    required String street,
-    required String city,
-    required String state,
-    //  required CroppedFile crop,
-  }) async {
-    final data = {
-      'name': name,
-      'description': description,
-      'phone': phone,
-      'category': category,
-      'street': street,
-      'city': city,
-      'state': state,
-    };
-
-    try {
-      PostgrestResponse? response =
-          await supabase.from('HomeShelter').insert(data);
-
-      if (response?.data != null) {
-        print(response?.data);
-      } else {
-        print(data);
-      }
-    } catch (error) {
-      print(error);
-    }
-    return null;
-  }
 
   //get stream of data from supabase table
   static SupabaseStreamFilterBuilder getShelterStream() {
@@ -64,6 +30,8 @@ class DatabaseService {
       throw Exception('Shelter not found');
     }
   }
+
+  //==========User Details Storage================
 
   //--------- store users google sign in details into user table
   static Future<void> storeUserDetails(BuildContext context, String name,
@@ -150,6 +118,77 @@ class DatabaseService {
         .update({'profile_picture': urlResponse}).eq('userid', userId);
 
     return urlResponse;
+  }
+
+  //========Home Shelter Details Storage================
+
+  //store shelter details into supabase table
+  static Future<PostgrestResponse?> storeShelterDetails({
+    required String email,
+    required String name,
+    required String description,
+    required int phone,
+    required String category,
+    required String street,
+    required String city,
+    required String state,
+    required String banner,
+    required BuildContext context,
+    //  required CroppedFile crop,
+  }) async {
+    final data = {
+      'email': email,
+      'name': name,
+      'description': description,
+      'phone': phone,
+      'category': category,
+      'street': street,
+      'city': city,
+      'state': state,
+      'banner': banner,
+    };
+
+    final sm = ScaffoldMessenger.of(context);
+
+    try {
+      final response = await supabase.from('HomeShelter').insert(data);
+
+      print(response);
+
+      if (response.error == null) {
+        sm.showSnackBar(
+          SnackBar(
+            content: const Text("Shelter Details Stored Successfully"),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+        );
+      } else {
+        sm.showSnackBar(
+          SnackBar(
+            content: const Text(
+              "Error storing shelter details",
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            dismissDirection: DismissDirection.startToEnd,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+        );
+      }
+    } catch (error) {
+      print(error);
+    }
+
+    return null;
   }
 
   //upload Shelter Banner image to supabase storage
