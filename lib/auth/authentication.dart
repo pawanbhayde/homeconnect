@@ -5,7 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/home_shelter.dart';
 import 'package:helpus/model/user.dart';
-import 'package:helpus/pages/navigator.dart';
+import 'package:helpus/pages/user_navigator.dart';
+import 'package:helpus/pages/sheltersignin.dart';
 import 'package:helpus/pages/signin.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -44,6 +45,15 @@ class Authentication {
             ),
           ),
         );
+
+        // After successful signup, insert into userType table
+        final typedata = {
+          'email': email,
+          'user_type': 'user',
+        };
+        final typeresponse = await supabase.from('userType').insert(typedata);
+
+        print(typeresponse);
 
         // store user details in user table
         await DatabaseService.storeUserDetails(
@@ -145,6 +155,15 @@ class Authentication {
           ),
         );
 
+        // After successful signup, insert into userType table
+        await supabase.from('userType').insert([
+          {
+            'email': authResponse.user!.userMetadata?['email'] ??
+                authResponse.user!.email!,
+            'user_type': 'user',
+          }
+        ]);
+
         // store user details in user table
         await DatabaseService.storeUserDetails(
           context,
@@ -158,7 +177,7 @@ class Authentication {
 
         // Navigate to the home page
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const MainNavigation()));
+            MaterialPageRoute(builder: (context) => const UserNavigation()));
       } else {
         // Display an appropriate error message
         sm.showSnackBar(
@@ -259,7 +278,7 @@ class Authentication {
         );
 
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const MainNavigation()));
+            MaterialPageRoute(builder: (context) => const UserNavigation()));
 
         // Navigate to the home page
       } else {
@@ -335,11 +354,6 @@ class Authentication {
   static Future<AuthResponse> googleSignIn() async {
     const webClientId =
         '232200069198-pl2uco2rt6q356dbnphrbl3pnv3mmu7g.apps.googleusercontent.com';
-
-    ///
-    ///
-    /// iOS Client ID that you registered with Google Cloud.
-    //const iosClientId = 'my-ios.apps.googleusercontent.com';
 
     // Google sign in on Android will work without providing the Android
     // Client ID registered on Google Cloud.
@@ -454,6 +468,13 @@ class Authentication {
     required BuildContext context,
     required String email,
     required String password,
+    required String name,
+    required String description,
+    required String category,
+    required String street,
+    required String city,
+    required String state,
+    required String phone,
   }) async {
     final sm = ScaffoldMessenger.of(context);
 
@@ -478,6 +499,32 @@ class Authentication {
             ),
           ),
         );
+        // After successful signup, insert into userType table
+        final typedata = {
+          'email': email,
+          'user_type': 'shelter',
+        };
+        final typeresponse = await supabase.from('userType').insert(typedata);
+
+        print(typeresponse);
+
+        // store shelter details in Home shelter table
+        await DatabaseService.storeShelterDetails(
+            email: email,
+            name: name,
+            description: description,
+            category: category,
+            street: street,
+            city: city,
+            state: state,
+            phone: int.parse(phone),
+            banner: '',
+            context: context);
+
+        // Navigate to the home page
+
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => ShelterSignInPage()));
       } else {
         // Display an appropriate error message
         sm.showSnackBar(

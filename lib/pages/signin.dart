@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
-import 'package:helpus/pages/navigator.dart';
+import 'package:helpus/pages/user_navigator.dart';
 import 'package:helpus/pages/signup.dart';
 import 'package:helpus/utilities/colors.dart';
 
@@ -214,7 +214,7 @@ class _SignInPageState extends State<SignInPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const MainNavigation(),
+                              builder: (context) => const UserNavigation(),
                             ),
                           );
                         },

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
-import 'package:helpus/pages/navigator.dart';
+import 'package:helpus/pages/user_navigator.dart';
 import 'package:helpus/utilities/colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -110,7 +110,7 @@ class _CityInputScreenState extends State<CityInputScreen> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const MainNavigation()));
+                              builder: (context) => const UserNavigation()));
                     } catch (e) {
                       print(e);
                     }

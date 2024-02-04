@@ -1,8 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
-import 'package:helpus/auth/database.dart';
-import 'package:helpus/pages/sheltersignin.dart';
+import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/utilities/colors.dart';
 import 'package:helpus/widgets/custom_category_dropdown.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -32,7 +31,6 @@ class _ShelterSignUpState extends State<ShelterSignUp> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final sm = ScaffoldMessenger.of(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -51,78 +49,35 @@ class _ShelterSignUpState extends State<ShelterSignUp> {
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
               try {
-                // await DatabaseService.addShelter(
-                //   email: emailController.text,
-                //   name: nameController.text,
-                //   description: descriptionController.text,
-                //   category: categoryController.text,
-                //   street: streetController.text,
-                //   city: cityController.text,
-                //   state: stateController.text,
-                //   phone: int.parse(phoneController.text),
-                // );
-
-                //sign up with email and password
-
-                final authResponse = await supabase.auth.signUp(
-                    email: emailController.text,
-                    password: passwordController.text);
-
-                // Check if the sign-up was successful
-                if (authResponse.user != null) {
-                  sm.showSnackBar(
-                    SnackBar(
-                      content: const Text(
-                        "Sign Up Successful.",
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      showCloseIcon: true,
-                      behavior: SnackBarBehavior.floating,
-                      dismissDirection: DismissDirection.startToEnd,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  );
-
-                  // store shelter details in Home shelter table
-                  await DatabaseService.storeShelterDetails(
-                      email: emailController.text,
-                      name: nameController.text,
-                      description: descriptionController.text,
-                      category: categoryController.text,
-                      street: streetController.text,
-                      city: cityController.text,
-                      state: stateController.text,
-                      phone: int.parse(phoneController.text),
-                      banner: '',
-                      context: context);
-
-                  // Navigate to the home page
-
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ShelterSignInPage()));
-                } else {
-                  // Display an appropriate error message
-                  sm.showSnackBar(
-                    SnackBar(
-                      content: const Text("Sign-Up failed. Please try again."),
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      showCloseIcon: true,
-                      behavior: SnackBarBehavior.floating,
-                      dismissDirection: DismissDirection.startToEnd,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  );
-                }
+                Authentication.signUpShelterWithEmail(
+                  context: context,
+                  email: emailController.text,
+                  password: passwordController.text,
+                  name: nameController.text,
+                  description: descriptionController.text,
+                  category: categoryController.text,
+                  street: streetController.text,
+                  city: cityController.text,
+                  state: stateController.text,
+                  phone: phoneController.text,
+                );
               } catch (e) {
                 print(e);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text(
+                      "An Error Occured",
+                    ),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    showCloseIcon: true,
+                    behavior: SnackBarBehavior.floating,
+                    dismissDirection: DismissDirection.startToEnd,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                );
               }
             } else {
               //all fields are not filled
