@@ -4,14 +4,14 @@ import 'package:helpus/pages/profile_page.dart';
 import 'package:helpus/pages/searchshelter.dart';
 import 'package:iconsax/iconsax.dart';
 
-class MainNavigation extends StatefulWidget {
-  const MainNavigation({Key? key}) : super(key: key);
+class UserNavigation extends StatefulWidget {
+  const UserNavigation({Key? key}) : super(key: key);
 
   @override
-  State<MainNavigation> createState() => _MainNavigationState();
+  State<UserNavigation> createState() => _UserNavigationState();
 }
 
-class _MainNavigationState extends State<MainNavigation> {
+class _UserNavigationState extends State<UserNavigation> {
   int selectedPage = 0;
   final List<Widget> pages = [
     const HomePage(),
