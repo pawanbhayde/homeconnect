@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/home_shelter.dart';
 import 'package:helpus/utilities/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeShelterDetails extends StatefulWidget {
   const HomeShelterDetails({
@@ -48,7 +49,7 @@ class _HomeShelterDetailsState extends State<HomeShelterDetails> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () => launch("tel://21213123123"),
           style: ElevatedButton.styleFrom(
             backgroundColor: primaryColor,
             padding: const EdgeInsets.symmetric(vertical: 15),

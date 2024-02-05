@@ -88,6 +88,7 @@ class _SignUpState extends State<SignUp> {
                           fontSize: 18,
                         ),
                         decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
                           labelText: 'Email',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -241,7 +242,6 @@ class _SignUpState extends State<SignUp> {
                               child: const Text('Login',
                                   style: TextStyle(
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w600,
                                   )),
                             ),
                           ],

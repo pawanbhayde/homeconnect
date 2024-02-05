@@ -173,7 +173,7 @@ class _ShelterSignInPageState extends State<ShelterSignInPage> {
                                       builder: (context) => ShelterSignUp()),
                                 );
                               },
-                              child: const Text('Create an account'),
+                              child: const Text('Sign Up'),
                             ),
                           ],
                         ),

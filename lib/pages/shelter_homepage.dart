@@ -89,7 +89,7 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
                     fontSize: 14,
                     color: Colors.grey,
                   ),
-                )
+                ),
               ],
             ),
           ),
