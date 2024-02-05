@@ -55,6 +55,7 @@ class _SignInPageState extends State<SignInPage> {
                       padding: EdgeInsets.all(20.0),
                       child: Text(
                         'Sign In to your Account',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -85,6 +86,7 @@ class _SignInPageState extends State<SignInPage> {
                           fontSize: 18,
                         ),
                         decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
                           labelText: 'Email',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -165,7 +167,7 @@ class _SignInPageState extends State<SignInPage> {
                                       builder: (context) => const SignUp()),
                                 );
                               },
-                              child: const Text('Create an account'),
+                              child: const Text('Sign Up'),
                             ),
                           ],
                         ),
