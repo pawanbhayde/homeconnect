@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
 
 class ShelterHomePage extends StatefulWidget {
-  const ShelterHomePage({super.key});
+  const ShelterHomePage({
+    super.key,
+    required this.title,
+    required this.id,
+    required this.category,
+    required this.phone,
+    required this.email,
+    required this.description,
+    required this.street,
+    required this.city,
+    required this.state,
+    required this.banner,
+  });
+
+  final int id;
+  final String title;
+  final String category;
+  final int phone;
+  final String email;
+  final String description;
+  final String street;
+  final String city;
+  final String state;
+  final String banner;
 
   @override
   State<ShelterHomePage> createState() => _ShelterHomePageState();
@@ -27,22 +50,24 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
               ),
             ),
             // Home Shelter Name
-            const Padding(
-              padding: EdgeInsets.all(20.0),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Eco Rustic Style Bali House',
-                    style: TextStyle(
+                    widget.title,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   // Home Shelter Address
                   Text(
-                    'Jl. Raya Kedewatan, Kedewatan, Ubud, Kabupaten Gianyar, Bali 80571',
-                    style: TextStyle(
+                    //address of the shelter
+                    widget.street + ', ' + widget.city + ', ' + widget.state,
+
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
                     ),
@@ -50,8 +75,8 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
                   const SizedBox(height: 10),
                   // Home Shelter Category
                   Text(
-                    'Category: Food',
-                    style: TextStyle(
+                    'Category: ' + widget.category,
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.black,
                     ),
@@ -60,8 +85,8 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
                   const SizedBox(height: 10),
                   // Home Shelter Phone
                   Text(
-                    'Phone: +62 361 977484',
-                    style: TextStyle(
+                    'Phone: ' + widget.phone.toString(),
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.black,
                     ),
@@ -69,15 +94,15 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
                   const SizedBox(height: 10),
                   // Home Shelter Email
                   Text(
-                    'Email: demo@gmail.com',
-                    style: TextStyle(
+                    'Email: ' + widget.email,
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 10),
                   // Home Shelter Description
-                  Text(
+                  const Text(
                     'Description: ',
                     style: TextStyle(
                       fontSize: 14,
@@ -85,8 +110,8 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
                     ),
                   ),
                   Text(
-                    "This is a description of the shelter. It is a place where people can come and get food and shelter. It is a safe place for people to come and get help. It is a place where people can come and get food and shelter. It is a safe place for people to come and get help. ",
-                    style: TextStyle(
+                    widget.description,
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
                     ),

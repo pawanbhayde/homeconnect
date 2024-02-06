@@ -9,6 +9,7 @@ class HomeShelter {
   final String city;
   final String state;
   final int phone;
+  final String banner;
 
   const HomeShelter({
     required this.id,
@@ -20,6 +21,7 @@ class HomeShelter {
     required this.city,
     required this.state,
     required this.phone,
+    required this.banner,
   });
 
   // Factory method to create a HomeShelter instance from a Map returned by Supabase
@@ -34,6 +36,7 @@ class HomeShelter {
       street: json['street'],
       city: json['city'],
       state: json['state'],
+      banner: json['banner'],
     );
   }
 
@@ -48,6 +51,7 @@ class HomeShelter {
       'city': city,
       'state': state,
       'phone': phone,
+      'banner': banner,
     };
   }
 
@@ -55,5 +59,5 @@ class HomeShelter {
   String toString() =>
       'HomeShelter{id:$id, email:$email , name: $name, description: $description, '
       'category: $category, street: $street, city: $city, '
-      'state: $state, phone: $phone}';
+      'state: $state, phone: $phone, banner: $banner}';
 }
