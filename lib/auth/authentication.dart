@@ -8,6 +8,7 @@ import 'package:helpus/model/user.dart';
 import 'package:helpus/pages/user_navigator.dart';
 import 'package:helpus/pages/sheltersignin.dart';
 import 'package:helpus/pages/signin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;
@@ -276,6 +277,20 @@ class Authentication {
             ),
           ),
         );
+
+        final userTypeResponse = await supabase
+            .from('userType')
+            .select('user_type')
+            .eq('email', email)
+            .single();
+
+        if (userTypeResponse.isNotEmpty) {
+          final userType = userTypeResponse['user_type'] as String;
+          final prefs = await SharedPreferences.getInstance();
+          final result = await prefs.setString('userType', userType);
+          print('User Type: $userType');
+          print('User Stored ?: $result');
+        }
 
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const UserNavigation()));
