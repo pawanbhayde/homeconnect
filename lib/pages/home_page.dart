@@ -192,7 +192,10 @@ class _HomePageState extends State<HomePage> {
                     } else if (snapshot.hasData) {
                       print(snapshot.data as List);
                       //filter data based on city
-                      final filteredData = snapshot.data as List;
+
+                      final filteredData = (snapshot.data as List)
+                          .where((element) => element['city'] == user?.city)
+                          .toList();
 
                       print(filteredData);
 

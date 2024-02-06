@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:helpus/auth/database.dart';
+import 'package:helpus/widgets/custom_history_card.dart';
 
 class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key});
+  const HistoryPage({
+    super.key,
+    required this.id,
+  });
+  final int id;
 
   @override
   State<HistoryPage> createState() => _HistoryPageState();
@@ -13,62 +19,61 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        forceMaterialTransparency: true,
+        centerTitle: true,
         title: const Text('History'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.grey[200],
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Person Name",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    "Email: demo@gmail.com",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Date: 12/12/2021",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
+        padding: const EdgeInsets.all(8.0),
+        child: StreamBuilder(
+          stream: DatabaseService.getCallerStream(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('An error occurred: ${snapshot.error}'),
+              );
+            } else if (snapshot.hasData) {
+              print(snapshot.data as List);
+              //filter data based on shelter id
+              final filteredData = (snapshot.data as List)
+                  .where((element) => element['shelterId'] == widget.id)
+                  .toList();
+
+              print('This is filtered Stream:$filteredData');
+
+              if (filteredData.isEmpty) {
+                return const Center(
+                  child: Text('No data available'),
+                );
+              } else {
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemCount: filteredData.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CustomHistoryCard(
+                        name: filteredData[index]['name'],
+                        email: filteredData[index]['email'],
+                        date: filteredData[index]['date'],
+                        time: filteredData[index]['time'],
                       ),
-                      const Spacer(),
-                      Text(
-                        "12:00 PM",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
+                    );
+                  },
+                );
+              }
+            } else {
+              return const Center(
+                child: Text('Unknown state'),
+              );
+            }
+          },
         ),
       ),
     );

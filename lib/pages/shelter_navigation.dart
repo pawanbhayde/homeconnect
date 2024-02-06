@@ -48,7 +48,9 @@ class _ShelterNavigationState extends State<ShelterNavigation> {
         city: homeShelter?.city ?? '',
         state: homeShelter?.state ?? '',
       ),
-      const HistoryPage(),
+      HistoryPage(
+        id: homeShelter?.id ?? 0,
+      ),
       const ProfileScreen(),
     ];
 
