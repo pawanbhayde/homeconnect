@@ -10,9 +10,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final supabase = Supabase.instance.client;
 
 class DatabaseService {
-  // Store the type of user user or shelter
-  static String userType = '';
-
   //get stream of data from supabase table
   static SupabaseStreamFilterBuilder getShelterStream() {
     return supabase.from('HomeShelter').stream(primaryKey: ['id']);

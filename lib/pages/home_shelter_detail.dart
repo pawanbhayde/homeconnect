@@ -49,7 +49,7 @@ class _HomeShelterDetailsState extends State<HomeShelterDetails> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ElevatedButton(
-          onPressed: () => launch("tel://21213123123"),
+          onPressed: () => launch("tel://${widget.phone}"),
           style: ElevatedButton.styleFrom(
             backgroundColor: primaryColor,
             padding: const EdgeInsets.symmetric(vertical: 15),

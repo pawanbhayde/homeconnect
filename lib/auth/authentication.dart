@@ -291,11 +291,9 @@ class Authentication {
           print('User Type: $userType');
           print('User Stored ?: $result');
         }
-
+        // Navigate to the home page
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const UserNavigation()));
-
-        // Navigate to the home page
       } else {
         // Display an appropriate error message
         sm.showSnackBar(

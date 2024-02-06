@@ -243,7 +243,6 @@ class _ShelterSignUpState extends State<ShelterSignUp> {
                 ),
                 //text field for home shelter name
                 SizedBox(
-                  height: 50,
                   child: TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: descriptionController,
