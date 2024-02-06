@@ -2,19 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
-import 'package:helpus/pages/shelter_navigation.dart';
-import 'package:helpus/pages/sheltersignup.dart';
+import 'package:helpus/pages/userPages/signup.dart';
+import 'package:helpus/pages/userPages/user_navigator.dart';
 import 'package:helpus/utilities/colors.dart';
 
-class ShelterSignInPage extends StatefulWidget {
+class SignInPage extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
-  ShelterSignInPage({super.key});
+  SignInPage({super.key});
 
   @override
-  State<ShelterSignInPage> createState() => _ShelterSignInPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _ShelterSignInPageState extends State<ShelterSignInPage> {
+class _SignInPageState extends State<SignInPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -54,7 +54,8 @@ class _ShelterSignInPageState extends State<ShelterSignInPage> {
                     const Padding(
                       padding: EdgeInsets.all(20.0),
                       child: Text(
-                        'Sign In as a Shelter',
+                        'Sign In to your Account',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -85,6 +86,7 @@ class _ShelterSignInPageState extends State<ShelterSignInPage> {
                           fontSize: 18,
                         ),
                         decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
                           labelText: 'Email',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -142,14 +144,6 @@ class _ShelterSignInPageState extends State<ShelterSignInPage> {
                                     context: context,
                                     email: emailController.text,
                                     password: passwordController.text);
-
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ShelterNavigation(),
-                                  ),
-                                );
                               }
                             },
                             child: const Text('Sign In',
@@ -170,7 +164,7 @@ class _ShelterSignInPageState extends State<ShelterSignInPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ShelterSignUp()),
+                                      builder: (context) => const SignUp()),
                                 );
                               },
                               child: const Text('Sign Up'),
@@ -178,6 +172,82 @@ class _ShelterSignInPageState extends State<ShelterSignInPage> {
                           ],
                         ),
                       ],
+                    ),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 1,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const Text(
+                          "Or Continue with",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromARGB(255, 135, 135, 135),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 1,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    //google sign-in button
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          //sign in with google
+                          await Authentication.googleSignIn();
+                          //navigate to main navigation
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const UserNavigation(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xffEEF5FF),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image(
+                              image: AssetImage('assets/images/google.png'),
+                              width: 30,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Sign In with Google",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),

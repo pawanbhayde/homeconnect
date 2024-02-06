@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:helpus/pages/home_page.dart';
-import 'package:helpus/pages/profile_page.dart';
-import 'package:helpus/pages/searchshelter.dart';
+import 'package:helpus/pages/userPages/home_page.dart';
+import 'package:helpus/pages/userPages/profile_page.dart';
+import 'package:helpus/pages/userPages/searchshelter.dart';
 import 'package:iconsax/iconsax.dart';
 
 class UserNavigation extends StatefulWidget {

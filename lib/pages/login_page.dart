@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:helpus/pages/sheltersignin.dart';
-import 'package:helpus/pages/signin.dart';
-import 'package:helpus/pages/signup.dart';
+import 'package:helpus/pages/shelter%20pages/sheltersignin.dart';
+import 'package:helpus/pages/userPages/signin.dart';
 import 'package:helpus/utilities/colors.dart';
 
 class LoginPage extends StatefulWidget {

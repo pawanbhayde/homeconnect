@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/apikey.env';
-import 'package:helpus/pages/user_navigator.dart';
-import 'package:helpus/pages/shelter_navigation.dart';
+import 'package:helpus/pages/shelter%20pages/shelter_navigation.dart';
+import 'package:helpus/pages/userPages/user_navigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:helpus/pages/splash_screen.dart';
