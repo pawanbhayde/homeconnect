@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:glass/glass.dart';
+import 'package:helpus/model/home_shelter.dart';
 
 class NeedFirstBox extends StatelessWidget {
-  const NeedFirstBox({
+  HomeShelter? shelterDetails;
+  NeedFirstBox({
     super.key,
     required this.title,
     required this.category,
