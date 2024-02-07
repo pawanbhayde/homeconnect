@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/model/home_shelter.dart';
-import 'package:helpus/pages/historypage.dart';
-import 'package:helpus/pages/home_shelter_detail.dart';
-import 'package:helpus/pages/profile_page.dart';
-import 'package:helpus/pages/shelter_homepage.dart';
+import 'package:helpus/pages/shelter%20pages/historypage.dart';
+import 'package:helpus/pages/shelter%20pages/shelter_homepage.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ShelterNavigation extends StatefulWidget {
@@ -23,30 +21,35 @@ class _ShelterNavigationState extends State<ShelterNavigation> {
     super.initState();
     //get current user email
     final String? email = supabase.auth.currentUser!.email;
+    print(email);
 
-    // Get user profile
+    //get current home shelter details
     Authentication.getCurrentShelterDetails(email).then((value) => setState(() {
           homeShelter = value;
           print(homeShelter?.toMap());
         }));
   }
 
+  int selectedPage = 0;
+
   @override
   Widget build(BuildContext context) {
-    int selectedPage = 0;
-
     final List<Widget> pages = [
-      // Shelter Detail Page
-      // HomeShelterDetails(
-      //   title: homeShelter!.name,
-      //   phone: homeShelter!.phone,
-      //   category: homeShelter!.category,
-      //   id: homeShelter!.id,
-      // ),
-      ShelterHomePage(),
-      // History Page
-      const HistoryPage(),
-      const ProfileScreen(),
+      ShelterHomePage(
+        id: homeShelter?.id ?? 0,
+        title: homeShelter?.name ?? '',
+        category: homeShelter?.category ?? '',
+        phone: homeShelter?.phone ?? 123456789,
+        email: homeShelter?.email ?? '',
+        description: homeShelter?.description ?? '',
+        banner: homeShelter?.banner ?? '',
+        street: homeShelter?.street ?? '',
+        city: homeShelter?.city ?? '',
+        state: homeShelter?.state ?? '',
+      ),
+      HistoryPage(
+        id: homeShelter?.id ?? 0,
+      ),
     ];
 
     return Scaffold(

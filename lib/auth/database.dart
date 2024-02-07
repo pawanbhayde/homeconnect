@@ -10,12 +10,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final supabase = Supabase.instance.client;
 
 class DatabaseService {
-  // Store the type of user user or shelter
-  static String userType = '';
-
   //get stream of data from supabase table
   static SupabaseStreamFilterBuilder getShelterStream() {
     return supabase.from('HomeShelter').stream(primaryKey: ['id']);
+  }
+
+  //get stream of data for caller from supabase table
+  static SupabaseStreamFilterBuilder getCallerStream() {
+    return supabase.from('caller').stream(primaryKey: ['id']);
   }
 
   //get shelter details from supabase table
@@ -227,5 +229,38 @@ class DatabaseService {
         .update({'bannerImage': urlResponse}).eq('id', shelterName);
 
     return urlResponse;
+  }
+
+  //store caller details into supabase table
+  static Future<PostgrestResponse?> storeCallerDetails({
+    required String name,
+    required String email,
+    required DateTime date,
+    required TimeOfDay time,
+    required int shelterId,
+  }) async {
+    final data = {
+      'name': name,
+      'email': email,
+      'date': date.toString(),
+      'time': '${time.hour}:${time.minute}',
+      'shelterId': shelterId,
+    };
+
+    try {
+      final response = await supabase.from('caller').insert(data);
+
+      print(response);
+
+      if (response.error == null) {
+        print("Caller Details Stored Successfully");
+      } else {
+        print("Error storing caller details");
+      }
+    } catch (error) {
+      print('This is error from storeCallerDetails $error');
+    }
+
+    return null;
   }
 }

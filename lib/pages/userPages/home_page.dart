@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/user.dart';
-import 'package:helpus/pages/home_shelter_detail.dart';
+import 'package:helpus/pages/userPages/donation_category.dart';
+import 'package:helpus/pages/userPages/home_shelter_detail.dart';
 import 'package:helpus/widgets/custom_category_card.dart';
 import 'package:helpus/widgets/custom_image_carousel.dart';
 import 'package:helpus/widgets/custom_near_shelter_card.dart';
 import 'package:helpus/widgets/custom_shalter_card.dart';
-
-import 'donation_category.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -192,7 +191,10 @@ class _HomePageState extends State<HomePage> {
                     } else if (snapshot.hasData) {
                       print(snapshot.data as List);
                       //filter data based on city
-                      final filteredData = snapshot.data as List;
+
+                      final filteredData = (snapshot.data as List)
+                          .where((element) => element['city'] == user?.city)
+                          .toList();
 
                       print(filteredData);
 

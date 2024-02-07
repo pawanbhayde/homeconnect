@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/user.dart';
-import 'package:helpus/pages/home_shelter_detail.dart';
+import 'package:helpus/pages/userPages/home_shelter_detail.dart';
 import 'package:helpus/widgets/custom_shalter_card.dart';
 
 class SearchHomeShelter extends StatefulWidget {

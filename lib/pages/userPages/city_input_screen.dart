@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
-import 'package:helpus/pages/user_navigator.dart';
+import 'package:helpus/pages/userPages/user_navigator.dart';
 import 'package:helpus/utilities/colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
