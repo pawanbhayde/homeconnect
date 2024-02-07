@@ -199,7 +199,7 @@ class DatabaseService {
     required String filePath,
     required String storagePath,
     required String imageExtension,
-    required String shelterName,
+    required int shelterId,
   }) async {
     final file = File(filePath);
     final bytes = await file.readAsBytes();
@@ -226,7 +226,7 @@ class DatabaseService {
     //update image url to supabase table
     await supabase
         .from('HomeShelter')
-        .update({'bannerImage': urlResponse}).eq('id', shelterName);
+        .update({'banner': urlResponse}).eq('id', shelterId);
 
     return urlResponse;
   }

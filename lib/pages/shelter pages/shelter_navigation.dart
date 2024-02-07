@@ -37,15 +37,6 @@ class _ShelterNavigationState extends State<ShelterNavigation> {
     final List<Widget> pages = [
       ShelterHomePage(
         id: homeShelter?.id ?? 0,
-        title: homeShelter?.name ?? '',
-        category: homeShelter?.category ?? '',
-        phone: homeShelter?.phone ?? 123456789,
-        email: homeShelter?.email ?? '',
-        description: homeShelter?.description ?? '',
-        banner: homeShelter?.banner ?? '',
-        street: homeShelter?.street ?? '',
-        city: homeShelter?.city ?? '',
-        state: homeShelter?.state ?? '',
       ),
       HistoryPage(
         id: homeShelter?.id ?? 0,
@@ -69,7 +60,6 @@ class _ShelterNavigationState extends State<ShelterNavigation> {
             BottomNavigationBarItem(icon: Icon(Iconsax.home), label: "Home"),
             BottomNavigationBarItem(
                 icon: Icon(Iconsax.search_normal), label: "Search"),
-            BottomNavigationBarItem(icon: Icon(Iconsax.user), label: "Account")
           ]),
     );
   }
