@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/auth/database.dart';
+import 'package:helpus/pages/splash_screen.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ShelterHomePage extends StatefulWidget {
   const ShelterHomePage({
@@ -17,9 +20,11 @@ class ShelterHomePage extends StatefulWidget {
 }
 
 class _ShelterHomePageState extends State<ShelterHomePage> {
-  pickImage(BuildContext context, {required userId, required shelterId}) async {
+  pickImage(BuildContext context, {required shelterId}) async {
     final ImagePicker picker = ImagePicker();
     final ImageCropper cropper = ImageCropper();
+    final supabase = Supabase.instance.client;
+
     showBottomSheet(
         backgroundColor: const Color(0xffF3F2F5),
         // const Color(0xff395EE7),
@@ -88,7 +93,8 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
                                 await DatabaseService.uploadShelterBanner(
                               shelterId: shelterId,
                               filePath: crop.path,
-                              storagePath: '/$userId/banner',
+                              storagePath:
+                                  '/${supabase.auth.currentUser!.id}/banner',
                               imageExtension: imageExtension,
                             );
 
@@ -181,7 +187,8 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
                                 await DatabaseService.uploadShelterBanner(
                               shelterId: shelterId,
                               filePath: crop.path,
-                              storagePath: '/$userId/banner',
+                              storagePath:
+                                  '/${supabase.auth.currentUser!.id}/banner',
                               imageExtension: imageExtension,
                             );
 
@@ -250,6 +257,47 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> showMyDialog() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Logout ?'),
+            content: const SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('This will sign you out of the app'),
+                  Text('Are you sure?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Logout'),
+                onPressed: () async {
+                  await Authentication.signOut(context);
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SplashScreen(),
+                      ),
+                      (route) => false);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return StreamBuilder(
         stream: DatabaseService.getShelterStream(),
         builder: (context, snapshot) {
@@ -262,7 +310,6 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
               child: Text('An error occurred: ${snapshot.error}'),
             );
           } else if (snapshot.hasData) {
-            final event = snapshot.data;
             // Use the event to update the UI.
             final filteredData = (snapshot.data as List)
                 .where((element) => element['id'] == widget.id)
@@ -276,63 +323,30 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Home Shelter Name
-                    Stack(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.4,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: filteredData[0]['banner'] == null ||
-                                    filteredData[0]['banner'] == ''
-                                ? Container(
-                                    color: const Color(0xffF3F2F5),
-                                    child: const Icon(
-                                      Iconsax.gallery_add,
-                                      size: 50,
-                                    ),
-                                  )
-                                : Image.network(
-                                    filteredData[0]['banner'],
-                                    fit: BoxFit.cover,
-                                  ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: GestureDetector(
-                            onTap: () {
-                              pickImage(
-                                shelterId: filteredData[0]['id'],
-                                context,
-                                userId: supabase.auth.currentUser!.id,
-                              );
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
-                                color: const Color(0xff395EE7),
+                    SizedBox(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: ClipRRect(
+                        child: filteredData[0]['banner'] == null ||
+                                filteredData[0]['banner'] == ''
+                            ? Container(
+                                color: const Color(0xffF3F2F5),
+                                child: const Icon(
+                                  Iconsax.gallery_add,
+                                  size: 50,
+                                ),
+                              )
+                            : Image.network(
+                                filteredData[0]['banner'],
+                                fit: BoxFit.cover,
                               ),
-                              child: const Icon(
-                                color: Colors.white,
-                                Iconsax.edit,
-                                size: 30,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
 
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -398,6 +412,68 @@ class _ShelterHomePageState extends State<ShelterHomePage> {
                             style: const TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
+                            ),
+                          ),
+
+                          //update banner button
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color(0xff395EE7)),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                pickImage(context, shelterId: widget.id);
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 15.0),
+                                child: Text(
+                                  'Update Banner',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          //Logout Button
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color(0xff395EE7)),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                showMyDialog();
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 15.0),
+                                child: Text(
+                                  'Logout',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ],
