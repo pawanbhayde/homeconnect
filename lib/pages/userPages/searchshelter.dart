@@ -114,6 +114,7 @@ class _SearchHomeShelterState extends State<SearchHomeShelter> {
                         return LatestShelter(
                           title: filteredData[index]['name'],
                           category: filteredData[index]['category'],
+                          image: filteredData[index]['banner'],
                           //navigate to shelter details page with data when pressed
                           onPressed: () {
                             Navigator.push(context,

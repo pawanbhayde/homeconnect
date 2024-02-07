@@ -29,7 +29,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(20.0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: primaryColor,
         ),
         child: Center(

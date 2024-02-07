@@ -111,6 +111,7 @@ class DonationCategoryPage extends StatelessWidget {
                       return LatestShelter(
                         title: filteredData[index]['name'],
                         category: filteredData[index]['category'],
+                        image: filteredData[index]['banner'],
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
