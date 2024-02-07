@@ -111,18 +111,23 @@ class _HomeShelterDetailsState extends State<HomeShelterDetails> {
                           // topRight: Radius.circular(20),
                         ),
                         image: DecorationImage(
-                          image: widget.category == 'Food'
-                              ? const AssetImage('assets/images/food.png')
-                              : widget.category == 'Clothes'
-                                  ? const AssetImage('assets/images/cloths.png')
-                                  : widget.category == 'Education'
+                          image: shelterDetails!.banner != null
+                              ? NetworkImage(shelterDetails!.banner)
+                              : widget.category == 'Food'
+                                  ? const AssetImage('assets/images/food.png')
+                                      as ImageProvider<Object>
+                                  : widget.category == 'Clothes'
                                       ? const AssetImage(
-                                          'assets/images/education.png')
-                                      : widget.category == 'Charity'
+                                          'assets/images/cloths.png')
+                                      : widget.category == 'Education'
                                           ? const AssetImage(
-                                              'assets/images/charity.png')
-                                          : const AssetImage(
-                                              'assets/images/ngo-banner-1.png'),
+                                              'assets/images/education.png')
+                                          : widget.category == 'Charity'
+                                              ? const AssetImage(
+                                                  'assets/images/charity.png')
+                                              : const AssetImage(
+                                                  'assets/images/ngo-banner-1.png'),
+                          // image: NetworkImage(shelterDetails!.banner),
                           fit: BoxFit.cover,
                         ),
                       ),
