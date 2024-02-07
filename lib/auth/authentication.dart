@@ -5,9 +5,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/home_shelter.dart';
 import 'package:helpus/model/user.dart';
-import 'package:helpus/pages/user_navigator.dart';
-import 'package:helpus/pages/sheltersignin.dart';
-import 'package:helpus/pages/signin.dart';
+import 'package:helpus/pages/shelter%20pages/sheltersignin.dart';
+import 'package:helpus/pages/userPages/signin.dart';
+import 'package:helpus/pages/userPages/user_navigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

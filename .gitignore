@@ -44,4 +44,4 @@ app.*.map.json
 
 
 # api keys
-/lib/apikey.env
+*.env

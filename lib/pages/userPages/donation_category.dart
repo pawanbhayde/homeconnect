@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/database.dart';
-import 'package:helpus/pages/home_shelter_detail.dart';
+import 'package:helpus/pages/userPages/home_shelter_detail.dart';
 import 'package:helpus/widgets/custom_shalter_card.dart';
 
 class DonationCategoryPage extends StatelessWidget {

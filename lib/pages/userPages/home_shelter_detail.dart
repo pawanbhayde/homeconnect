@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:helpus/auth/authentication.dart';
 import 'package:helpus/auth/database.dart';
 import 'package:helpus/model/home_shelter.dart';
+import 'package:helpus/model/user.dart';
 import 'package:helpus/utilities/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,6 +26,7 @@ class HomeShelterDetails extends StatefulWidget {
 
 class _HomeShelterDetailsState extends State<HomeShelterDetails> {
   HomeShelter? shelterDetails;
+  UserProfile? user;
 
   @override
   void initState() {
@@ -33,6 +36,13 @@ class _HomeShelterDetailsState extends State<HomeShelterDetails> {
       setState(() {
         shelterDetails = value;
         print(shelterDetails);
+      });
+    });
+
+    // get user details
+    Authentication.getCurrentUser().then((value) {
+      setState(() {
+        user = value;
       });
     });
   }
@@ -49,7 +59,17 @@ class _HomeShelterDetailsState extends State<HomeShelterDetails> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ElevatedButton(
-          onPressed: () => launch("tel://${widget.phone}"),
+          onPressed: () async {
+            await DatabaseService.storeCallerDetails(
+              name: user!.name,
+              email: user!.email,
+              date: DateTime.now(),
+              time: TimeOfDay.now(),
+              shelterId: widget.id,
+            );
+
+            launch("tel://${widget.phone}");
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: primaryColor,
             padding: const EdgeInsets.symmetric(vertical: 15),
@@ -129,83 +149,7 @@ class _HomeShelterDetailsState extends State<HomeShelterDetails> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // const Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //   children: [
-                    //     Row(
-                    //       children: [
-                    //         Icon(
-                    //           Iconsax.slider_vertical_1,
-                    //           color: Colors.black,
-                    //         ),
-                    //         SizedBox(
-                    //           width: 5,
-                    //         ),
-                    //         Text(
-                    //           '5',
-                    //           style: TextStyle(
-                    //             fontSize: 18,
-                    //             fontWeight: FontWeight.w400,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     Row(
-                    //       children: [
-                    //         Icon(
-                    //           Iconsax.star,
-                    //           color: Colors.black,
-                    //         ),
-                    //         SizedBox(
-                    //           width: 5,
-                    //         ),
-                    //         Text(
-                    //           '4.2',
-                    //           style: TextStyle(
-                    //             fontSize: 18,
-                    //             fontWeight: FontWeight.w400,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     Row(
-                    //       children: [
-                    //         Icon(
-                    //           Iconsax.camera,
-                    //           color: Colors.black,
-                    //         ),
-                    //         SizedBox(
-                    //           width: 5,
-                    //         ),
-                    //         Text(
-                    //           '2',
-                    //           style: TextStyle(
-                    //             fontSize: 18,
-                    //             fontWeight: FontWeight.w400,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     Row(
-                    //       children: [
-                    //         Icon(
-                    //           Iconsax.maximize,
-                    //           color: Colors.black,
-                    //         ),
-                    //         SizedBox(
-                    //           width: 5,
-                    //         ),
-                    //         Text(
-                    //           '1102m',
-                    //           style: TextStyle(
-                    //             fontSize: 18,
-                    //             fontWeight: FontWeight.w400,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ],
-                    // ),
+
                     const SizedBox(
                       height: 20,
                     ),

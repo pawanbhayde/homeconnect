@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:helpus/auth/authentication.dart';
-import 'package:helpus/pages/city_input_screen.dart';
-import 'package:helpus/pages/signin.dart';
+import 'package:helpus/pages/userPages/city_input_screen.dart';
+import 'package:helpus/pages/userPages/signin.dart';
 import 'package:helpus/utilities/colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -236,7 +236,8 @@ class _SignUpState extends State<SignUp> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignInPage()),
+                                    builder: (context) => SignInPage(),
+                                  ),
                                 );
                               },
                               child: const Text('Login',
@@ -292,7 +293,8 @@ class _SignUpState extends State<SignUp> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const CityInputScreen()),
+                              builder: (context) => const CityInputScreen(),
+                            ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
