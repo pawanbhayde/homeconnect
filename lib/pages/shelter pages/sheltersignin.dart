@@ -24,7 +24,7 @@ class _ShelterSignInPageState extends State<ShelterSignInPage> {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(20.0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: primaryColor,
         ),
         child: Center(
@@ -170,7 +170,8 @@ class _ShelterSignInPageState extends State<ShelterSignInPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ShelterSignUp()),
+                                      builder: (context) =>
+                                          const ShelterSignUp()),
                                 );
                               },
                               child: const Text('Sign Up'),

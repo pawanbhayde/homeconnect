@@ -24,7 +24,7 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(20.0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: primaryColor,
         ),
         child: Center(

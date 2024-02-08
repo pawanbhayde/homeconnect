@@ -28,6 +28,8 @@ class _ShelterSignUpState extends State<ShelterSignUp> {
 
   final _formKey = GlobalKey<FormState>();
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -48,6 +50,9 @@ class _ShelterSignUpState extends State<ShelterSignUp> {
         child: ElevatedButton(
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
+              setState(() {
+                isLoading = true;
+              });
               try {
                 Authentication.signUpShelterWithEmail(
                   context: context,
@@ -78,6 +83,10 @@ class _ShelterSignUpState extends State<ShelterSignUp> {
                     ),
                   ),
                 );
+              } finally {
+                setState(() {
+                  isLoading = false;
+                });
               }
             } else {
               //all fields are not filled
@@ -103,14 +112,16 @@ class _ShelterSignUpState extends State<ShelterSignUp> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: const Text(
-            "Sign Up",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Color.fromARGB(255, 255, 255, 255),
-            ),
-          ),
+          child: isLoading
+              ? const CircularProgressIndicator()
+              : const Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                ),
         ),
       ),
       body: SingleChildScrollView(
