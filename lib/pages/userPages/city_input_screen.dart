@@ -71,7 +71,7 @@ class _CityInputScreenState extends State<CityInputScreen> {
             Container(
               width: double.infinity,
               height: 50,
-              margin: EdgeInsets.all(20),
+              margin: const EdgeInsets.all(20),
               child: ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
@@ -131,19 +131,19 @@ class _CityInputScreenState extends State<CityInputScreen> {
                     );
                   }
                 },
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white),
-                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
+                ),
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
                 ),
               ),
             ),

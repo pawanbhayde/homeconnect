@@ -5,10 +5,12 @@ class LatestShelter extends StatelessWidget {
     super.key,
     required this.title,
     required this.category,
+    required this.image,
     required this.onPressed,
   });
   final String title;
   final String category;
+  final String image;
   final VoidCallback onPressed;
 
   @override
@@ -26,17 +28,20 @@ class LatestShelter extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
-                  image: category == 'Food'
-                      ? const AssetImage('assets/images/food.png')
-                      : category == 'Clothes'
-                          ? const AssetImage('assets/images/cloths.png')
-                          : category == 'Education'
-                              ? const AssetImage('assets/images/education.png')
-                              : category == 'Charity'
+                  image: image.isNotEmpty
+                      ? Image.network(image).image
+                      : category == 'Food'
+                          ? const AssetImage('assets/images/food.png')
+                          : category == 'Clothes'
+                              ? const AssetImage('assets/images/cloths.png')
+                              : category == 'Education'
                                   ? const AssetImage(
-                                      'assets/images/charity.png')
-                                  : const AssetImage(
-                                      'assets/images/ngo-banner-1.png'),
+                                      'assets/images/education.png')
+                                  : category == 'Charity'
+                                      ? const AssetImage(
+                                          'assets/images/charity.png')
+                                      : const AssetImage(
+                                          'assets/images/ngo-banner-1.png'),
                   fit: BoxFit.cover,
                 ),
                 color: Colors.red,

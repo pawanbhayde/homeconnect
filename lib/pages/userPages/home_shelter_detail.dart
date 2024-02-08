@@ -111,7 +111,7 @@ class _HomeShelterDetailsState extends State<HomeShelterDetails> {
                           // topRight: Radius.circular(20),
                         ),
                         image: DecorationImage(
-                          image: shelterDetails!.banner != null
+                          image: shelterDetails!.banner.isNotEmpty
                               ? NetworkImage(shelterDetails!.banner)
                               : widget.category == 'Food'
                                   ? const AssetImage('assets/images/food.png')

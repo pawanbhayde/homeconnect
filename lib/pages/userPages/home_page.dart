@@ -211,6 +211,7 @@ class _HomePageState extends State<HomePage> {
                             return NeedFirstBox(
                               title: filteredData[index]['name'],
                               category: filteredData[index]['category'],
+                              image: filteredData[index]['banner'],
                               onPressed: () {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
@@ -276,6 +277,7 @@ class _HomePageState extends State<HomePage> {
                           return LatestShelter(
                             title: snapshot.data?[index]['name'],
                             category: snapshot.data?[index]['category'],
+                            image: snapshot.data?[index]['banner'],
                             //navigate to shelter details page with data when pressed
                             onPressed: () {
                               Navigator.push(context,

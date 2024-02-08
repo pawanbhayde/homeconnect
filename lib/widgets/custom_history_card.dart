@@ -17,7 +17,7 @@ class CustomHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //convert date to a more readable format
-    //dont show time as it is not needed
+    //don't show time as it is not needed
     final convertdate = DateTime.parse(date).toLocal().toString().split(' ')[0];
 
     return Container(
